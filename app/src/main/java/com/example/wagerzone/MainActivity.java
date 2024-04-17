@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
             //TEST PUSH ANTHO
             //Test Richard
             //Test push max
+            //Test push JL
         });
     }
 }
