@@ -5,8 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
+    tools:context=".Portefeuille">
     <LinearLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
@@ -31,7 +30,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Accueil"
+            android:text="Portefeuille"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="20dp" />
@@ -124,19 +123,21 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="548dp"
+        android:layout_width="409dp"
+        android:layout_height="549dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/header"
-        tools:layout_editor_absoluteX="0dp">
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="101dp">
 
-        <Button
-            android:id="@+id/btnPortefeuilleTemp"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/tMontant"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="100dp"
-            android:text="Portefeuille" />
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:text="Montant au compte"
+            android:textSize="24sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
