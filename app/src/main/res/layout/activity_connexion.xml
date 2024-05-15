@@ -35,15 +35,17 @@
             android:text="Connexion"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
-        <ImageView
-            android:id="@+id/imageView3"
+        <ImageButton
+            android:id="@+id/userIcone"
             android:layout_width="79dp"
             android:layout_height="61dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/user"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:background="@drawable/rounded_corner"/>
     </LinearLayout>
 
     <LinearLayout
@@ -70,25 +72,26 @@
         android:background="@color/rougeFonce">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/home"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="home"
-            android:textSize="10dp"
+            android:textSize="11sp"
             android:padding="0dp"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_marginVertical="10dp"
-            android:background="@color/rougeFonce"
             android:radius="10dp"
+            android:background="@color/rougeFonce"
             android:textColor="@color/white"/>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/equipes"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Équipe"
-            android:textSize="10dp"
+            android:text="equipes"
+            android:textSize="11sp"
             android:layout_marginVertical="10dp"
             android:padding="0dp"
             style="?android:attr/borderlessButtonStyle"
@@ -96,12 +99,12 @@
             android:textColor="@color/white"/>
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/matchs"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Matchs"
-            android:textSize="10dp"
+            android:textSize="11sp"
             android:layout_marginVertical="10dp"
             android:padding="0dp"
             style="?android:attr/borderlessButtonStyle"
@@ -109,12 +112,12 @@
             android:textColor="@color/white"/>
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/paris"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Mes paris"
-            android:textSize="10dp"
+            android:textSize="11sp"
             android:layout_marginVertical="10dp"
             android:padding="0dp"
             style="?android:attr/borderlessButtonStyle"
