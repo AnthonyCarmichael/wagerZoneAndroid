@@ -2,9 +2,11 @@ package com.example.wagerzone;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private Button home,equipes,matchs,paris;
     private ImageButton user;
+    private boolean selected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.userIcone){
-            Intent connexionIntent = new Intent(MainActivity.this,ConnexionActivity.class);
-            //Avant de lancer l'activité
-            v.setBackgroundResource(R.drawable.rounded_corner);
-            home.setBackgroundResource(R.drawable.btn_borderless);
-            startActivity(connexionIntent);
-
+            showUserMenu(v);
         }
         if (v.getId() == R.id.equipes){
             Intent equipesIntent = new Intent(MainActivity.this,ConnexionActivity.class);
@@ -88,5 +86,71 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.equipes).setBackgroundResource(R.drawable.btn_borderless);
         findViewById(R.id.matchs).setBackgroundResource(R.drawable.btn_borderless);
         findViewById(R.id.paris).setBackgroundResource(R.drawable.btn_borderless);
+    }
+
+    private void showUserMenu(View view) {
+        PopupMenu menuUser = new PopupMenu(this,view);
+        menuUser.getMenuInflater().inflate(R.menu.user_menu,menuUser.getMenu());
+        user.setBackgroundResource(R.drawable.rounded_corner);
+
+        menuUser.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.connecter) {
+                        Intent connexionIntent = new Intent(MainActivity.this,ConnexionActivity.class);
+                        //Avant de lancer l'activité
+                        home.setBackgroundResource(R.drawable.btn_borderless);
+                        selected = true;
+                        startActivity(connexionIntent);
+                    return true;
+                }
+                if (item.getItemId() == R.id.deconnecter) {
+                    Intent connexionIntent = new Intent(MainActivity.this,ConnexionActivity.class);
+                    //Avant de lancer l'activité
+                    home.setBackgroundResource(R.drawable.btn_borderless);
+                    selected = true;
+                    startActivity(connexionIntent);
+                    return true;
+                }
+                if (item.getItemId() == R.id.inscription) {
+                    Intent connexionIntent = new Intent(MainActivity.this,ConnexionActivity.class);
+                    //Avant de lancer l'activité
+                    home.setBackgroundResource(R.drawable.btn_borderless);
+                    selected = true;
+                    startActivity(connexionIntent);
+                    return true;
+                }
+                if (item.getItemId() == R.id.compte) {
+                    Intent connexionIntent = new Intent(MainActivity.this,ConnexionActivity.class);
+                    //Avant de lancer l'activité
+                    home.setBackgroundResource(R.drawable.btn_borderless);
+                    selected = true;
+                    startActivity(connexionIntent);
+                    return true;
+                }
+                if (item.getItemId() == R.id.portefeuille) {
+                    Intent connexionIntent = new Intent(MainActivity.this,ConnexionActivity.class);
+                    //Avant de lancer l'activité
+                    home.setBackgroundResource(R.drawable.btn_borderless);
+                    selected = true;
+                    startActivity(connexionIntent);
+                    return true;
+                }
+                selected = false;
+                return false;
+            }
+        });
+        menuUser.setOnDismissListener(new PopupMenu.OnDismissListener() {
+            @Override
+            public void onDismiss(PopupMenu menu) {
+                // Lors de la fermeture du popmenu
+                if (!selected)
+                    user.setBackgroundResource(R.drawable.btn_borderless);
+                else
+                    selected=false;
+            }
+        });
+
+        menuUser.show();
     }
 }
