@@ -2,12 +2,12 @@ package com.example.wagerzone;
 
 import java.util.HashMap;
 
-public class Parties {
+public class Partie {
     private String _date_heure;
     private int _prolongation;
     private String _statut;
 
-    public Parties(HashMap<String, String> partie) {
+    public Partie(HashMap<String, String> partie) {
         this._date_heure = partie.get("date_heure");
         this._prolongation = Integer.parseInt(partie.get("prolongation"));
         this._statut = partie.get("statut");
@@ -37,4 +37,3 @@ public class Parties {
         this._statut = _statut;
     }
 }
-

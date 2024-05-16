@@ -6,12 +6,12 @@ import java.util.Objects;
 public class Ville {
     private int _id_ville;
     private String _nom_ville;
-    private int _id_pays;
+    private String _pays;
 
     public Ville(HashMap<String, String> ville) {
         this._id_ville = Integer.parseInt(Objects.requireNonNull(ville.get("id_ville")));
         this._nom_ville = ville.get("nom_ville");
-        this._id_pays = Integer.parseInt(Objects.requireNonNull(ville.get("id_pays")));
+        this._pays = Objects.requireNonNull(ville.get("id_pays"));
     }
 
     public int get_id_ville() {
@@ -30,11 +30,11 @@ public class Ville {
         this._nom_ville = _nom_ville;
     }
 
-    public int get_id_pays() {
-        return _id_pays;
+    public String get_id_pays() {
+        return _pays;
     }
 
-    public void set_id_pays(int _id_pays) {
-        this._id_pays = _id_pays;
+    public void set_id_pays(String _id_pays) {
+        this._pays = _id_pays;
     }
 }
