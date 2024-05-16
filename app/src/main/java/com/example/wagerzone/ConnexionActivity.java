@@ -14,29 +14,24 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class ConnexionActivity extends AppCompatActivity  implements View.OnClickListener {
 
     private Button home,equipes,matchs,paris;
     private ImageButton user;
-    private boolean selected = false;
 
+    private boolean selected =false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        setContentView(R.layout.activity_connexion);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.connexion), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
-            //TEST PUSH ANTHO
-            //Test Richard
-            //Test push max
-            //Test push JL
         });
         setNav();
     }
-
     protected void setNav(){
         user = findViewById(R.id.userIcone);
         home = findViewById(R.id.home);
@@ -57,37 +52,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (v.getId() == R.id.userIcone){
             showUserMenu(v);
         }
-        if (v.getId() == R.id.equipes){
-            Intent equipesIntent = new Intent(MainActivity.this,ConnexionActivity.class);
+        if (v.getId() == R.id.home){
             v.setBackgroundResource(R.drawable.rounded_corner);
-            home.setBackgroundResource(R.drawable.btn_borderless);
+            user.setBackgroundResource(R.drawable.btn_borderless);
+            finish();
+        }
+        if (v.getId() == R.id.equipes){
+            v.setBackgroundResource(R.drawable.rounded_corner);
+            user.setBackgroundResource(R.drawable.btn_borderless);
+            Intent equipesIntent = new Intent(ConnexionActivity.this,ConnexionActivity.class);
             startActivity(equipesIntent);
+            finish();
         }
         if (v.getId() == R.id.matchs) {
-            Intent matchsIntent = new Intent(MainActivity.this,ConnexionActivity.class);
             v.setBackgroundResource(R.drawable.rounded_corner);
-            home.setBackgroundResource(R.drawable.btn_borderless);
+            user.setBackgroundResource(R.drawable.btn_borderless);
+            Intent matchsIntent = new Intent(ConnexionActivity.this,ConnexionActivity.class);
             startActivity(matchsIntent);
+            finish();
         }
         if (v.getId() == R.id.paris) {
-            Intent parisIntent = new Intent(MainActivity.this,ConnexionActivity.class);
             v.setBackgroundResource(R.drawable.rounded_corner);
-            home.setBackgroundResource(R.drawable.btn_borderless);
+            user.setBackgroundResource(R.drawable.btn_borderless);
+            Intent parisIntent = new Intent(ConnexionActivity.this,ConnexionActivity.class);
             startActivity(parisIntent);
+            finish();
         }
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // Quand on reviens au main
-        home.setBackgroundResource(R.drawable.rounded_corner);
-        findViewById(R.id.userIcone).setBackgroundResource(R.drawable.btn_borderless);
-        findViewById(R.id.equipes).setBackgroundResource(R.drawable.btn_borderless);
-        findViewById(R.id.matchs).setBackgroundResource(R.drawable.btn_borderless);
-        findViewById(R.id.paris).setBackgroundResource(R.drawable.btn_borderless);
-    }
-
     private void showUserMenu(View view) {
         PopupMenu menuUser = new PopupMenu(this,view);
         menuUser.getMenuInflater().inflate(R.menu.user_menu,menuUser.getMenu());
@@ -97,43 +88,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.connecter) {
-                        Intent connexionIntent = new Intent(MainActivity.this,ConnexionActivity.class);
-                        //Avant de lancer l'activité
-                        home.setBackgroundResource(R.drawable.btn_borderless);
-                        selected = true;
-                        startActivity(connexionIntent);
+                    Intent connexionIntent = new Intent(ConnexionActivity.this,ConnexionActivity.class);
+                    //Avant de lancer l'activité
+                    home.setBackgroundResource(R.drawable.btn_borderless);
+                    selected = true;
+                    startActivity(connexionIntent);
+                    finish();
                     return true;
                 }
                 if (item.getItemId() == R.id.deconnecter) {
-                    Intent connexionIntent = new Intent(MainActivity.this,ConnexionActivity.class);
+                    Intent connexionIntent = new Intent(ConnexionActivity.this,ConnexionActivity.class);
                     //Avant de lancer l'activité
                     home.setBackgroundResource(R.drawable.btn_borderless);
                     selected = true;
                     startActivity(connexionIntent);
+                    finish();
                     return true;
                 }
                 if (item.getItemId() == R.id.inscription) {
-                    Intent connexionIntent = new Intent(MainActivity.this,ConnexionActivity.class);
+                    Intent connexionIntent = new Intent(ConnexionActivity.this,ConnexionActivity.class);
                     //Avant de lancer l'activité
                     home.setBackgroundResource(R.drawable.btn_borderless);
                     selected = true;
                     startActivity(connexionIntent);
+                    finish();
                     return true;
                 }
                 if (item.getItemId() == R.id.compte) {
-                    Intent connexionIntent = new Intent(MainActivity.this,ConnexionActivity.class);
+                    Intent connexionIntent = new Intent(ConnexionActivity.this,ConnexionActivity.class);
                     //Avant de lancer l'activité
                     home.setBackgroundResource(R.drawable.btn_borderless);
                     selected = true;
                     startActivity(connexionIntent);
+                    finish();
                     return true;
                 }
                 if (item.getItemId() == R.id.portefeuille) {
-                    Intent connexionIntent = new Intent(MainActivity.this,ConnexionActivity.class);
+                    Intent connexionIntent = new Intent(ConnexionActivity.this,ConnexionActivity.class);
                     //Avant de lancer l'activité
                     home.setBackgroundResource(R.drawable.btn_borderless);
                     selected = true;
                     startActivity(connexionIntent);
+                    finish();
                     return true;
                 }
                 selected = false;
