@@ -1,17 +1,16 @@
 package com.example.wagerzone;
 
+import java.util.HashMap;
+
 public class Parties {
-    private int _id_partie;
     private String _date_heure;
     private int _prolongation;
     private String _statut;
 
-    public int get_id_partie() {
-        return _id_partie;
-    }
-
-    public void set_id_partie(int _id_partie) {
-        this._id_partie = _id_partie;
+    public Parties(HashMap<String, String> partie) {
+        this._date_heure = partie.get("date_heure");
+        this._prolongation = Integer.parseInt(partie.get("prolongation"));
+        this._statut = partie.get("statut");
     }
 
     public String get_date_heure() {

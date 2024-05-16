@@ -1,20 +1,22 @@
 package com.example.wagerzone;
 
+import java.util.HashMap;
+
 public class Paris {
-    private int _id_paris;
     private double _montant;
     private String _date_heure;
-    private String _receveur;
+    private int _receveur;
     private String _utilisateur;
-    private String _partie;
+    private int _id_partie;
 
-    public int get_id_paris() {
-        return _id_paris;
+    public Paris(HashMap<String, String> paris) {
+        this._montant =Double.parseDouble(paris.get("montant"));
+        this._date_heure = paris.get("date_heure");
+        this._receveur = Integer.parseInt(paris.get("receveur"));
+        this._utilisateur = paris.get("utilisateur");
+        this._id_partie = Integer.parseInt(paris.get("id_partie"));
     }
 
-    public void set_id_paris(int _id_paris) {
-        this._id_paris = _id_paris;
-    }
 
     public double get_montant() {
         return _montant;
@@ -32,11 +34,11 @@ public class Paris {
         this._date_heure = _date_heure;
     }
 
-    public String get_receveur() {
+    public int get_receveur() {
         return _receveur;
     }
 
-    public void set_receveur(String _receveur) {
+    public void set_receveur(int _receveur) {
         this._receveur = _receveur;
     }
 
@@ -48,11 +50,11 @@ public class Paris {
         this._utilisateur = _utilisateur;
     }
 
-    public String get_partie() {
-        return _partie;
+    public int get_partie() {
+        return _id_partie;
     }
 
-    public void set_partie(String _partie) {
-        this._partie = _partie;
+    public void set_partie(int _partie) {
+        this._id_partie = _partie;
     }
 }
