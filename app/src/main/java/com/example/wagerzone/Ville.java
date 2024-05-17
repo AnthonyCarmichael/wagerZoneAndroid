@@ -16,6 +16,7 @@ public class Ville {
         this._nom_ville = ville.getString("nom_ville");
         this._id_pays = Integer.parseInt(Objects.requireNonNull(ville.getString("id_pays")));
     }
+
     public int get_id_ville() {
         return _id_ville;
     }

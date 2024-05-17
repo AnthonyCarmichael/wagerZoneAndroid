@@ -19,6 +19,12 @@
             android:name=".ConnexionActivity"
             android:exported="false" />
         <activity
+            android:name=".Equipes"
+            android:exported="false" />
+        <activity
+            android:name=".Equipe"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true" >
             <intent-filter>
