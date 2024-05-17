@@ -32,15 +32,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            SQLiteManager sqLiteManager = new SQLiteManager(MainActivity.this);
-            ArrayList<String> nomPays = null;
-            try {
-                nomPays = sqLiteManager.getNomPays();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            TextView titre = (TextView) findViewById(R.id.textView4);
-            titre.setText(nomPays.get(0));
             return insets;
             //TEST PUSH ANTHO
             //Test Richard
