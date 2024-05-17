@@ -1,16 +1,19 @@
 package com.example.wagerzone;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 public class Partie {
     private String _date_heure;
-    private int _prolongation;
+    private String _prolongation;
     private String _statut;
 
-    public Partie(HashMap<String, String> partie) {
-        this._date_heure = partie.get("date_heure");
-        this._prolongation = Integer.parseInt(partie.get("prolongation"));
-        this._statut = partie.get("statut");
+    public Partie(JSONObject partie) throws JSONException {
+        this._date_heure = partie.getString("date_heure");
+        this._prolongation = partie.getString("prolongation");
+        this._statut = partie.getString("id_statut");
     }
 
     public String get_date_heure() {
@@ -21,11 +24,11 @@ public class Partie {
         this._date_heure = _date_heure;
     }
 
-    public int get_prolongation() {
+    public String get_prolongation() {
         return _prolongation;
     }
 
-    public void set_prolongation(int _prolongation) {
+    public void set_prolongation(String _prolongation) {
         this._prolongation = _prolongation;
     }
 

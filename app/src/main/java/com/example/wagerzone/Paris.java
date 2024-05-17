@@ -1,20 +1,21 @@
 package com.example.wagerzone;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 public class Paris {
     private double _montant;
     private String _date_heure;
     private int _receveur;
-    private String _utilisateur;
     private int _id_partie;
 
-    public Paris(HashMap<String, String> paris) {
-        this._montant =Double.parseDouble(paris.get("montant"));
-        this._date_heure = paris.get("date_heure");
-        this._receveur = Integer.parseInt(paris.get("receveur"));
-        this._utilisateur = paris.get("utilisateur");
-        this._id_partie = Integer.parseInt(paris.get("id_partie"));
+    public Paris(JSONObject paris) throws JSONException {
+        this._montant =Double.parseDouble(paris.getString("montant"));
+        this._date_heure = paris.getString("date_heure");
+        this._receveur = Integer.parseInt(paris.getString("receveur"));
+        this._id_partie = Integer.parseInt(paris.getString("id_partie"));
     }
 
 
@@ -40,14 +41,6 @@ public class Paris {
 
     public void set_receveur(int _receveur) {
         this._receveur = _receveur;
-    }
-
-    public String get_utilisateur() {
-        return _utilisateur;
-    }
-
-    public void set_utilisateur(String _utilisateur) {
-        this._utilisateur = _utilisateur;
     }
 
     public int get_partie() {

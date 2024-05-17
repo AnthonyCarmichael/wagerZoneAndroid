@@ -1,6 +1,10 @@
 package com.example.wagerzone;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Equipe {
     private String _nom_equipe;
@@ -14,17 +18,17 @@ public class Equipe {
     private String _sport;
     private String _ville;
 
-    public Equipe(HashMap<String, String> equipe) {
-        this._nom_equipe = equipe.get("nom_equipe");
-        this._entraineur = equipe.get("entraineur");
-        this._stade = equipe.get("stade");
-        this._match_joue = Integer.parseInt(equipe.get("match_joue"));
-        this._victoire = Integer.parseInt(equipe.get("victoire"));
-        this._defaite = Integer.parseInt(equipe.get("defaite"));
-        this._match_nul = Integer.parseInt(equipe.get("match_nul"));
-        this._defaite_prolongation = Integer.parseInt(equipe.get("defaite_prolongation"));
-        this._sport = equipe.get("sport");
-        this._ville = equipe.get("ville");
+    public Equipe(JSONObject equipe) throws JSONException {
+        this._nom_equipe = equipe.getString("nom_equipe");
+        this._entraineur = equipe.getString("entraineur");
+        this._stade = equipe.getString("stade");
+        this._match_joue = Integer.parseInt(equipe.getString("match_joue"));
+        this._victoire = Integer.parseInt(equipe.getString("victoire"));
+        this._defaite = Integer.parseInt(equipe.getString("defaite"));
+        this._match_nul = Integer.parseInt(equipe.getString("match_nul"));
+        this._defaite_prolongation = Integer.parseInt(equipe.getString("defaite_prolongation"));
+        this._sport = equipe.getString("id_sport");
+        this._ville = equipe.getString("id_ville");
     }
 
     public String get_nom_equipe() {

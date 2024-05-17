@@ -131,6 +131,8 @@ public class SQLiteManager  extends SQLiteOpenHelper
                 .append(" (")
                 .append(ID_PARTIE)
                 .append(" INTEGER PRIMARY KEY AUTOINCREMENT, ")
+                .append(PROLONGATION)
+                .append(" BOOL, ")
                 .append(DATE_HEURE)
                 .append(" DATETIME, ")
                 .append(ID_STATUT)
@@ -206,8 +208,6 @@ public class SQLiteManager  extends SQLiteOpenHelper
                 .append(" INTEGER, ")
                 .append(COTE)
                 .append(" INTEGER, ")
-                .append(PROLONGATION)
-                .append(" BOOL, ")
                 .append(RECEVEUR)
                 .append(" BOOL, ")
                 .append(ID_PARTIE)
@@ -237,8 +237,14 @@ public class SQLiteManager  extends SQLiteOpenHelper
         db.execSQL(sqlParis.toString());
         db.execSQL(sqlEquipePartie.toString());
         try {
-            insertSports(db);
             insertPays(db);
+            insertVilles(db);
+            insertSports(db);
+            insertEquipes(db);
+            insertStatuts(db);
+            insertParties(db);
+            insertParis(db);
+            insertEquipePartie(db);
         } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
         }
@@ -346,8 +352,8 @@ public class SQLiteManager  extends SQLiteOpenHelper
                 Ville ville2 = new Ville(ville);
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(NOM_VILLE, ville2.get_nom_ville());
-                contentValues.put(ID_PAYS, ville2.get_id_pays());
-                sqLiteDatabase.insert(TABLE_PAYS, null, contentValues);
+                contentValues.put(ID_PAYS, ville2.get_pays());
+                sqLiteDatabase.insert(TABLE_VILLE, null, contentValues);
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -395,8 +401,8 @@ public class SQLiteManager  extends SQLiteOpenHelper
                 contentValues.put(VICTOIRE, equipe2.get_victoire());
                 contentValues.put(DEFAITE, equipe2.get_defaite());
                 contentValues.put(DEFAITE_PROLONGATION, equipe2.get_defaite_prolongation());
-                contentValues.put(ID_VILLE, equipe2.get_id_ville());
-                contentValues.put(ID_SPORT, equipe2.get_id_sport());
+                contentValues.put(ID_VILLE, equipe2.get_ville());
+                contentValues.put(ID_SPORT, equipe2.get_sport());
                 sqLiteDatabase.insert(TABLE_EQUIPE, null, contentValues);
             }
         } catch (JSONException e) {
@@ -437,10 +443,9 @@ public class SQLiteManager  extends SQLiteOpenHelper
                 JSONObject equipePartie = equipePartieArr.getJSONObject(i);
                 EquipePartie equipePartie2 = new EquipePartie(equipePartie);
                 ContentValues contentValues = new ContentValues();
-                contentValues.put(ID_EQUIPE, equipePartie2.get_id_equipe());
-                contentValues.put(ID_PARTIE, equipePartie2.get_id_partie());
+                contentValues.put(ID_EQUIPE, equipePartie2.get_equipe());
+                contentValues.put(ID_PARTIE, equipePartie2.get_partie());
                 contentValues.put(BUT_MARQUE, equipePartie2.get_but_marque());
-                contentValues.put(PROLONGATION, equipePartie2.get_prolongation());
                 contentValues.put(COTE, equipePartie2.get_cote());
                 contentValues.put(RECEVEUR, equipePartie2.get_receveur());
                 sqLiteDatabase.insert(TABLE_EQUIPE_PARTIE, null, contentValues);
@@ -470,7 +475,7 @@ public class SQLiteManager  extends SQLiteOpenHelper
                 JSONObject partie = partiesArr.getJSONObject(i);
                 Partie partie2 = new Partie(partie);
                 ContentValues contentValues = new ContentValues();
-                contentValues.put(ID_STATUT, partie2.get_id_statut());
+                contentValues.put(ID_STATUT, partie2.get_statut());
                 contentValues.put(DATE_HEURE, partie2.get_date_heure());
                 sqLiteDatabase.insert(TABLE_PARTIE, null, contentValues);
             }
@@ -503,7 +508,7 @@ public class SQLiteManager  extends SQLiteOpenHelper
                 contentValues.put(MONTANT, paris2.get_montant());
                 contentValues.put(DATE_HEURE, paris2.get_date_heure());
                 contentValues.put(RECEVEUR, paris2.get_receveur());
-                contentValues.put(ID_PARTIE, paris2.get_id_partie());
+                contentValues.put(ID_PARTIE, paris2.get_partie());
                 sqLiteDatabase.insert(TABLE_PARIS, null, contentValues);
             }
         } catch (JSONException e) {
