@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/rougeFonce"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/home"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="10dp"
+            android:layout_weight="1"
+            android:background="@color/rougeFonce"
+            android:padding="0dp"
+            android:radius="10dp"
+            android:text="home"
+            android:textColor="@color/white"
+            android:textSize="11sp" />
+
+        <Button
+            android:id="@+id/equipes"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="10dp"
+            android:layout_weight="1"
+            android:background="@color/rougeFonce"
+            android:padding="0dp"
+            android:text="equipes"
+            android:textColor="@color/white"
+            android:textSize="11sp" />
+
+        <Button
+            android:id="@+id/matchs"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="10dp"
+            android:layout_weight="1"
+            android:background="@color/rougeFonce"
+            android:padding="0dp"
+            android:text="Matchs"
+            android:textColor="@color/white"
+            android:textSize="11sp" />
+
+        <Button
+            android:id="@+id/paris"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="10dp"
+            android:layout_weight="1"
+            android:background="@color/rougeFonce"
+            android:padding="0dp"
+            android:text="Mes paris"
+            android:textColor="@color/white"
+            android:textSize="11sp"
+
+            />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

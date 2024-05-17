@@ -18,11 +18,9 @@ import androidx.core.view.WindowInsetsCompat;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
 
-    private Button home,equipes,matchs,paris;
-    private ImageButton user;
-    private boolean selected = false;
+    private Nav _nav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,123 +36,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //Test push max
             //Test push JL
         });
-        setNav();
-    }
-
-    protected void setNav(){
-        user = findViewById(R.id.userIcone);
-        home = findViewById(R.id.home);
-        equipes = findViewById(R.id.equipes);
-        matchs = findViewById(R.id.matchs);
-        paris = findViewById(R.id.paris);
-
-        user.setOnClickListener(this);
-        home.setOnClickListener(this);
-        equipes.setOnClickListener(this);
-        matchs.setOnClickListener(this);
-        paris.setOnClickListener(this);
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.userIcone){
-            showUserMenu(v);
-        }
-        if (v.getId() == R.id.equipes){
-            Intent equipesIntent = new Intent(MainActivity.this,ConnexionActivity.class);
-            v.setBackgroundResource(R.drawable.rounded_corner);
-            home.setBackgroundResource(R.drawable.btn_borderless);
-            startActivity(equipesIntent);
-        }
-        if (v.getId() == R.id.matchs) {
-            Intent matchsIntent = new Intent(MainActivity.this,ConnexionActivity.class);
-            v.setBackgroundResource(R.drawable.rounded_corner);
-            home.setBackgroundResource(R.drawable.btn_borderless);
-            startActivity(matchsIntent);
-        }
-        if (v.getId() == R.id.paris) {
-            Intent parisIntent = new Intent(MainActivity.this,ConnexionActivity.class);
-            v.setBackgroundResource(R.drawable.rounded_corner);
-            home.setBackgroundResource(R.drawable.btn_borderless);
-            startActivity(parisIntent);
-        }
+        _nav = new Nav(this, findViewById(android.R.id.content),MainActivity.this);
+        TextView titre = findViewById(R.id.titre);
+        titre.setText(R.string.accueil);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         // Quand on reviens au main
-        home.setBackgroundResource(R.drawable.rounded_corner);
-        findViewById(R.id.userIcone).setBackgroundResource(R.drawable.btn_borderless);
-        findViewById(R.id.equipes).setBackgroundResource(R.drawable.btn_borderless);
-        findViewById(R.id.matchs).setBackgroundResource(R.drawable.btn_borderless);
-        findViewById(R.id.paris).setBackgroundResource(R.drawable.btn_borderless);
+        _nav.get_home().setBackgroundResource(R.drawable.rounded_corner);
+        _nav.get_user().setBackgroundResource(R.drawable.btn_borderless);
+        _nav.get_equipes().setBackgroundResource(R.drawable.btn_borderless);
+        _nav.get_matchs().setBackgroundResource(R.drawable.btn_borderless);
+        _nav.get_paris().setBackgroundResource(R.drawable.btn_borderless);
     }
 
-    private void showUserMenu(View view) {
-        PopupMenu menuUser = new PopupMenu(this,view);
-        menuUser.getMenuInflater().inflate(R.menu.user_menu,menuUser.getMenu());
-        user.setBackgroundResource(R.drawable.rounded_corner);
 
-        menuUser.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.connecter) {
-                        Intent connexionIntent = new Intent(MainActivity.this,ConnexionActivity.class);
-                        //Avant de lancer l'activité
-                        home.setBackgroundResource(R.drawable.btn_borderless);
-                        selected = true;
-                        startActivity(connexionIntent);
-                    return true;
-                }
-                if (item.getItemId() == R.id.deconnecter) {
-                    Intent connexionIntent = new Intent(MainActivity.this,ConnexionActivity.class);
-                    //Avant de lancer l'activité
-                    home.setBackgroundResource(R.drawable.btn_borderless);
-                    selected = true;
-                    startActivity(connexionIntent);
-                    return true;
-                }
-                if (item.getItemId() == R.id.inscription) {
-                    Intent connexionIntent = new Intent(MainActivity.this,ConnexionActivity.class);
-                    //Avant de lancer l'activité
-                    home.setBackgroundResource(R.drawable.btn_borderless);
-                    selected = true;
-                    startActivity(connexionIntent);
-                    return true;
-                }
-                if (item.getItemId() == R.id.compte) {
-                    Intent connexionIntent = new Intent(MainActivity.this,ConnexionActivity.class);
-                    //Avant de lancer l'activité
-                    home.setBackgroundResource(R.drawable.btn_borderless);
-                    selected = true;
-                    startActivity(connexionIntent);
-                    return true;
-                }
-                if (item.getItemId() == R.id.portefeuille) {
-                    Intent connexionIntent = new Intent(MainActivity.this,ConnexionActivity.class);
-                    //Avant de lancer l'activité
-                    home.setBackgroundResource(R.drawable.btn_borderless);
-                    selected = true;
-                    startActivity(connexionIntent);
-                    return true;
-                }
-                selected = false;
-                return false;
-            }
-        });
-        menuUser.setOnDismissListener(new PopupMenu.OnDismissListener() {
-            @Override
-            public void onDismiss(PopupMenu menu) {
-                // Lors de la fermeture du popmenu
-                if (!selected)
-                    user.setBackgroundResource(R.drawable.btn_borderless);
-                else
-                    selected=false;
-            }
-        });
-
-        menuUser.show();
-    }
 }

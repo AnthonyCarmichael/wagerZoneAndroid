@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">wagerZone</string>
+    <string name="accueil">Acceuil</string>
+    <string name="connexion">Connexion</string>
 </resources>
