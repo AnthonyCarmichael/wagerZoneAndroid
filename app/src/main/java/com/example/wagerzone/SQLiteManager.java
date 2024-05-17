@@ -18,6 +18,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SQLiteManager  extends SQLiteOpenHelper
 {
@@ -237,6 +238,7 @@ public class SQLiteManager  extends SQLiteOpenHelper
         db.execSQL(sqlEquipePartie.toString());
         try {
             insertSports(db);
+            insertPays(db);
         } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
         }
@@ -280,6 +282,261 @@ public class SQLiteManager  extends SQLiteOpenHelper
             }
         }
         return sports;
+    }
+
+    public void insertPays(SQLiteDatabase sqLiteDatabase) throws SQLException, IOException {
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+        String url = new String("http://10.0.2.2:8000/api/pays");
+
+        try(InputStream is = new URL(url).openConnection().getInputStream()) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "utf-8"));
+
+            StringBuilder builder = new StringBuilder();
+            for(String line = reader.readLine(); line != null; line = reader.readLine()) {
+                builder.append(line + "\n");
+            }
+            JSONObject data = new JSONObject(builder.toString());
+            JSONArray paysArr = data.getJSONArray("data");
+            for (int i=0; i < paysArr.length(); i++) {
+                JSONObject pays = paysArr.getJSONObject(i);
+                Pays pays2 = new Pays(pays);
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(NOM_PAYS, pays2.get_nom_pays());
+                sqLiteDatabase.insert(TABLE_PAYS, null, contentValues);
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<String> getNomPays() throws IOException {
+        ArrayList<String> pays = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT " + NOM_PAYS + " FROM " + TABLE_PAYS, null)){
+            if(result.getCount() != 0){
+                while (result.moveToNext()){
+                    pays.add(result.getString(0));
+                }
+            }
+        }
+        return pays;
+    }
+
+    public void insertVilles(SQLiteDatabase sqLiteDatabase) throws SQLException, IOException {
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+        String url = new String("http://10.0.2.2:8000/api/villes");
+
+        try(InputStream is = new URL(url).openConnection().getInputStream()) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "utf-8"));
+
+            StringBuilder builder = new StringBuilder();
+            for(String line = reader.readLine(); line != null; line = reader.readLine()) {
+                builder.append(line + "\n");
+            }
+            JSONObject data = new JSONObject(builder.toString());
+            JSONArray villesArr = data.getJSONArray("data");
+            for (int i=0; i < villesArr.length(); i++) {
+                JSONObject ville = villesArr.getJSONObject(i);
+                Ville ville2 = new Ville(ville);
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(NOM_VILLE, ville2.get_nom_ville());
+                contentValues.put(ID_PAYS, ville2.get_id_pays());
+                sqLiteDatabase.insert(TABLE_PAYS, null, contentValues);
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<String> getNomVille() throws IOException {
+        ArrayList<String> ville = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT " + NOM_VILLE + " FROM " + TABLE_VILLE, null)){
+            if(result.getCount() != 0){
+                while (result.moveToNext()){
+                    ville.add(result.getString(0));
+                }
+            }
+        }
+        return ville;
+    }
+
+    public void insertEquipes(SQLiteDatabase sqLiteDatabase) throws SQLException, IOException {
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+        String url = new String("http://10.0.2.2:8000/api/equipes");
+
+        try(InputStream is = new URL(url).openConnection().getInputStream()) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "utf-8"));
+
+            StringBuilder builder = new StringBuilder();
+            for(String line = reader.readLine(); line != null; line = reader.readLine()) {
+                builder.append(line + "\n");
+            }
+            JSONObject data = new JSONObject(builder.toString());
+            JSONArray equipesArr = data.getJSONArray("data");
+            for (int i=0; i < equipesArr.length(); i++) {
+                JSONObject equipe = equipesArr.getJSONObject(i);
+                Equipe equipe2 = new Equipe(equipe);
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(NOM_EQUIPE, equipe2.get_nom_equipe());
+                contentValues.put(ENTRAINEUR, equipe2.get_entraineur());
+                contentValues.put(STADE, equipe2.get_stade());
+                contentValues.put(MATCH_NUL, equipe2.get_match_nul());
+                contentValues.put(MATCH_JOUE, equipe2.get_match_joue());
+                contentValues.put(VICTOIRE, equipe2.get_victoire());
+                contentValues.put(DEFAITE, equipe2.get_defaite());
+                contentValues.put(DEFAITE_PROLONGATION, equipe2.get_defaite_prolongation());
+                contentValues.put(ID_VILLE, equipe2.get_id_ville());
+                contentValues.put(ID_SPORT, equipe2.get_id_sport());
+                sqLiteDatabase.insert(TABLE_EQUIPE, null, contentValues);
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<String> getNomEquipe() throws IOException {
+        ArrayList<String> equipe = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT " + NOM_EQUIPE + " FROM " + TABLE_EQUIPE, null)){
+            if(result.getCount() != 0){
+                while (result.moveToNext()){
+                    equipe.add(result.getString(0));
+                }
+            }
+        }
+        return equipe;
+    }
+
+    public void insertEquipePartie(SQLiteDatabase sqLiteDatabase) throws SQLException, IOException {
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+        String url = new String("http://10.0.2.2:8000/api/equipePartie");
+
+        try(InputStream is = new URL(url).openConnection().getInputStream()) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "utf-8"));
+
+            StringBuilder builder = new StringBuilder();
+            for(String line = reader.readLine(); line != null; line = reader.readLine()) {
+                builder.append(line + "\n");
+            }
+            JSONObject data = new JSONObject(builder.toString());
+            JSONArray equipePartieArr = data.getJSONArray("data");
+            for (int i=0; i < equipePartieArr.length(); i++) {
+                JSONObject equipePartie = equipePartieArr.getJSONObject(i);
+                EquipePartie equipePartie2 = new EquipePartie(equipePartie);
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(ID_EQUIPE, equipePartie2.get_id_equipe());
+                contentValues.put(ID_PARTIE, equipePartie2.get_id_partie());
+                contentValues.put(BUT_MARQUE, equipePartie2.get_but_marque());
+                contentValues.put(PROLONGATION, equipePartie2.get_prolongation());
+                contentValues.put(COTE, equipePartie2.get_cote());
+                contentValues.put(RECEVEUR, equipePartie2.get_receveur());
+                sqLiteDatabase.insert(TABLE_EQUIPE_PARTIE, null, contentValues);
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void insertParties(SQLiteDatabase sqLiteDatabase) throws SQLException, IOException {
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+        String url = new String("http://10.0.2.2:8000/api/parties");
+
+        try(InputStream is = new URL(url).openConnection().getInputStream()) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "utf-8"));
+
+            StringBuilder builder = new StringBuilder();
+            for(String line = reader.readLine(); line != null; line = reader.readLine()) {
+                builder.append(line + "\n");
+            }
+            JSONObject data = new JSONObject(builder.toString());
+            JSONArray partiesArr = data.getJSONArray("data");
+            for (int i=0; i < partiesArr.length(); i++) {
+                JSONObject partie = partiesArr.getJSONObject(i);
+                Partie partie2 = new Partie(partie);
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(ID_STATUT, partie2.get_id_statut());
+                contentValues.put(DATE_HEURE, partie2.get_date_heure());
+                sqLiteDatabase.insert(TABLE_PARTIE, null, contentValues);
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //à modifier pour prendre seulement les paris de l'utilisateur connecté
+    public void insertParis(SQLiteDatabase sqLiteDatabase) throws SQLException, IOException {
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+        String url = new String("http://10.0.2.2:8000/api/paris");
+
+        try(InputStream is = new URL(url).openConnection().getInputStream()) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "utf-8"));
+
+            StringBuilder builder = new StringBuilder();
+            for(String line = reader.readLine(); line != null; line = reader.readLine()) {
+                builder.append(line + "\n");
+            }
+            JSONObject data = new JSONObject(builder.toString());
+            JSONArray parisArr = data.getJSONArray("data");
+            for (int i=0; i < parisArr.length(); i++) {
+                JSONObject paris = parisArr.getJSONObject(i);
+                Paris paris2 = new Paris(paris);
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(MONTANT, paris2.get_montant());
+                contentValues.put(DATE_HEURE, paris2.get_date_heure());
+                contentValues.put(RECEVEUR, paris2.get_receveur());
+                contentValues.put(ID_PARTIE, paris2.get_id_partie());
+                sqLiteDatabase.insert(TABLE_PARIS, null, contentValues);
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void insertStatuts(SQLiteDatabase sqLiteDatabase) throws SQLException, IOException {
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+        String url = new String("http://10.0.2.2:8000/api/statuts");
+
+        try(InputStream is = new URL(url).openConnection().getInputStream()) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "utf-8"));
+
+            StringBuilder builder = new StringBuilder();
+            for(String line = reader.readLine(); line != null; line = reader.readLine()) {
+                builder.append(line + "\n");
+            }
+            JSONObject data = new JSONObject(builder.toString());
+            JSONArray statutsArr = data.getJSONArray("data");
+            for (int i=0; i < statutsArr.length(); i++) {
+                JSONObject statut = statutsArr.getJSONObject(i);
+                Statut statut2 = new Statut(statut);
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(NOM_STATUT, statut2.get_nom_statut());
+                sqLiteDatabase.insert(TABLE_STATUT, null, contentValues);
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

@@ -7,12 +7,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -28,6 +32,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            SQLiteManager sqLiteManager = new SQLiteManager(MainActivity.this);
+            ArrayList<String> nomPays = null;
+            try {
+                nomPays = sqLiteManager.getNomPays();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            TextView titre = (TextView) findViewById(R.id.textView4);
+            titre.setText(nomPays.get(0));
             return insets;
             //TEST PUSH ANTHO
             //Test Richard

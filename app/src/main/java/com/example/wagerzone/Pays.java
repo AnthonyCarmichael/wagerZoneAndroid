@@ -1,5 +1,8 @@
 package com.example.wagerzone;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -7,9 +10,9 @@ public class Pays {
     private String _nom_pays;
     private int _id_pays;
 
-    public Pays(HashMap<String, String> pays) {
-        this._id_pays = Integer.parseInt(Objects.requireNonNull(pays.get("id_pays")));
-        this._nom_pays = pays.get("nom_pays");
+    public Pays(JSONObject pays) throws JSONException {
+        this._id_pays = Integer.parseInt(Objects.requireNonNull(pays.getString("id_pays")));
+        this._nom_pays = pays.getString("nom_pays");
     }
 
     public String get_nom_pays() {
