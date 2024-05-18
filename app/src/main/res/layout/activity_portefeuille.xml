@@ -17,12 +17,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="75dp"
-            android:layout_height="match_parent"
+
+        <Button
+            android:id="@+id/btnRetour"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@drawable/logo" />
+            android:text="Retour" />
 
         <TextView
             android:id="@+id/textView4"
@@ -36,12 +37,11 @@
             android:textSize="20dp" />
 
         <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="79dp"
-            android:layout_height="61dp"
+            android:id="@+id/imageView2"
+            android:layout_width="75dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            app:srcCompat="@drawable/user"
-            android:layout_gravity="center"/>
+            app:srcCompat="@drawable/logo" />
     </LinearLayout>
 
 
@@ -50,32 +50,73 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="549dp"
+            android:layout_height="621dp"
             android:layout_marginTop="1dp"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tMontant"
+                android:id="@+id/tMontantTotal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center"
-                android:text="Montant au compte"
+                android:text="Montant total"
                 android:textColor="#2C2C2C"
                 android:textSize="34sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/montantTotal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="0,00$"
+                android:textColor="#2C2C2C"
+                android:textSize="34sp" />
+
+            <TextView
+                android:id="@+id/tMontantParis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:gravity="center"
+                android:text="Montant en paris"
+                android:textColor="#2C2C2C"
+                android:textSize="34sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/montantParis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="0,00$"
+                android:textColor="#2C2C2C"
+                android:textSize="34sp" />
+
+            <TextView
+                android:id="@+id/tMontantRetirable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:gravity="center"
+                android:text="Montant retirable"
+                android:textColor="#2C2C2C"
+                android:textSize="34sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/montantRetirable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -89,90 +130,32 @@
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/rounded_corner"
                 android:text="Ajouter des fonds"
                 android:textColor="#E3E2E2"
                 android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/buttonRetirFonds"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/rounded_corner"
+                android:text="Retirer des fonds"
+                android:textColor="#E3E2E2"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/buttonTransactions"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:gravity="center"
-                android:text="Transactions :"
-                android:textColor="#2C2C2C"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:text="mes transactions"
+                android:textSize="20sp" />
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/rougeFonce">
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="home"
-            android:textSize="14dp"
-            android:padding="0dp"
-            android:layout_marginVertical="10dp"
-            android:radius="10dp"
-            android:background="@color/rougeFonce"
-            style="?android:attr/borderlessButtonStyle"
-            android:textColor="@color/white"/>
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Équipe"
-            android:textSize="14dp"
-            android:layout_marginVertical="10dp"
-            android:padding="0dp"
-            style="?android:attr/borderlessButtonStyle"
-            android:background="@color/rougeFonce"
-            android:textColor="@color/white"/>
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Matchs"
-            android:textSize="14dp"
-            android:layout_marginVertical="10dp"
-            android:padding="0dp"
-            style="?android:attr/borderlessButtonStyle"
-            android:background="@color/rougeFonce"
-            android:textColor="@color/white"/>
-
-        <Button
-            android:id="@+id/button5"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Mes paris"
-            android:textSize="14dp"
-            android:layout_marginVertical="10dp"
-            android:padding="0dp"
-            style="?android:attr/borderlessButtonStyle"
-            android:background="@color/rougeFonce"
-            android:textColor="@color/white"
-
-            />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

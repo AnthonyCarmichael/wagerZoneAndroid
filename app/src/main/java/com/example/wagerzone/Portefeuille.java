@@ -23,14 +23,34 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        //Déclare les bouttons
         Button btnAjouteFonds = findViewById(R.id.buttonAjoutFonds);
+        Button btnRetout = findViewById(R.id.btnRetour);
+        Button btnTransactions = findViewById(R.id.buttonTransactions);
+        Button btnRetrait = findViewById(R.id.buttonRetirFonds);
+
+        //affecte les onClickListener sur les bouttons
         btnAjouteFonds.setOnClickListener(this);
+        btnRetout.setOnClickListener(this);
+        btnTransactions.setOnClickListener(this);
+        btnRetrait.setOnClickListener(this);
     }
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.buttonAjoutFonds){
             Intent intent = new Intent(Portefeuille.this, Paiement.class);
             startActivity(intent);
+        }
+        if(v.getId()==R.id.buttonTransactions){
+            Intent intent = new Intent(Portefeuille.this, MesTransactions.class);
+            startActivity(intent);
+        }
+        if(v.getId()==R.id.buttonRetirFonds){
+            Intent intent = new Intent(Portefeuille.this, Retrait.class);
+            startActivity(intent);
+        }
+        if(v.getId()==R.id.btnRetour){
+            finish();
         }
     }
 }

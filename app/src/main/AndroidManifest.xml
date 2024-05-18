@@ -13,6 +13,12 @@
         android:theme="@style/Theme.WagerZone"
         tools:targetApi="31">
         <activity
+            android:name=".MesTransactions"
+            android:exported="false" />
+        <activity
+            android:name=".Retrait"
+            android:exported="false" />
+        <activity
             android:name=".Paiement"
             android:exported="false" />
         <activity
