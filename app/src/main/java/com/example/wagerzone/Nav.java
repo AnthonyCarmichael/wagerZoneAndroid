@@ -155,12 +155,12 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                         _activity.finish();
                     return true;
                 }
-                if (item.getItemId() == R.id.inscription && !_activity.getClass().equals(ConnexionActivity.class)) {
-                    Intent connexionIntent = new Intent(_context,ConnexionActivity.class);
+                if (item.getItemId() == R.id.inscription && !_activity.getClass().equals(InscriptionActivity.class)) {
+                    Intent inscriptionIntent = new Intent(_context,InscriptionActivity.class);
                     //Avant de lancer l'activité
                     _home.setBackgroundResource(R.drawable.rounded_dark_red);
                     _selected = true;
-                    _context.startActivity(connexionIntent);
+                    _context.startActivity(inscriptionIntent);
                     if (!_activity.getClass().equals(MainActivity.class))
                         _activity.finish();
                     return true;
@@ -193,7 +193,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
             public void onDismiss(PopupMenu menu) {
                 // Lors de la fermeture du popmenu
                 // RAJOUTER DANS LE IF LES AUTRES ACTIVITÉ DU POPMENU
-                if (!_selected && !_activity.getClass().equals(ConnexionActivity.class))
+                if (!_selected && !_activity.getClass().equals(ConnexionActivity.class) && !_activity.getClass().equals(InscriptionActivity.class) )
                     _user.setBackgroundResource(R.drawable.rounded_dark_red);
                 else
                     _selected=false;

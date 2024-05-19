@@ -44,6 +44,7 @@
             android:layout_marginBottom="16dp"/>
 
         <Button
+            android:id="@+id/btnInscription"
             android:text="@string/cr_er_un_compte"
             android:background="@drawable/bouton_vert"
             android:textColor="@color/white"
@@ -98,6 +99,7 @@
             />
 
         <Button
+            android:id="@+id/btnSeConnecter"
             android:text="@string/se_connecter"
             android:background="@drawable/bouton_rouge"
             android:textColor="@color/white"
