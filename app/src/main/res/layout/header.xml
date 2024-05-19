@@ -5,17 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/header"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/headerToolbar"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="#700E0E"
-        android:orientation="horizontal"
+        android:background="@color/rougeFonce"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
+        app:layout_constraintTop_toTopOf="parent"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleMarginStart="30dp"
+        android:titleTextColor="@color/white">
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="75dp"
@@ -25,12 +26,10 @@
 
         <TextView
             android:id="@+id/titre"
-            android:layout_width="84dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="titre"
-            android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="20sp" />
 
@@ -38,11 +37,15 @@
             android:id="@+id/userIcone"
             android:layout_width="79dp"
             android:layout_height="61dp"
+            android:layout_marginRight="16dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/user"
-            android:layout_gravity="center"
+            android:layout_gravity="end"
+
             android:scaleType="fitCenter"
             android:background="@color/rougeFonce"/>
-    </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
