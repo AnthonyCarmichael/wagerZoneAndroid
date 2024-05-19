@@ -97,29 +97,29 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
             showUserMenu(v);
         }
         if (v.getId() == R.id.home && !_activity.getClass().equals(MainActivity.class)){
-            v.setBackgroundResource(R.drawable.rounded_corner);
+            v.setBackgroundResource(R.drawable.rounded_red);
             _activity.finish();
         }
         if (v.getId() == R.id.equipes){
             Intent equipesIntent = new Intent(_context,ConnexionActivity.class);
-            v.setBackgroundResource(R.drawable.rounded_corner);
-            _home.setBackgroundResource(R.drawable.btn_borderless);
+            v.setBackgroundResource(R.drawable.rounded_red);
+            _home.setBackgroundResource(R.drawable.rounded_dark_red);
             _context.startActivity(equipesIntent);
             if (!_activity.getClass().equals(MainActivity.class))
                 _activity.finish();
         }
         if (v.getId() == R.id.matchs) {
             Intent matchsIntent = new Intent(_context,ConnexionActivity.class);
-            v.setBackgroundResource(R.drawable.rounded_corner);
-            _home.setBackgroundResource(R.drawable.btn_borderless);
+            v.setBackgroundResource(R.drawable.rounded_red);
+            _home.setBackgroundResource(R.drawable.rounded_dark_red);
             _context.startActivity(matchsIntent);
             if (!_activity.getClass().equals(MainActivity.class))
                 _activity.finish();
         }
         if (v.getId() == R.id.paris) {
             Intent parisIntent = new Intent(_context,ConnexionActivity.class);
-            v.setBackgroundResource(R.drawable.rounded_corner);
-            _home.setBackgroundResource(R.drawable.btn_borderless);
+            v.setBackgroundResource(R.drawable.rounded_red);
+            _home.setBackgroundResource(R.drawable.rounded_dark_red);
             _context.startActivity(parisIntent);
             if (!_activity.getClass().equals(MainActivity.class))
                 _activity.finish();
@@ -130,7 +130,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
     private void showUserMenu(View view) {
         PopupMenu menuUser = new PopupMenu(_context,view);
         menuUser.getMenuInflater().inflate(R.menu.user_menu,menuUser.getMenu());
-        _user.setBackgroundResource(R.drawable.rounded_corner);
+        _user.setBackgroundResource(R.drawable.rounded_red);
 
         menuUser.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
@@ -138,7 +138,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                 if (item.getItemId() == R.id.connecter && !_activity.getClass().equals(ConnexionActivity.class)) {
                     Intent connexionIntent = new Intent(_context,ConnexionActivity.class);
                     //Avant de lancer l'activité
-                    _home.setBackgroundResource(R.drawable.btn_borderless);
+                    _home.setBackgroundResource(R.drawable.rounded_dark_red);
                     _selected = true;
                     _context.startActivity(connexionIntent);
                     if (!_activity.getClass().equals(MainActivity.class))
@@ -148,7 +148,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                 if (item.getItemId() == R.id.deconnecter && !_activity.getClass().equals(ConnexionActivity.class)) {
                     Intent connexionIntent = new Intent(_context,ConnexionActivity.class);
                     //Avant de lancer l'activité
-                    _home.setBackgroundResource(R.drawable.btn_borderless);
+                    _home.setBackgroundResource(R.drawable.rounded_dark_red);
                     _selected = true;
                     _context.startActivity(connexionIntent);
                     if (!_activity.getClass().equals(MainActivity.class))
@@ -158,7 +158,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                 if (item.getItemId() == R.id.inscription && !_activity.getClass().equals(ConnexionActivity.class)) {
                     Intent connexionIntent = new Intent(_context,ConnexionActivity.class);
                     //Avant de lancer l'activité
-                    _home.setBackgroundResource(R.drawable.btn_borderless);
+                    _home.setBackgroundResource(R.drawable.rounded_dark_red);
                     _selected = true;
                     _context.startActivity(connexionIntent);
                     if (!_activity.getClass().equals(MainActivity.class))
@@ -168,7 +168,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                 if (item.getItemId() == R.id.compte && !_activity.getClass().equals(ConnexionActivity.class)) {
                     Intent connexionIntent = new Intent(_context,ConnexionActivity.class);
                     //Avant de lancer l'activité
-                    _home.setBackgroundResource(R.drawable.btn_borderless);
+                    _home.setBackgroundResource(R.drawable.rounded_dark_red);
                     _selected = true;
                     _context.startActivity(connexionIntent);
                     if (!_activity.getClass().equals(MainActivity.class))
@@ -178,7 +178,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                 if (item.getItemId() == R.id.portefeuille && !_activity.getClass().equals(ConnexionActivity.class)) {
                     Intent connexionIntent = new Intent(_context,ConnexionActivity.class);
                     //Avant de lancer l'activité
-                    _home.setBackgroundResource(R.drawable.btn_borderless);
+                    _home.setBackgroundResource(R.drawable.rounded_dark_red);
                     _selected = true;
                     _context.startActivity(connexionIntent);
                     if (!_activity.getClass().equals(MainActivity.class))
@@ -194,7 +194,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                 // Lors de la fermeture du popmenu
                 // RAJOUTER DANS LE IF LES AUTRES ACTIVITÉ DU POPMENU
                 if (!_selected && !_activity.getClass().equals(ConnexionActivity.class))
-                    _user.setBackgroundResource(R.drawable.btn_borderless);
+                    _user.setBackgroundResource(R.drawable.rounded_dark_red);
                 else
                     _selected=false;
             }

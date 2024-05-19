@@ -1,12 +1,7 @@
 package com.example.wagerzone;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -32,6 +27,6 @@ public class ConnexionActivity extends AppCompatActivity {
         TextView titre = findViewById(R.id.titre);
         titre.setText(R.string.connexion);
         ImageButton userIcone = findViewById(R.id.userIcone);
-        userIcone.setBackgroundResource(R.drawable.rounded_corner);
+        userIcone.setBackgroundResource(R.drawable.rounded_red);
     }
 }

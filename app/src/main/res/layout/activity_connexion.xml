@@ -8,8 +8,118 @@
     android:layout_height="match_parent"
     tools:context=".ConnexionActivity">
 
-    <include layout="@layout/header" />
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#700E0E"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <include layout="@layout/header"/>
+    </LinearLayout>
 
-    <include layout="@layout/footer" />
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        app:layout_constraintBottom_toTopOf="@id/footer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        android:layout_marginHorizontal="20dp">
+
+        <TextView
+            android:layout_columnSpan="2"
+            android:text="Vous avez bien été inscrit!"
+            android:visibility="gone"
+            android:textColor="#049A18"
+            android:textSize="20sp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:text="Pas de compte?"
+            android:layout_marginBottom="16dp"/>
+
+        <Button
+            android:text="Créer un compte"
+            android:background="@drawable/bouton_vert"
+            android:textColor="@color/white"
+            android:padding="10dp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_columnSpan="2"
+            android:text="Connexion:"
+            android:textColor="@color/black"
+            android:layout_marginBottom="16dp"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+
+        <TextView
+            android:text="Nom d'utilisateur ou courriel:"
+            android:layout_columnSpan="2"
+            />
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:text=""
+            android:layout_columnSpan="2"
+            android:layout_marginBottom="16dp"/>
+        <TextView
+            android:text="Mot de passe:"
+            android:layout_columnSpan="2"/>
+
+        <EditText
+            android:id="@+id/mdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:text=""
+            android:layout_columnSpan="2"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:text="Se souvenir de moi:"
+            android:layout_marginBottom="16dp"
+            />
+
+        <CheckBox
+            android:id="@+id/souvenir"
+            android:layout_marginBottom="16dp"
+            />
+
+        <Button
+            android:text="Se connecter"
+            android:background="@drawable/bouton_rouge"
+            android:textColor="@color/white"
+            android:padding="10dp"
+            android:layout_columnSpan="2"
+            android:layout_gravity="center"
+            />
+
+
+    </GridLayout>
+
+
+    <LinearLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/rougeFonce"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <include layout="@layout/footer" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
