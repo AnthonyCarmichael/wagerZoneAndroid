@@ -33,18 +33,18 @@
 
         <TextView
             android:layout_columnSpan="2"
-            android:text="Vous avez bien été inscrit!"
+            android:text="@string/vous_avez_bien_t_inscrit"
             android:visibility="gone"
             android:textColor="#049A18"
             android:textSize="20sp"
             android:layout_marginBottom="16dp"/>
 
         <TextView
-            android:text="Pas de compte?"
+            android:text="@string/pas_de_compte"
             android:layout_marginBottom="16dp"/>
 
         <Button
-            android:text="Créer un compte"
+            android:text="@string/cr_er_un_compte"
             android:background="@drawable/bouton_vert"
             android:textColor="@color/white"
             android:padding="10dp"
@@ -52,7 +52,7 @@
 
         <TextView
             android:layout_columnSpan="2"
-            android:text="Connexion:"
+            android:text="@string/connexionForm"
             android:textColor="@color/black"
             android:layout_marginBottom="16dp"
             android:textSize="20sp"
@@ -60,7 +60,7 @@
 
 
         <TextView
-            android:text="Nom d'utilisateur ou courriel:"
+            android:text="@string/nom_d_utilisateur_ou_courriel"
             android:layout_columnSpan="2"
             />
 
@@ -74,7 +74,7 @@
             android:layout_columnSpan="2"
             android:layout_marginBottom="16dp"/>
         <TextView
-            android:text="Mot de passe:"
+            android:text="@string/mot_de_passe"
             android:layout_columnSpan="2"/>
 
         <EditText
@@ -88,7 +88,7 @@
             android:layout_marginBottom="16dp"/>
 
         <TextView
-            android:text="Se souvenir de moi:"
+            android:text="@string/se_souvenir_de_moi"
             android:layout_marginBottom="16dp"
             />
 
@@ -98,7 +98,7 @@
             />
 
         <Button
-            android:text="Se connecter"
+            android:text="@string/se_connecter"
             android:background="@drawable/bouton_rouge"
             android:textColor="@color/white"
             android:padding="10dp"
