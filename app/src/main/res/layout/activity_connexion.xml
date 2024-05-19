@@ -31,10 +31,13 @@
         app:layout_constraintTop_toBottomOf="@id/header"
         android:layout_marginHorizontal="20dp">
 
+        <!--
+            android:visibility="gone"
+        -->
         <TextView
+            android:id="@+id/messageErreurSucces"
             android:layout_columnSpan="2"
             android:text="@string/vous_avez_bien_t_inscrit"
-            android:visibility="gone"
             android:textColor="#049A18"
             android:textSize="20sp"
             android:layout_marginBottom="16dp"/>

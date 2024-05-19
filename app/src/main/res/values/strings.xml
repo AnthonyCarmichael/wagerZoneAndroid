@@ -11,4 +11,6 @@
     <string name="se_souvenir_de_moi">Se souvenir de moi:</string>
     <string name="se_connecter">Se connecter</string>
     <string name="inscription">Inscription</string>
+    <string name="erreur_de_connexion">Impossible de se connecter</string>
+    <string name="succesConnection">Vous êtes connecté!</string>
 </resources>

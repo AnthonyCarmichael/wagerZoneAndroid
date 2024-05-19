@@ -1,9 +1,14 @@
 package com.example.wagerzone;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -13,10 +18,25 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+
 public class ConnexionActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Nav _nav;
+    private EditText _username;
+    private EditText _password;
     private Button _btnConnecter, _btnInscription;
+    private TextView _messageErreurSucces;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +57,7 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
         ImageButton userIcone = findViewById(R.id.userIcone);
         userIcone.setBackgroundResource(R.drawable.rounded_red);
 
+        _messageErreurSucces = findViewById(R.id.messageErreurSucces);
         setBoutons();
 
     }
@@ -59,8 +80,64 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
         }
         if (v.getId() == R.id.btnSeConnecter){
             // Asynch tentative de connexion
+            _username = findViewById(R.id.username);
+            _password = findViewById(R.id.mdp);
+            verifyUser(_username.getText().toString(),_password.getText().toString());
         }
     }
 
+    private Utilisateur verifyUser(String username, String password) {
+        Utilisateur user = new Utilisateur();
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            URL url = new URL("http://10.0.2.2:8000/api/connexionApi");
+
+            // Crée la connection
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Content-Type","application/json");
+            JSONObject data = new JSONObject();
+
+            // Écriture de la requête
+            data.put("username", "utilisateur@wagerzone.com");
+            data.put("password", "abc123");
+            OutputStream os = connection.getOutputStream();
+            os.write(data.toString().getBytes());
+            os.flush();
+            os.close();
+
+            int codeReponse = connection.getResponseCode();
+            String reponse = connection.getResponseMessage();
+            if (codeReponse == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+                String inputLine;
+
+                StringBuilder response = new StringBuilder();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                JSONObject jsonResponse = new JSONObject(response.toString());
+
+                System.out.println(jsonResponse);
+                _messageErreurSucces.setText(R.string.succesConnection);
+                _messageErreurSucces.setTextColor(getResources().getColor(R.color.vertFonce));
+
+            }
+            else {
+                _messageErreurSucces.setText(String.valueOf(codeReponse));
+                _messageErreurSucces.setTextColor(getResources().getColor(R.color.rougeFonce));
+            }
+            connection.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
 
 }
