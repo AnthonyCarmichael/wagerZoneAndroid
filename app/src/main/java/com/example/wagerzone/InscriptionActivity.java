@@ -1,6 +1,8 @@
 package com.example.wagerzone;
 
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -9,39 +11,27 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
+public class InscriptionActivity extends AppCompatActivity {
 
     private Nav _nav;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_inscription);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
-            //TEST PUSH ANTHO
-            //Test Richard
-            //Test push max
-            //Test push JL
         });
-        _nav = new Nav(this, findViewById(android.R.id.content),MainActivity.this);
+
+        // Set le nav et récupere le titre
+        this._nav = new Nav(this,findViewById(android.R.id.content),InscriptionActivity.this);
         TextView titre = findViewById(R.id.titre);
-        titre.setText(R.string.accueil);
+
+        // Mise a jour du titre, et surlignement de l'iconeUser
+        titre.setText(R.string.inscription);
+        ImageButton userIcone = findViewById(R.id.userIcone);
+        userIcone.setBackgroundResource(R.drawable.rounded_red);
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // Quand on reviens au main
-        _nav.get_home().setBackgroundResource(R.drawable.rounded_red);
-        _nav.get_user().setBackgroundResource(R.drawable.rounded_dark_red);
-        _nav.get_equipes().setBackgroundResource(R.drawable.rounded_dark_red);
-        _nav.get_matchs().setBackgroundResource(R.drawable.rounded_dark_red);
-        _nav.get_paris().setBackgroundResource(R.drawable.rounded_dark_red);
-    }
-
-
 }

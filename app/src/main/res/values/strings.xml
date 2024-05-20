@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">wagerZone</string>
+    <string name="accueil">Acceuil</string>
+    <string name="connexion">Connexion</string>
+    <string name="vous_avez_bien_t_inscrit">Vous avez bien été inscrit!</string>
+    <string name="pas_de_compte">Pas de compte?</string>
+    <string name="cr_er_un_compte">Créer un compte</string>
+    <string name="connexionForm">Connexion:</string>
+    <string name="nom_d_utilisateur_ou_courriel">Nom d\'utilisateur ou courriel:</string>
+    <string name="mot_de_passe">Mot de passe:</string>
+    <string name="se_souvenir_de_moi">Se souvenir de moi:</string>
+    <string name="se_connecter">Se connecter</string>
+    <string name="inscription">Inscription</string>
 </resources>

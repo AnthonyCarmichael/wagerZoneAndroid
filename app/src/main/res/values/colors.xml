@@ -4,4 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="rougeFonce">#700E0E</color>
     <color name="rougePale">#991414</color>
+    <color name="vertFonce">#2C7116</color>
+    <color name="vertPale">#4CBC25</color>
 </resources>

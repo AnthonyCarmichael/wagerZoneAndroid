@@ -18,112 +18,110 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="75dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/logo" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="84dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Connexion"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-
-        <ImageButton
-            android:id="@+id/userIcone"
-            android:layout_width="79dp"
-            android:layout_height="61dp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/user"
-            android:layout_gravity="center"
-            android:scaleType="fitCenter"
-            android:background="@drawable/rounded_corner"/>
+        <include layout="@layout/header"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/mainContent"
+    <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        android:columnCount="2"
+        app:layout_constraintBottom_toTopOf="@id/footer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header"></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@id/header"
+        android:layout_marginHorizontal="20dp">
+
+        <TextView
+            android:layout_columnSpan="2"
+            android:text="@string/vous_avez_bien_t_inscrit"
+            android:visibility="gone"
+            android:textColor="#049A18"
+            android:textSize="20sp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:text="@string/pas_de_compte"
+            android:layout_marginBottom="16dp"/>
+
+        <Button
+            android:id="@+id/btnInscription"
+            android:text="@string/cr_er_un_compte"
+            android:background="@drawable/bouton_vert"
+            android:textColor="@color/white"
+            android:padding="10dp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_columnSpan="2"
+            android:text="@string/connexionForm"
+            android:textColor="@color/black"
+            android:layout_marginBottom="16dp"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+
+        <TextView
+            android:text="@string/nom_d_utilisateur_ou_courriel"
+            android:layout_columnSpan="2"
+            />
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:text=""
+            android:layout_columnSpan="2"
+            android:layout_marginBottom="16dp"/>
+        <TextView
+            android:text="@string/mot_de_passe"
+            android:layout_columnSpan="2"/>
+
+        <EditText
+            android:id="@+id/mdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:text=""
+            android:layout_columnSpan="2"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:text="@string/se_souvenir_de_moi"
+            android:layout_marginBottom="16dp"
+            />
+
+        <CheckBox
+            android:id="@+id/souvenir"
+            android:layout_marginBottom="16dp"
+            />
+
+        <Button
+            android:id="@+id/btnSeConnecter"
+            android:text="@string/se_connecter"
+            android:background="@drawable/bouton_rouge"
+            android:textColor="@color/white"
+            android:padding="10dp"
+            android:layout_columnSpan="2"
+            android:layout_gravity="center"
+            />
+
+
+    </GridLayout>
+
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/footer"
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:background="@color/rougeFonce"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/rougeFonce">
-
-        <Button
-            android:id="@+id/home"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="home"
-            android:textSize="11sp"
-            android:padding="0dp"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_marginVertical="10dp"
-            android:radius="10dp"
-            android:background="@color/rougeFonce"
-            android:textColor="@color/white"/>
-
-        <Button
-            android:id="@+id/equipes"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="equipes"
-            android:textSize="11sp"
-            android:layout_marginVertical="10dp"
-            android:padding="0dp"
-            style="?android:attr/borderlessButtonStyle"
-            android:background="@color/rougeFonce"
-            android:textColor="@color/white"/>
-
-        <Button
-            android:id="@+id/matchs"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Matchs"
-            android:textSize="11sp"
-            android:layout_marginVertical="10dp"
-            android:padding="0dp"
-            style="?android:attr/borderlessButtonStyle"
-            android:background="@color/rougeFonce"
-            android:textColor="@color/white"/>
-
-        <Button
-            android:id="@+id/paris"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Mes paris"
-            android:textSize="11sp"
-            android:layout_marginVertical="10dp"
-            android:padding="0dp"
-            style="?android:attr/borderlessButtonStyle"
-            android:background="@color/rougeFonce"
-            android:textColor="@color/white"
-
-            />
+        app:layout_constraintStart_toStartOf="parent">
+        <include layout="@layout/footer" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
