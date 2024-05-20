@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,8 +12,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 public class Portefeuille extends AppCompatActivity implements View.OnClickListener{
 
+    private TextView montantTotal;
+    private TextView montantParis;
+    private TextView montantRetirable;
+
+    private static final DecimalFormat decfor = new DecimalFormat("0.00");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +32,15 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        //Déclare les TextView des montants
+        montantTotal = findViewById(R.id.montantTotal);
+        montantParis = findViewById(R.id.montantParis);
+        montantRetirable = findViewById(R.id.montantRetirable);
+        //Affecte le text des montant
+        chargeMontantTotal();
+        chargeMontanParis();
+        chargeMontantRetirable();
+
         //Déclare les bouttons
         Button btnAjouteFonds = findViewById(R.id.buttonAjoutFonds);
         Button btnRetout = findViewById(R.id.btnRetour);
@@ -52,5 +70,23 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
         if(v.getId()==R.id.btnRetour){
             finish();
         }
+    }
+
+    private void chargeMontantTotal(){
+        double total = 0;
+        
+        montantTotal.setText(decfor.format(total) + '$');
+    }
+
+    private void chargeMontanParis(){
+        double total = 0;
+
+        montantParis.setText(decfor.format(total) + '$');
+    }
+
+    private void chargeMontantRetirable(){
+        double total = 0;
+
+        montantRetirable.setText(decfor.format(total) + '$');
     }
 }
