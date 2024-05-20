@@ -117,7 +117,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                 _activity.finish();
         }
         if (v.getId() == R.id.paris) {
-            Intent parisIntent = new Intent(_context,ConnexionActivity.class);
+            Intent parisIntent = new Intent(_context,ParisActivity.class);
             v.setBackgroundResource(R.drawable.rounded_red);
             _home.setBackgroundResource(R.drawable.rounded_dark_red);
             _context.startActivity(parisIntent);

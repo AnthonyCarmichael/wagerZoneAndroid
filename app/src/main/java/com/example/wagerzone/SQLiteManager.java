@@ -516,6 +516,24 @@ public class SQLiteManager  extends SQLiteOpenHelper
         }
     }
 
+    public ArrayList<Paris> getParis() throws IOException {
+        ArrayList<Paris> paris = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_PARIS, null)){
+            if(result.getCount() != 0){
+                while (result.moveToNext()){
+                    Paris pari = new Paris();
+                    pari.set_montant(result.getFloat(1));
+                    pari.set_date_heure(result.getString(2));
+                    pari.set_receveur(result.getInt(3));
+                    pari.set_partie(result.getInt(4));
+                    paris.add(pari);
+                }
+            }
+        }
+        return paris;
+    }
+
     public void insertStatuts(SQLiteDatabase sqLiteDatabase) throws SQLException, IOException {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
