@@ -29,14 +29,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header"
-        android:layout_marginHorizontal="20dp">
+        android:layout_marginHorizontal="50dp">
 
-        <!--
-            android:visibility="gone"
-        -->
         <TextView
             android:id="@+id/messageErreurSucces"
             android:layout_columnSpan="2"
+            android:visibility="gone"
             android:text="@string/vous_avez_bien_t_inscrit"
             android:textColor="#049A18"
             android:textSize="20sp"

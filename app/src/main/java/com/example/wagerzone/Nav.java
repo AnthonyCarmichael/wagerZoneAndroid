@@ -3,23 +3,44 @@ package com.example.wagerzone;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Scanner;
+import java.util.UUID;
+
 public class Nav extends AppCompatActivity implements View.OnClickListener{
     private Button _home,_equipes,_matchs,_paris;
-    private ImageButton _user;
+    private ImageButton _userIcone;
     private boolean _selected = false;
     Context _context;
     private Activity _activity;
+    private Utilisateur _user;
+    private TextView _messageErreurSuccesMain;
 
     public Nav(Context context, View rootView, Activity activity) {
-        this._user = rootView.findViewById(R.id.userIcone);
+        this._userIcone = rootView.findViewById(R.id.userIcone);
         this._home = rootView.findViewById(R.id.home);
         this._equipes = rootView.findViewById(R.id.equipes);
         this._matchs = rootView.findViewById(R.id.matchs);
@@ -28,7 +49,11 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
         this._selected = false;
         this._activity = activity;
 
-        _user.setOnClickListener(this);
+        if (_activity.getClass().equals(MainActivity.class)){
+            _messageErreurSuccesMain = rootView.findViewById(R.id.messageErreurSuccesMain);
+            getUserWithToken();
+        }
+        _userIcone.setOnClickListener(this);
         _home.setOnClickListener(this);
         _equipes.setOnClickListener(this);
         _matchs.setOnClickListener(this);
@@ -67,12 +92,12 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
         this._paris = _paris;
     }
 
-    public ImageButton get_user() {
-        return _user;
+    public ImageButton get_userIcone() {
+        return _userIcone;
     }
 
-    public void set_user(ImageButton _user) {
-        this._user = _user;
+    public void set_userIcone(ImageButton _userIcone) {
+        this._userIcone = _userIcone;
     }
 
     public boolean is_selected() {
@@ -130,7 +155,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
     private void showUserMenu(View view) {
         PopupMenu menuUser = new PopupMenu(_context,view);
         menuUser.getMenuInflater().inflate(R.menu.user_menu,menuUser.getMenu());
-        _user.setBackgroundResource(R.drawable.rounded_red);
+        _userIcone.setBackgroundResource(R.drawable.rounded_red);
 
         menuUser.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
@@ -194,12 +219,114 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                 // Lors de la fermeture du popmenu
                 // RAJOUTER DANS LE IF LES AUTRES ACTIVITÉ DU POPMENU
                 if (!_selected && !_activity.getClass().equals(ConnexionActivity.class) && !_activity.getClass().equals(InscriptionActivity.class) )
-                    _user.setBackgroundResource(R.drawable.rounded_dark_red);
+                    _userIcone.setBackgroundResource(R.drawable.rounded_dark_red);
                 else
                     _selected=false;
             }
         });
 
         menuUser.show();
+    }
+
+    private Utilisateur getUserWithToken(){
+        Utilisateur user = new Utilisateur();
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            URL url = new URL("http://10.0.2.2:8000/api/connexionTokenApi");
+
+            // Crée la connection
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Content-Type","application/json");
+            connection.setConnectTimeout(1000);
+            JSONObject data = new JSONObject();
+
+
+            // Get token et username avec le fichier tokenWagerZone.txt
+            HashMap<String,String> infoTokenMap = readToken();
+
+            // Écriture de la requête
+            if (infoTokenMap.get("username") != null && infoTokenMap.get("token") != null){
+                data.put("username", infoTokenMap.get("username"));
+                data.put("token", infoTokenMap.get("token"));
+            }
+
+            OutputStream os = connection.getOutputStream();
+            os.write(data.toString().getBytes());
+            os.flush();
+            os.close();
+
+            int codeReponse = connection.getResponseCode();
+            String reponse = connection.getResponseMessage();
+            if (codeReponse == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                JSONObject jsonResponse = new JSONObject(response.toString());
+
+                System.out.println(jsonResponse);
+                _messageErreurSuccesMain.setText(R.string.succesConnection);
+                _messageErreurSuccesMain.setTextColor(_context.getResources().getColor(R.color.vertFonce));
+                _messageErreurSuccesMain.setVisibility(View.VISIBLE);
+
+            } else if (codeReponse == 501) {
+                // Compte inactif
+                /*
+                _messageErreurSuccesMain.setText(R.string.erreur_compte_inactif);
+                _messageErreurSuccesMain.setTextColor(_context.getResources().getColor(R.color.rougeFonce));
+                _messageErreurSuccesMain.setVisibility(View.VISIBLE);
+                 */
+                cleanFileToken();
+
+            } else {
+                // Compte information invalide
+                /*
+                _messageErreurSuccesMain.setText(R.string.erreur_information_invalide);
+                _messageErreurSuccesMain.setTextColor(_context.getColor(R.color.rougeFonce));
+                _messageErreurSuccesMain.setVisibility(View.VISIBLE);*/
+                cleanFileToken();
+            }
+            connection.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
+    private HashMap<String,String> readToken() {
+        HashMap<String,String> infoTokenMap = new HashMap<>();
+        String fileName="/data/data/com.example.wagerzone/files/tokenWagerZone.txt";
+        try {
+            File file = new File(fileName);
+            Scanner myReader = new Scanner(file);
+            if (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                String[] tokenUsername= data.split(";");
+                infoTokenMap.put("token",tokenUsername[0]);
+                infoTokenMap.put("username",tokenUsername[1]);
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return infoTokenMap;
+    }
+
+    private void cleanFileToken() {
+        String filePath = "/data/data/com.example.wagerzone/files/tokenWagerZone.txt";
+        File file = new File(filePath);
+        if (file.delete()) {
+            System.out.println("Le fichier a été supprimé avec succès.");
+        } else {
+            System.out.println("Impossible de supprimer le fichier.");
+        }
     }
 }

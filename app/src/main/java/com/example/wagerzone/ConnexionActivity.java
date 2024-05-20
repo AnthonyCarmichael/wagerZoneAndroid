@@ -6,11 +6,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,18 +26,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class ConnexionActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Nav _nav;
     private EditText _username;
     private EditText _password;
+    private CheckBox _souvenir;
     private Button _btnConnecter, _btnInscription;
     private TextView _messageErreurSucces;
     @Override
@@ -82,11 +90,12 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
             // Asynch tentative de connexion
             _username = findViewById(R.id.username);
             _password = findViewById(R.id.mdp);
-            verifyUser(_username.getText().toString(),_password.getText().toString());
+            _souvenir = findViewById(R.id.souvenir);
+            verifyUser(_username.getText().toString(),_password.getText().toString(),_souvenir.isChecked());
         }
     }
 
-    private Utilisateur verifyUser(String username, String password) {
+    private Utilisateur verifyUser(String username, String password, Boolean souvenir) {
         Utilisateur user = new Utilisateur();
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -98,11 +107,22 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
             connection.setRequestProperty("Content-Type","application/json");
+            connection.setConnectTimeout(3000);
             JSONObject data = new JSONObject();
 
             // Écriture de la requête
-            data.put("username", "utilisateur@wagerzone.com");
-            data.put("password", "abc123");
+            data.put("username", username);
+            data.put("password", password);
+
+            if (souvenir) {
+                String token = UUID.randomUUID().toString();
+                data.put("souvenir", token);
+                writeToken(token+";"+username);
+            }
+
+
+
+
             OutputStream os = connection.getOutputStream();
             os.write(data.toString().getBytes());
             os.flush();
@@ -123,21 +143,53 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
 
                 JSONObject jsonResponse = new JSONObject(response.toString());
 
+
+
                 System.out.println(jsonResponse);
                 _messageErreurSucces.setText(R.string.succesConnection);
                 _messageErreurSucces.setTextColor(getResources().getColor(R.color.vertFonce));
+                _messageErreurSucces.setVisibility(View.VISIBLE);
 
-            }
-            else {
-                _messageErreurSucces.setText(String.valueOf(codeReponse));
+            } else if (codeReponse == 501) {
+                    _messageErreurSucces.setText(R.string.erreur_compte_inactif);
+                    _messageErreurSucces.setTextColor(getResources().getColor(R.color.rougeFonce));
+                    _messageErreurSucces.setVisibility(View.VISIBLE);
+            } else {
+                _messageErreurSucces.setText(R.string.erreur_information_invalide);
                 _messageErreurSucces.setTextColor(getResources().getColor(R.color.rougeFonce));
+                _messageErreurSucces.setVisibility(View.VISIBLE);
             }
             connection.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
+            _messageErreurSucces.setText(R.string.erreur_connexion);
+            _messageErreurSucces.setTextColor(getResources().getColor(R.color.rougeFonce));
+            _messageErreurSucces.setVisibility(View.VISIBLE);
         }
 
         return user;
+    }
+
+    private void writeToken(String token) {
+        OutputStreamWriter outputStreamWriter = null;
+        try{
+            outputStreamWriter = new OutputStreamWriter(this.openFileOutput("tokenWagerZone.txt", this.MODE_PRIVATE));
+            outputStreamWriter.write(token);
+            //Toast.makeText(this,"Saved to "+this.getFilesDir()+"/"+"tokenWagerZone.txt",Toast.LENGTH_LONG).show();
+        }
+        catch (IOException e){
+            Log.e("Execption","File write failed" + e.toString());
+        }
+        finally {
+            if (outputStreamWriter != null){
+                try{
+                    outputStreamWriter.close();
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 }
