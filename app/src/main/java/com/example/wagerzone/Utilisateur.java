@@ -19,6 +19,20 @@ public class Utilisateur {
     private String _pays;
     private BigDecimal _fonds;
 
+    public Utilisateur() {
+        this._name = null;
+        this._email = null;
+        this._nom = null;
+        this._prenom =null;
+        this._password = null;
+        this._date_naissance = null;
+        this._telephonne =null;
+        this._adresse =null;
+        this._ville = null;
+        this._pays = null;
+        this._fonds = null;
+    }
+
     public Utilisateur(HashMap<String, String> user) {
         this._name = user.get("name");
         this._email = user.get("email");

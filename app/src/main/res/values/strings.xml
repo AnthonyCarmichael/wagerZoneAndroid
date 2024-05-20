@@ -11,4 +11,8 @@
     <string name="se_souvenir_de_moi">Se souvenir de moi:</string>
     <string name="se_connecter">Se connecter</string>
     <string name="inscription">Inscription</string>
+    <string name="erreur_information_invalide">Les informations entrées ne sont pas valides</string>
+    <string name="succesConnection">Vous êtes connecté!</string>
+    <string name="erreur_connexion">Erreur de connexion avec le serveur de WagerZone</string>
+    <string name="erreur_compte_inactif">Compte désactivé! Veulliez contacter le support technique pour plus d\'information.</string>
 </resources>

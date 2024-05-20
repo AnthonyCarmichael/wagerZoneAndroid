@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         // Quand on reviens au main
         _nav.get_home().setBackgroundResource(R.drawable.rounded_red);
-        _nav.get_user().setBackgroundResource(R.drawable.rounded_dark_red);
+        _nav.get_userIcone().setBackgroundResource(R.drawable.rounded_dark_red);
         _nav.get_equipes().setBackgroundResource(R.drawable.rounded_dark_red);
         _nav.get_matchs().setBackgroundResource(R.drawable.rounded_dark_red);
         _nav.get_paris().setBackgroundResource(R.drawable.rounded_dark_red);
