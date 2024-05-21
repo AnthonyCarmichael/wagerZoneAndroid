@@ -52,7 +52,7 @@ public class SQLiteManager  extends SQLiteOpenHelper
     private static final String COTE = "cote";
     private static final String RECEVEUR = "receveur";
     private static final String TABLE_PARTIE = "parties";
-    private static final String ID_PARTIE = "id_pays";
+    private static final String ID_PARTIE = "id_partie";
     private static final String DATE_HEURE = "date_heure";
     private static final String TABLE_STATUT = "statuts";
     private static final String ID_STATUT = "id_statut";
@@ -532,6 +532,84 @@ public class SQLiteManager  extends SQLiteOpenHelper
             }
         }
         return paris;
+    }
+
+    public Partie getPartie(int id_partie) throws IOException {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        Partie partie = new Partie();
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_PARTIE + " WHERE " + ID_PARTIE + " = " + id_partie, null)){
+            if(result.getCount() != 0){
+                while (result.moveToNext()){
+                    partie.set_id_partie(result.getInt(0));
+                    partie.set_prolongation(result.getString(1));
+                    partie.set_date_heure(result.getString(2));
+                    partie.set_statut(result.getString(3));
+                }
+            }
+        }
+        return partie;
+    }
+
+    public Equipe getEquipeReceveur(int id_partie) throws IOException {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        int id_equipe = 0;
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_EQUIPE_PARTIE + " WHERE " + ID_PARTIE + " = " + id_partie + " AND " + RECEVEUR + " =  1", null)){
+            if(result.getCount() != 0){
+                while (result.moveToNext()){
+                    id_equipe = result.getInt(4);
+                }
+            }
+        }
+        Equipe equipe =new Equipe();
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_EQUIPE + " WHERE " + ID_EQUIPE + " = " + id_equipe, null)){
+            if(result.getCount() != 0){
+                while (result.moveToNext()){
+                    equipe.set_id_equipe(result.getInt(0));
+                    equipe.set_nom_equipe(result.getString(1));
+                    equipe.set_entraineur(result.getString(2));
+                    equipe.set_stade(result.getString(3));
+                    equipe.set_match_joue(result.getInt(4));
+                    equipe.set_victoire(result.getInt(5));
+                    equipe.set_defaite(result.getInt(6));
+                    equipe.set_match_nul(result.getInt(7));
+                    equipe.set_defaite_prolongation(result.getInt(8));
+                    equipe.set_ville(result.getString(9));
+                    equipe.set_sport(result.getString(10));
+                }
+            }
+        }
+        return equipe;
+    }
+
+    public Equipe getEquipeVisiteur(int id_partie) throws IOException {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        int id_equipe = 0;
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_EQUIPE_PARTIE + " WHERE " + ID_PARTIE + " = " + id_partie + " AND " + RECEVEUR + " = 0", null)){
+            if(result.getCount() != 0){
+                while (result.moveToNext()){
+                    id_equipe = result.getInt(4);
+                }
+            }
+        }
+        Equipe equipe =new Equipe();
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_EQUIPE + " WHERE " + ID_EQUIPE + " = " + id_equipe, null)){
+            if(result.getCount() != 0){
+                while (result.moveToNext()){
+                    equipe.set_id_equipe(result.getInt(0));
+                    equipe.set_nom_equipe(result.getString(1));
+                    equipe.set_entraineur(result.getString(2));
+                    equipe.set_stade(result.getString(3));
+                    equipe.set_match_joue(result.getInt(4));
+                    equipe.set_victoire(result.getInt(5));
+                    equipe.set_defaite(result.getInt(6));
+                    equipe.set_match_nul(result.getInt(7));
+                    equipe.set_defaite_prolongation(result.getInt(8));
+                    equipe.set_ville(result.getString(9));
+                    equipe.set_sport(result.getString(10));
+                }
+            }
+        }
+        return equipe;
     }
 
     public void insertStatuts(SQLiteDatabase sqLiteDatabase) throws SQLException, IOException {
