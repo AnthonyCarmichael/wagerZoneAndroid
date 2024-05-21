@@ -16,4 +16,6 @@
     <string name="erreur_connexion">Erreur de connexion avec le serveur de WagerZone</string>
     <string name="erreur_compte_inactif">Compte désactivé! Veulliez contacter le support technique pour plus d\'information.</string>
     <string name="compte">Gestion du compte</string>
+    <string name="equipe">Les équipes</string>
+    <string name="match">Les parties</string>
 </resources>

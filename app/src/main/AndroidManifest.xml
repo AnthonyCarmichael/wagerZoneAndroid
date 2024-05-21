@@ -18,6 +18,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".MatchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EquipeActivity"
+            android:exported="false" />
+        <activity
             android:name=".CompteActivity"
             android:exported="false" />
         <activity

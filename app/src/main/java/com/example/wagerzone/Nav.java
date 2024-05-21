@@ -148,7 +148,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
             _activity.finish();
         }
         if (v.getId() == R.id.equipes){
-            Intent equipesIntent = new Intent(_context,EquipesActivity.class);
+            Intent equipesIntent = new Intent(_context,EquipeActivity.class);
             equipesIntent.putExtra("user", _user);
             v.setBackgroundResource(R.drawable.rounded_red);
             _home.setBackgroundResource(R.drawable.rounded_dark_red);
@@ -157,7 +157,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                 _activity.finish();
         }
         if (v.getId() == R.id.matchs) {
-            Intent matchsIntent = new Intent(_context,ConnexionActivity.class);
+            Intent matchsIntent = new Intent(_context,MatchActivity.class);
             matchsIntent.putExtra("user", _user);
             v.setBackgroundResource(R.drawable.rounded_red);
             _home.setBackgroundResource(R.drawable.rounded_dark_red);
@@ -174,10 +174,14 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
             if (!_activity.getClass().equals(MainActivity.class))
                 _activity.finish();
         }
+        /*
         if (_activity.getClass().equals(ParisActivity.class))
             _paris.setBackgroundResource(R.drawable.rounded_dark_red);
         else if (_activity.getClass().equals(EquipesActivity.class))
             _equipes.setBackgroundResource(R.drawable.rounded_dark_red);
+        else if (_activity.getClass().equals(MatchActivity.class))
+            _matchs.setBackgroundResource(R.drawable.rounded_dark_red);
+        */
     }
 
 
