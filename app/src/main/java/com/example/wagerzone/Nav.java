@@ -202,14 +202,14 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                         _activity.finish();
                     return true;
                 }
-                if (item.getItemId() == R.id.deconnecter && !_activity.getClass().equals(ConnexionActivity.class)) {
-                    Intent connexionIntent = new Intent(_context,ConnexionActivity.class);
+                if (item.getItemId() == R.id.deconnecter) {
                     //Avant de lancer l'activité
-                    _home.setBackgroundResource(R.drawable.rounded_dark_red);
-                    _selected = true;
-                    _context.startActivity(connexionIntent);
+                    _user = null;
                     if (!_activity.getClass().equals(MainActivity.class))
                         _activity.finish();
+                    cleanFileToken();
+                    _messageErreurSuccesMain.setVisibility(View.INVISIBLE);
+
                     return true;
                 }
                 if (item.getItemId() == R.id.inscription && !_activity.getClass().equals(InscriptionActivity.class)) {
@@ -380,10 +380,4 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
             System.out.println("Impossible de supprimer le fichier.");
         }
     }
-
-    private void hideShowButtonIfUser(){
-
-    }
-
-
 }
