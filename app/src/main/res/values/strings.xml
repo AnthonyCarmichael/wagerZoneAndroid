@@ -15,4 +15,5 @@
     <string name="succesConnection">Vous êtes connecté!</string>
     <string name="erreur_connexion">Erreur de connexion avec le serveur de WagerZone</string>
     <string name="erreur_compte_inactif">Compte désactivé! Veulliez contacter le support technique pour plus d\'information.</string>
+    <string name="compte">Gestion du compte</string>
 </resources>

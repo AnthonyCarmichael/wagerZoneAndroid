@@ -228,7 +228,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                         _activity.finish();
                     return true;
                 }
-                if (item.getItemId() == R.id.compte && !_activity.getClass().equals(ConnexionActivity.class)) {
+                if (item.getItemId() == R.id.compte && !_activity.getClass().equals(CompteActivity.class)) {
                     Intent compteIntent = new Intent(_context,ConnexionActivity.class);
                     compteIntent.putExtra("user", _user);
                     //Avant de lancer l'activité
