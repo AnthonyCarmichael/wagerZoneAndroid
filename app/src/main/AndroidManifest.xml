@@ -18,6 +18,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".AjoutParisActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ModificationParisActivity"
+            android:exported="false" />
+        <activity
             android:name=".ParisActivity"
             android:exported="false" />
         <activity
