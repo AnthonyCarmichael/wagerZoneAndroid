@@ -132,9 +132,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:background="@drawable/rounded_corner"
                 android:text="Ajouter des fonds"
-                android:textColor="#E3E2E2"
                 android:textSize="20sp" />
 
             <Button
@@ -143,9 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/rounded_corner"
                 android:text="Retirer des fonds"
-                android:textColor="#E3E2E2"
                 android:textSize="20sp" />
 
             <Button
