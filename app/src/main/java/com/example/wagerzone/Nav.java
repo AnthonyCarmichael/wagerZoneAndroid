@@ -148,7 +148,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
             _activity.finish();
         }
         if (v.getId() == R.id.equipes){
-            Intent equipesIntent = new Intent(_context,ConnexionActivity.class);
+            Intent equipesIntent = new Intent(_context,EquipesActivity.class);
             equipesIntent.putExtra("user", _user);
             v.setBackgroundResource(R.drawable.rounded_red);
             _home.setBackgroundResource(R.drawable.rounded_dark_red);
@@ -174,6 +174,10 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
             if (!_activity.getClass().equals(MainActivity.class))
                 _activity.finish();
         }
+        if (_activity.getClass().equals(ParisActivity.class))
+            _paris.setBackgroundResource(R.drawable.rounded_dark_red);
+        else if (_activity.getClass().equals(EquipesActivity.class))
+            _equipes.setBackgroundResource(R.drawable.rounded_dark_red);
     }
 
 
@@ -203,14 +207,14 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                         _activity.finish();
                     return true;
                 }
-                if (item.getItemId() == R.id.deconnecter && !_activity.getClass().equals(ConnexionActivity.class)) {
-                    Intent connexionIntent = new Intent(_context,ConnexionActivity.class);
+                if (item.getItemId() == R.id.deconnecter) {
                     //Avant de lancer l'activité
-                    _home.setBackgroundResource(R.drawable.rounded_dark_red);
-                    _selected = true;
-                    _context.startActivity(connexionIntent);
+                    _user = null;
                     if (!_activity.getClass().equals(MainActivity.class))
                         _activity.finish();
+                    cleanFileToken();
+                    _messageErreurSuccesMain.setVisibility(View.INVISIBLE);
+
                     return true;
                 }
                 if (item.getItemId() == R.id.inscription && !_activity.getClass().equals(InscriptionActivity.class)) {
@@ -234,8 +238,8 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                         _activity.finish();
                     return true;
                 }
-                if (item.getItemId() == R.id.portefeuille && !_activity.getClass().equals(ConnexionActivity.class)) {
-                    Intent portefeuilleIntent = new Intent(_context,ConnexionActivity.class);
+                if (item.getItemId() == R.id.portefeuille && !_activity.getClass().equals(Portefeuille.class)) {
+                    Intent portefeuilleIntent = new Intent(_context,Portefeuille.class);
                     portefeuilleIntent.putExtra("user", _user);
                     //Avant de lancer l'activité
                     _home.setBackgroundResource(R.drawable.rounded_dark_red);
@@ -381,10 +385,4 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
             System.out.println("Impossible de supprimer le fichier.");
         }
     }
-
-    private void hideShowButtonIfUser(){
-
-    }
-
-
 }
