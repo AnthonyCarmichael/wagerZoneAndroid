@@ -23,9 +23,11 @@
 
             <TextView
                 android:id="@+id/match"
-                android:layout_width="225dp"
+                android:layout_width="260dp"
                 android:layout_height="wrap_content"
-                android:text="Match" />
+                android:text="Match"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
 
             <Button
                 android:id="@+id/modifier"
@@ -45,9 +47,11 @@
 
             <TextView
                 android:id="@+id/mise"
-                android:layout_width="225dp"
+                android:layout_width="260dp"
                 android:layout_height="wrap_content"
-                android:text="Mise" />
+                android:text="Mise"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
 
             <Button
                 android:id="@+id/annuler"
