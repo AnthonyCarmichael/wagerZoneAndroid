@@ -3,6 +3,7 @@ package com.example.wagerzone;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONObject;
@@ -39,6 +41,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
     private Utilisateur _user;
     private TextView _messageErreurSuccesMain;
 
+
     public Nav(Context context, View rootView, Activity activity) {
         this._userIcone = rootView.findViewById(R.id.userIcone);
         this._home = rootView.findViewById(R.id.home);
@@ -48,6 +51,12 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
         this._context = context;
         this._selected = false;
         this._activity = activity;
+
+        if (_activity.getIntent() != null && _activity.getIntent().hasExtra("user")) {
+            this._user = (Utilisateur) _activity.getIntent().getSerializableExtra("user");
+        } else {
+            this._user = null;
+        }
 
         if (_activity.getClass().equals(MainActivity.class)){
             _messageErreurSuccesMain = rootView.findViewById(R.id.messageErreurSuccesMain);
@@ -70,6 +79,10 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
 
     public Button get_equipes() {
         return _equipes;
+    }
+
+    public void set_user(Utilisateur _user) {
+        this._user = _user;
     }
 
     public void set_equipes(Button _equipes) {
@@ -116,6 +129,14 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
         this._context = _context;
     }
 
+    public TextView get_messageErreurSuccesMain() {
+        return _messageErreurSuccesMain;
+    }
+
+    public void set_messageErreurSuccesMain(TextView _messageErreurSuccesMain) {
+        this._messageErreurSuccesMain = _messageErreurSuccesMain;
+    }
+
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.userIcone){
@@ -127,6 +148,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
         }
         if (v.getId() == R.id.equipes){
             Intent equipesIntent = new Intent(_context,ConnexionActivity.class);
+            equipesIntent.putExtra("user", _user);
             v.setBackgroundResource(R.drawable.rounded_red);
             _home.setBackgroundResource(R.drawable.rounded_dark_red);
             _context.startActivity(equipesIntent);
@@ -135,6 +157,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
         }
         if (v.getId() == R.id.matchs) {
             Intent matchsIntent = new Intent(_context,ConnexionActivity.class);
+            matchsIntent.putExtra("user", _user);
             v.setBackgroundResource(R.drawable.rounded_red);
             _home.setBackgroundResource(R.drawable.rounded_dark_red);
             _context.startActivity(matchsIntent);
@@ -143,6 +166,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
         }
         if (v.getId() == R.id.paris) {
             Intent parisIntent = new Intent(_context,ParisActivity.class);
+            parisIntent.putExtra("user", _user);
             v.setBackgroundResource(R.drawable.rounded_red);
             _home.setBackgroundResource(R.drawable.rounded_dark_red);
             _context.startActivity(parisIntent);
@@ -162,10 +186,13 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.connecter && !_activity.getClass().equals(ConnexionActivity.class)) {
                     Intent connexionIntent = new Intent(_context,ConnexionActivity.class);
+                    connexionIntent.putExtra("user", _user);
                     //Avant de lancer l'activité
                     _home.setBackgroundResource(R.drawable.rounded_dark_red);
                     _selected = true;
-                    _context.startActivity(connexionIntent);
+
+                    _activity.startActivityForResult(connexionIntent, 1);
+                    //_activity.startActivityForResult(connexionIntent,1);
                     if (!_activity.getClass().equals(MainActivity.class))
                         _activity.finish();
                     return true;
@@ -191,21 +218,23 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                     return true;
                 }
                 if (item.getItemId() == R.id.compte && !_activity.getClass().equals(ConnexionActivity.class)) {
-                    Intent connexionIntent = new Intent(_context,ConnexionActivity.class);
+                    Intent compteIntent = new Intent(_context,ConnexionActivity.class);
+                    compteIntent.putExtra("user", _user);
                     //Avant de lancer l'activité
                     _home.setBackgroundResource(R.drawable.rounded_dark_red);
                     _selected = true;
-                    _context.startActivity(connexionIntent);
+                    _context.startActivity(compteIntent);
                     if (!_activity.getClass().equals(MainActivity.class))
                         _activity.finish();
                     return true;
                 }
                 if (item.getItemId() == R.id.portefeuille && !_activity.getClass().equals(ConnexionActivity.class)) {
-                    Intent connexionIntent = new Intent(_context,ConnexionActivity.class);
+                    Intent portefeuilleIntent = new Intent(_context,ConnexionActivity.class);
+                    portefeuilleIntent.putExtra("user", _user);
                     //Avant de lancer l'activité
                     _home.setBackgroundResource(R.drawable.rounded_dark_red);
                     _selected = true;
-                    _context.startActivity(connexionIntent);
+                    _context.startActivity(portefeuilleIntent);
                     if (!_activity.getClass().equals(MainActivity.class))
                         _activity.finish();
                     return true;
@@ -276,6 +305,23 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                 _messageErreurSuccesMain.setTextColor(_context.getResources().getColor(R.color.vertFonce));
                 _messageErreurSuccesMain.setVisibility(View.VISIBLE);
 
+                JSONObject successObject = jsonResponse.getJSONObject("SUCCESS");
+
+                // Création du user:
+                user = new Utilisateur();
+                user.set_nom(successObject.getString("nom"));
+                user.set_prenom(successObject.getString("prenom"));
+                user.set_name(successObject.getString("name")); // USERNAME
+                user.set_email(successObject.getString("name"));
+                user.set_id(successObject.getInt("id"));
+                user.set_date_naissance(successObject.getString("date_naissance"));
+                user.set_telephone(successObject.getString("telephone"));
+                user.set_adresse(successObject.getString("adresse"));
+                user.set_fonds(successObject.getString("fonds"));
+                //user.set_ville(successObject.getString("ville"));
+                //user.set_pays(successObject.getString("ville"));
+                this._user = user;
+
             } else if (codeReponse == 501) {
                 // Compte inactif
                 /*
@@ -329,4 +375,6 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
             System.out.println("Impossible de supprimer le fichier.");
         }
     }
+
+
 }
