@@ -1,6 +1,7 @@
 package com.example.wagerzone;
 
 import android.content.Context;
+import android.provider.Telephony;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.lang.reflect.Array;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
@@ -33,7 +34,26 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.nom.setText(paris.get(position).get_string_montant());
+        Partie partie = new Partie();
+        Equipe visiteur = new Equipe();
+        Equipe receveur = new Equipe();
+        Paris pari = new Paris();
+        pari = paris.get(position);
+        SQLiteManager sqLiteManager = new SQLiteManager(context);
+        try {
+            partie = sqLiteManager.getPartie(pari.get_partie());
+            visiteur = sqLiteManager.getEquipeVisiteur(partie.get_id_partie());
+            receveur = sqLiteManager.getEquipeReceveur(partie.get_id_partie());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        holder.match.setText("Match : " + visiteur.get_nom_equipe() + " vs " + receveur.get_nom_equipe());
+        if (pari.get_receveur() == 0){
+            holder.mise.setText("Mise : " + pari.get_montant() + "$ sur " + visiteur.get_nom_equipe());
+        } else if (pari.get_receveur() == 1) {
+            holder.mise.setText("Mise : " + pari.get_montant() + "$ sur " + receveur.get_nom_equipe());
+        }
+
     }
 
     @Override
@@ -42,12 +62,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView nom;
-        TextView groupe;
+        TextView match;
+        TextView mise;
         public MyViewHolder(View itemView){
             super(itemView);
-            nom = (TextView) itemView.findViewById(R.id.nom);
-            groupe = (TextView) itemView.findViewById(R.id.groupe);
+            mise = (TextView) itemView.findViewById(R.id.mise);
+            match = (TextView) itemView.findViewById(R.id.match);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

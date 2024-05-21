@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class Equipe {
+    private int _id_equipe;
     private String _nom_equipe;
     private String _entraineur;
     private String _stade;
@@ -19,6 +20,7 @@ public class Equipe {
     private String _ville;
 
     public Equipe(JSONObject equipe) throws JSONException {
+        this._id_equipe = equipe.getInt("id_equipe");
         this._nom_equipe = equipe.getString("nom_equipe");
         this._entraineur = equipe.getString("entraineur");
         this._stade = equipe.getString("stade");
@@ -29,6 +31,27 @@ public class Equipe {
         this._defaite_prolongation = Integer.parseInt(equipe.getString("defaite_prolongation"));
         this._sport = equipe.getString("id_sport");
         this._ville = equipe.getString("id_ville");
+    }
+    public Equipe(){
+        this._id_equipe = 0;
+        this._nom_equipe = "";
+        this._entraineur = "";
+        this._stade = "";
+        this._match_joue = 0;
+        this._victoire = 0;
+        this._defaite = 0;
+        this._match_nul = 0;
+        this._defaite_prolongation = 0;
+        this._sport = "";
+        this._ville = "";
+    }
+
+    public int get_id_equipe() {
+        return _id_equipe;
+    }
+
+    public void set_id_equipe(int id_equipe) {
+        this._id_equipe = id_equipe;
     }
 
     public String get_nom_equipe() {
