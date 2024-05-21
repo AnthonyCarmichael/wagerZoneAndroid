@@ -29,6 +29,7 @@ public class ParisActivity extends AppCompatActivity implements RecyclerViewInte
         titre.setText("Mes paris");
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         SQLiteManager sqLiteManager = new SQLiteManager(ParisActivity.this);
+        sqLiteManager.MAJParis(_nav.get_user().get_id());
         ArrayList<Paris> paris;
         try {
             paris = sqLiteManager.getParis();
@@ -47,7 +48,6 @@ public class ParisActivity extends AppCompatActivity implements RecyclerViewInte
     @Override
     protected void onResume() {
         super.onResume();
-        // Quand on reviens au main
         _nav.get_home().setBackgroundResource(R.drawable.rounded_dark_red);
         _nav.get_userIcone().setBackgroundResource(R.drawable.rounded_dark_red);
         _nav.get_equipes().setBackgroundResource(R.drawable.rounded_dark_red);

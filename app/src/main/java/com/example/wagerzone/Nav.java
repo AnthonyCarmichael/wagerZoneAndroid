@@ -84,6 +84,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
     public void set_user(Utilisateur _user) {
         this._user = _user;
     }
+    public Utilisateur get_user(){return this._user;}
 
     public void set_equipes(Button _equipes) {
         this._equipes = _equipes;

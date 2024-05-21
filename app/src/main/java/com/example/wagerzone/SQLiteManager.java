@@ -15,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -608,6 +609,40 @@ public class SQLiteManager  extends SQLiteOpenHelper
             }
         }
         return equipe;
+    }
+
+    public void MAJParis(int id_user){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        sqLiteDatabase.delete(TABLE_PARIS,null, null );
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+        String url = new String("http://10.0.2.2:8000/api/parisUser?id_user="+id_user);
+
+        try(InputStream is = new URL(url).openConnection().getInputStream()) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "utf-8"));
+
+            StringBuilder builder = new StringBuilder();
+            for(String line = reader.readLine(); line != null; line = reader.readLine()) {
+                builder.append(line + "\n");
+            }
+            JSONObject data = new JSONObject(builder.toString());
+            JSONArray parisArr = data.getJSONArray("data");
+            for (int i=0; i < parisArr.length(); i++) {
+                JSONObject paris = parisArr.getJSONObject(i);
+                Paris paris2 = new Paris(paris);
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(MONTANT, paris2.get_montant());
+                contentValues.put(DATE_HEURE, paris2.get_date_heure());
+                contentValues.put(RECEVEUR, paris2.get_receveur());
+                contentValues.put(ID_PARTIE, paris2.get_partie());
+                sqLiteDatabase.insert(TABLE_PARIS, null, contentValues);
+            }
+        } catch (JSONException | MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Equipe getEquipeVisiteur(int id_partie) throws IOException {
