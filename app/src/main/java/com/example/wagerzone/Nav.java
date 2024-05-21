@@ -233,8 +233,8 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                         _activity.finish();
                     return true;
                 }
-                if (item.getItemId() == R.id.portefeuille && !_activity.getClass().equals(ConnexionActivity.class)) {
-                    Intent portefeuilleIntent = new Intent(_context,ConnexionActivity.class);
+                if (item.getItemId() == R.id.portefeuille && !_activity.getClass().equals(Portefeuille.class)) {
+                    Intent portefeuilleIntent = new Intent(_context,Portefeuille.class);
                     portefeuilleIntent.putExtra("user", _user);
                     //Avant de lancer l'activité
                     _home.setBackgroundResource(R.drawable.rounded_dark_red);
