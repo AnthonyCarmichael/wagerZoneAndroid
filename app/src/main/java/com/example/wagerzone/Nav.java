@@ -152,7 +152,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
             equipesIntent.putExtra("user", _user);
             v.setBackgroundResource(R.drawable.rounded_red);
             _home.setBackgroundResource(R.drawable.rounded_dark_red);
-            _context.startActivity(equipesIntent);
+            _activity.startActivityForResult(equipesIntent,1);
             if (!_activity.getClass().equals(MainActivity.class))
                 _activity.finish();
         }
@@ -161,7 +161,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
             matchsIntent.putExtra("user", _user);
             v.setBackgroundResource(R.drawable.rounded_red);
             _home.setBackgroundResource(R.drawable.rounded_dark_red);
-            _context.startActivity(matchsIntent);
+            _activity.startActivityForResult(matchsIntent,1);
             if (!_activity.getClass().equals(MainActivity.class))
                 _activity.finish();
         }
@@ -170,7 +170,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
             parisIntent.putExtra("user", _user);
             v.setBackgroundResource(R.drawable.rounded_red);
             _home.setBackgroundResource(R.drawable.rounded_dark_red);
-            _context.startActivity(parisIntent);
+            _activity.startActivityForResult(parisIntent,1);
             if (!_activity.getClass().equals(MainActivity.class))
                 _activity.finish();
         }
@@ -214,8 +214,8 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                 if (item.getItemId() == R.id.deconnecter) {
                     //Avant de lancer l'activité
                     if (!_activity.getClass().equals(MainActivity.class)){
-                        setResult(9);
-                        finish();
+                        _activity.setResult(9);
+                        _activity.finish();
                     }
                     else {
                         _user = null;
@@ -240,7 +240,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                     //Avant de lancer l'activité
                     _home.setBackgroundResource(R.drawable.rounded_dark_red);
                     _selected = true;
-                    _context.startActivity(compteIntent);
+                    _activity.startActivityForResult(compteIntent,1);
                     if (!_activity.getClass().equals(MainActivity.class))
                         _activity.finish();
                     return true;
@@ -251,7 +251,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                     //Avant de lancer l'activité
                     _home.setBackgroundResource(R.drawable.rounded_dark_red);
                     _selected = true;
-                    _context.startActivity(portefeuilleIntent);
+                    _activity.startActivityForResult(portefeuilleIntent,1);
                     if (!_activity.getClass().equals(MainActivity.class))
                         _activity.finish();
                     return true;
