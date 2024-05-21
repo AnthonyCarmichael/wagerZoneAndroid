@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class MesTransactions extends AppCompatActivity {
 
@@ -29,5 +31,27 @@ public class MesTransactions extends AppCompatActivity {
                 finish();
             }
         });
+
+        //Set les données à mettre dans le recycle view
+        String test[] = new String[]{"test1", "test2", "test3", "test4"};
+        //Déclaration du recyclerView et de son adaptateur
+        RecyclerView rv = (RecyclerView) findViewById(R.id.rvTransactions);
+        TransactionAdaptor adaptor = new TransactionAdaptor(this, test,test,test);
+        //Application des données dans le recycleView
+        rv.setAdapter(adaptor);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    //Déclaration des transactions
+    private void afficherTransactions(){
+
+        //Set les données à mettre dans le recycle view
+        String test[] = new String[]{"test1", "test2", "test3", "test4"};
+        //Déclaration du recyclerView et de son adaptateur
+        RecyclerView rv = (RecyclerView) findViewById(R.id.rvTransactions);
+        TransactionAdaptor adaptor = new TransactionAdaptor(this, test,test,test);
+        //Application des données dans le recycleView
+        rv.setAdapter(adaptor);
+        rv.setLayoutManager(new LinearLayoutManager(this));
     }
 }
