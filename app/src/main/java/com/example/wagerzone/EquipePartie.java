@@ -17,6 +17,13 @@ public class EquipePartie {
         this._cote = Integer.parseInt(equipePartie.getString("cote"));
         this._receveur = Integer.parseInt(equipePartie.getString("receveur"));
     }
+    public EquipePartie(){
+        this._equipe = "";
+        this._partie = "";
+        this._but_marque = 0;
+        this._cote = 0;
+        this._receveur = 0;
+    }
 
     public String get_equipe() {
         return _equipe;

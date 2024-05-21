@@ -1,32 +1,33 @@
 package com.example.wagerzone;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Objects;
 
 
-public class Utilisateur {
-
+public class Utilisateur implements Serializable {
+    private int _id;
     private String _name; // username
     private String _email;
     private String _nom;
     private String _prenom;
     private String _password;
     private String _date_naissance;
-    private String _telephonne;
+    private String _telephone;
     private String _adresse;
-    private String _tel;
     private String _ville;
     private String _pays;
     private BigDecimal _fonds;
 
     public Utilisateur() {
+        this._id = 0;
         this._name = null;
         this._email = null;
         this._nom = null;
         this._prenom =null;
         this._password = null;
         this._date_naissance = null;
-        this._telephonne =null;
+        this._telephone =null;
         this._adresse =null;
         this._ville = null;
         this._pays = null;
@@ -34,13 +35,14 @@ public class Utilisateur {
     }
 
     public Utilisateur(HashMap<String, String> user) {
+        this._id = Integer.parseInt(Objects.requireNonNull(user.get("id")));
         this._name = user.get("name");
         this._email = user.get("email");
         this._nom = user.get("nom");
         this._prenom = user.get("prenom");
         this._password = user.get("password");
         this._date_naissance = user.get("date_naissance");
-        this._telephonne = user.get("telephone");
+        this._telephone = user.get("telephone");
         this._adresse = user.get("adresse");
         this._ville = user.get("ville");
         this._pays = user.get("pays");
@@ -95,12 +97,12 @@ public class Utilisateur {
         this._date_naissance = _date_naissance;
     }
 
-    public String get_telephonne() {
-        return _telephonne;
+    public String get_telephone() {
+        return _telephone;
     }
 
-    public void set_telephonne(String _telephonne) {
-        this._telephonne = _telephonne;
+    public void set_telephone(String _telephone) {
+        this._telephone = _telephone;
     }
 
     public String get_adresse() {
@@ -111,13 +113,6 @@ public class Utilisateur {
         this._adresse = _adresse;
     }
 
-    public String get_tel() {
-        return _tel;
-    }
-
-    public void set_tel(String _tel) {
-        this._tel = _tel;
-    }
 
     public String get_ville() {
         return _ville;
@@ -141,5 +136,13 @@ public class Utilisateur {
 
     public void set_fonds(String _fonds) {
         this._fonds = BigDecimal.valueOf(Long.parseLong(_fonds));
+    }
+
+    public int get_id() {
+        return _id;
+    }
+
+    public void set_id(int _id) {
+        this._id = _id;
     }
 }

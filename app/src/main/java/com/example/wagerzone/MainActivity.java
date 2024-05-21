@@ -1,9 +1,12 @@
 package com.example.wagerzone;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -43,5 +46,28 @@ public class MainActivity extends AppCompatActivity {
         _nav.get_paris().setBackgroundResource(R.drawable.rounded_dark_red);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
+        TextView messageErreurSuccesMain = _nav.get_messageErreurSuccesMain();
+        messageErreurSuccesMain.setText(R.string.succesConnection);
+        messageErreurSuccesMain.setTextColor(getResources().getColor(R.color.vertFonce));
+        messageErreurSuccesMain.setVisibility(View.VISIBLE);
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            // Récupérer l'objet User de l'Intent
+            if (data != null && data.hasExtra("user")) {
+                Utilisateur user = (Utilisateur) data.getSerializableExtra("user");
+
+                if (user != null) {
+                    _nav.set_user(user);
+                }
+
+            }
+        }
+    }
 }
+/*
+                _messageErreurSucces.setText(R.string.succesConnection);
+                        _messageErreurSucces.setTextColor(getResources().getColor(R.color.vertFonce));
+                        _messageErreurSucces.setVisibility(View.VISIBLE);*/

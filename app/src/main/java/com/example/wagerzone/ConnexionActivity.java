@@ -1,9 +1,7 @@
 package com.example.wagerzone;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -13,7 +11,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,20 +19,18 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import org.json.JSONArray;
-import org.json.JSONException;
+
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
+
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.SecureRandom;
-import java.util.ArrayList;
+
 import java.util.UUID;
 
 public class ConnexionActivity extends AppCompatActivity implements View.OnClickListener{
@@ -96,7 +92,7 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
     }
 
     private Utilisateur verifyUser(String username, String password, Boolean souvenir) {
-        Utilisateur user = new Utilisateur();
+        Utilisateur user = null;
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -120,9 +116,6 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
                 writeToken(token+";"+username);
             }
 
-
-
-
             OutputStream os = connection.getOutputStream();
             os.write(data.toString().getBytes());
             os.flush();
@@ -142,13 +135,28 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
                 in.close();
 
                 JSONObject jsonResponse = new JSONObject(response.toString());
+                Log.d("JSON Response", jsonResponse.toString());
+                JSONObject successObject = jsonResponse.getJSONObject("SUCCESS");
 
+                // Création du user:
+                user = new Utilisateur();
+                user.set_nom(successObject.getString("nom"));
+                user.set_prenom(successObject.getString("prenom"));
+                user.set_name(successObject.getString("name")); // USERNAME
+                user.set_email(successObject.getString("name"));
+                user.set_id(successObject.getInt("id"));
+                user.set_date_naissance(successObject.getString("date_naissance"));
+                user.set_telephone(successObject.getString("telephone"));
+                user.set_adresse(successObject.getString("adresse"));
+                user.set_fonds(successObject.getString("fonds"));
+                //user.set_ville(successObject.getString("ville"));
+                //user.set_pays(successObject.getString("ville"));
 
-
-                System.out.println(jsonResponse);
-                _messageErreurSucces.setText(R.string.succesConnection);
-                _messageErreurSucces.setTextColor(getResources().getColor(R.color.vertFonce));
-                _messageErreurSucces.setVisibility(View.VISIBLE);
+                // Envoi du result à l'activité main
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("user", user);
+                setResult(RESULT_OK, resultIntent);
+                finish();
 
             } else if (codeReponse == 501) {
                     _messageErreurSucces.setText(R.string.erreur_compte_inactif);
