@@ -32,8 +32,8 @@ public class EquipesActivity extends AppCompatActivity {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        MyAdapter myAdapter = new MyAdapter(this, equipes, this);
-        recyclerView.setAdapter(myAdapter);
+        //MyAdapter myAdapter = new MyAdapter(this, equipes, this);
+        ///recyclerView.setAdapter(myAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 }
