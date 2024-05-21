@@ -65,9 +65,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }
+        if (resultCode == 9){ // Déconnexion
+            _nav.set_user(null);
+            TextView messageErreurSuccesMain = _nav.get_messageErreurSuccesMain();
+            messageErreurSuccesMain.setVisibility(View.INVISIBLE);
+        }
     }
 }
-/*
-                _messageErreurSucces.setText(R.string.succesConnection);
-                        _messageErreurSucces.setTextColor(getResources().getColor(R.color.vertFonce));
-                        _messageErreurSucces.setVisibility(View.VISIBLE);*/

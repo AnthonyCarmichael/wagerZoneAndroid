@@ -213,13 +213,15 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                 }
                 if (item.getItemId() == R.id.deconnecter) {
                     //Avant de lancer l'activité
-                    _user = null;
-                    if (!_activity.getClass().equals(MainActivity.class))
-                        _activity.finish();
+                    if (!_activity.getClass().equals(MainActivity.class)){
+                        setResult(9);
+                        finish();
+                    }
+                    else {
+                        _user = null;
+                        _messageErreurSuccesMain.setVisibility(View.INVISIBLE);
+                    }
                     cleanFileToken();
-                    _messageErreurSuccesMain.setVisibility(View.INVISIBLE);
-                    if (!_activity.getClass().equals(MainActivity.class))
-                        _activity.finish();
                     return true;
                 }
                 if (item.getItemId() == R.id.inscription && !_activity.getClass().equals(InscriptionActivity.class)) {
@@ -227,7 +229,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                     //Avant de lancer l'activité
                     _home.setBackgroundResource(R.drawable.rounded_dark_red);
                     _selected = true;
-                    _context.startActivity(inscriptionIntent);
+                    _activity.startActivityForResult(inscriptionIntent, 1);
                     if (!_activity.getClass().equals(MainActivity.class))
                         _activity.finish();
                     return true;
