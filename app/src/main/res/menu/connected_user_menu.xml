@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group >
+        <item android:id="@+id/deconnecter"
+            android:title="Se déconnecter"/>
+        <item android:id="@+id/compte"
+            android:title="Compte" />
+        <item android:id="@+id/portefeuille"
+            android:title="Portefeuille" />
+    </group>
+</menu>

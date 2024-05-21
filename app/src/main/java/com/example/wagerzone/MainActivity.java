@@ -49,10 +49,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
-        TextView messageErreurSuccesMain = _nav.get_messageErreurSuccesMain();
-        messageErreurSuccesMain.setText(R.string.succesConnection);
-        messageErreurSuccesMain.setTextColor(getResources().getColor(R.color.vertFonce));
-        messageErreurSuccesMain.setVisibility(View.VISIBLE);
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
             // Récupérer l'objet User de l'Intent
@@ -60,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
                 Utilisateur user = (Utilisateur) data.getSerializableExtra("user");
 
                 if (user != null) {
+                    TextView messageErreurSuccesMain = _nav.get_messageErreurSuccesMain();
+                    messageErreurSuccesMain.setText(R.string.succesConnection);
+                    messageErreurSuccesMain.setTextColor(getResources().getColor(R.color.vertFonce));
+                    messageErreurSuccesMain.setVisibility(View.VISIBLE);
                     _nav.set_user(user);
                 }
 

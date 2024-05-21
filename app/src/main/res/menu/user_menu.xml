@@ -3,13 +3,7 @@
     <group >
         <item android:id="@+id/connecter"
             android:title="Connecter" />
-        <item android:id="@+id/deconnecter"
-            android:title="Se déconnecter"/>
         <item android:id="@+id/inscription"
             android:title="S'inscrire" />
-        <item android:id="@+id/compte"
-            android:title="Compte" />
-        <item android:id="@+id/portefeuille"
-            android:title="Portefeuille" />
     </group>
 </menu>

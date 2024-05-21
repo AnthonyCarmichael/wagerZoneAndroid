@@ -178,7 +178,12 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
 
     private void showUserMenu(View view) {
         PopupMenu menuUser = new PopupMenu(_context,view);
-        menuUser.getMenuInflater().inflate(R.menu.user_menu,menuUser.getMenu());
+        // Menu de l'icone user. Si un user est connecté, affiche un menu différent
+        if (_user != null)
+            menuUser.getMenuInflater().inflate(R.menu.connected_user_menu,menuUser.getMenu());
+        else
+            menuUser.getMenuInflater().inflate(R.menu.user_menu,menuUser.getMenu());
+
         _userIcone.setBackgroundResource(R.drawable.rounded_red);
 
         menuUser.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -374,6 +379,10 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
         } else {
             System.out.println("Impossible de supprimer le fichier.");
         }
+    }
+
+    private void hideShowButtonIfUser(){
+
     }
 
 
