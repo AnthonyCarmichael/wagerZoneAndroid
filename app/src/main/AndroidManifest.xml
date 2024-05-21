@@ -18,10 +18,28 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".AjoutParisActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ModificationParisActivity"
+            android:exported="false" />
+        <activity
             android:name=".ParisActivity"
             android:exported="false" />
         <activity
             android:name=".InscriptionActivity"
+        tools:targetApi="31"/>
+        <activity
+            android:name=".MesTransactions"
+            android:exported="false" />
+        <activity
+            android:name=".Retrait"
+            android:exported="false" />
+        <activity
+            android:name=".Paiement"
+            android:exported="false" />
+        <activity
+            android:name=".Portefeuille"
             android:exported="false" />
         <activity
             android:name=".ConnexionActivity"

@@ -178,7 +178,12 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
 
     private void showUserMenu(View view) {
         PopupMenu menuUser = new PopupMenu(_context,view);
-        menuUser.getMenuInflater().inflate(R.menu.user_menu,menuUser.getMenu());
+        // Menu de l'icone user. Si un user est connecté, affiche un menu différent
+        if (_user != null)
+            menuUser.getMenuInflater().inflate(R.menu.connected_user_menu,menuUser.getMenu());
+        else
+            menuUser.getMenuInflater().inflate(R.menu.user_menu,menuUser.getMenu());
+
         _userIcone.setBackgroundResource(R.drawable.rounded_red);
 
         menuUser.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -197,14 +202,14 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                         _activity.finish();
                     return true;
                 }
-                if (item.getItemId() == R.id.deconnecter && !_activity.getClass().equals(ConnexionActivity.class)) {
-                    Intent connexionIntent = new Intent(_context,ConnexionActivity.class);
+                if (item.getItemId() == R.id.deconnecter) {
                     //Avant de lancer l'activité
-                    _home.setBackgroundResource(R.drawable.rounded_dark_red);
-                    _selected = true;
-                    _context.startActivity(connexionIntent);
+                    _user = null;
                     if (!_activity.getClass().equals(MainActivity.class))
                         _activity.finish();
+                    cleanFileToken();
+                    _messageErreurSuccesMain.setVisibility(View.INVISIBLE);
+
                     return true;
                 }
                 if (item.getItemId() == R.id.inscription && !_activity.getClass().equals(InscriptionActivity.class)) {
@@ -228,8 +233,8 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                         _activity.finish();
                     return true;
                 }
-                if (item.getItemId() == R.id.portefeuille && !_activity.getClass().equals(ConnexionActivity.class)) {
-                    Intent portefeuilleIntent = new Intent(_context,ConnexionActivity.class);
+                if (item.getItemId() == R.id.portefeuille && !_activity.getClass().equals(Portefeuille.class)) {
+                    Intent portefeuilleIntent = new Intent(_context,Portefeuille.class);
                     portefeuilleIntent.putExtra("user", _user);
                     //Avant de lancer l'activité
                     _home.setBackgroundResource(R.drawable.rounded_dark_red);
@@ -375,6 +380,4 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
             System.out.println("Impossible de supprimer le fichier.");
         }
     }
-
-
 }
