@@ -213,7 +213,8 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                         _activity.finish();
                     cleanFileToken();
                     _messageErreurSuccesMain.setVisibility(View.INVISIBLE);
-
+                    if (!_activity.getClass().equals(MainActivity.class))
+                        _activity.finish();
                     return true;
                 }
                 if (item.getItemId() == R.id.inscription && !_activity.getClass().equals(InscriptionActivity.class)) {
