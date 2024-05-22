@@ -31,11 +31,11 @@
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="1"
+            android:columnCount="2"
             android:layout_marginHorizontal="60dp">
 
             <TextView
-                android:layout_columnSpan="1"
+                android:layout_columnSpan="2"
                 android:text="@string/information_connexion"
                 android:textColor="@color/black"
                 android:layout_marginBottom="16dp"
@@ -52,7 +52,7 @@
                 android:ems="10"
                 android:inputType="text"
                 android:text=""
-                android:layout_columnSpan="1"
+                android:layout_columnSpan="2"
                 android:layout_marginBottom="16dp"/>
 
             <TextView
@@ -64,7 +64,7 @@
                 android:ems="10"
                 android:inputType="text"
                 android:text=""
-                android:layout_columnSpan="1"
+                android:layout_columnSpan="2"
                 android:layout_marginBottom="16dp"/>
 
             <TextView
@@ -76,7 +76,7 @@
                 android:ems="10"
                 android:inputType="text"
                 android:text=""
-                android:layout_columnSpan="1"
+                android:layout_columnSpan="2"
                 android:layout_marginBottom="16dp"/>
 
             <TextView
@@ -88,16 +88,38 @@
                 android:ems="10"
                 android:inputType="textEmailAddress"
                 android:text=""
-                android:layout_columnSpan="1"
+                android:layout_columnSpan="2"
                 android:layout_marginBottom="40dp"/>
 
             <TextView
-                android:layout_columnSpan="1"
+                android:layout_columnSpan="2"
                 android:text="@string/coordonnee"
                 android:textColor="@color/black"
                 android:layout_marginBottom="16dp"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
+
+            <TextView
+                android:text="@string/pays" />
+            <Spinner
+                android:layout_columnSpan="2"
+                android:id="@+id/pays"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:prompt="@string/pays"
+                android:spinnerMode="dialog" />
+
+            <TextView
+                android:text="@string/ville" />
+            <Spinner
+                android:layout_columnSpan="2"
+                android:id="@+id/villes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:prompt="@string/ville"
+                android:spinnerMode="dialog" />
 
             <TextView
                 android:text="@string/adresse" />
@@ -108,32 +130,9 @@
                 android:ems="10"
                 android:inputType="textEmailAddress"
                 android:text=""
-                android:layout_columnSpan="1"
+                android:layout_columnSpan="2"
                 android:layout_marginBottom="16dp"/>
 
-            <TextView
-                android:text="@string/pays" />
-            <EditText
-                android:id="@+id/pays"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textEmailAddress"
-                android:text=""
-                android:layout_columnSpan="1"
-                android:layout_marginBottom="16dp"/>
-
-            <TextView
-                android:text="@string/province" />
-            <EditText
-                android:id="@+id/province"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textEmailAddress"
-                android:text=""
-                android:layout_columnSpan="1"
-                android:layout_marginBottom="16dp"/>
 
             <TextView
                 android:text="@string/tel" />
@@ -144,14 +143,30 @@
                 android:ems="10"
                 android:inputType="phone"
                 android:text=""
-                android:layout_columnSpan="1"
+                android:layout_columnSpan="2"
                 android:layout_marginBottom="16dp"/>
 
+            <TextView
+                android:text="@string/photo"
+                android:layout_columnSpan="2"/>
             <Button
+                android:id="@+id/btnPhoto"
+                android:layout_columnSpan="2"
+                android:background="@drawable/bouton_vert"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Photo"
+                android:layout_marginBottom="16dp"/>
+
+
+            <Button
+                android:layout_marginTop="16dp"
+                android:layout_columnSpan="2"
                 android:id="@+id/button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button"
+                android:text="Envoyer"
                 android:background="@drawable/bouton_rouge"
                 android:textColor="@color/white"
                 android:layout_gravity="center"/>

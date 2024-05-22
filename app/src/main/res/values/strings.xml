@@ -27,4 +27,6 @@
     <string name="pays">Pays</string>
     <string name="province">Province</string>
     <string name="tel">Téléphone</string>
+    <string name="photo">Icone</string>
+    <string name="ville">Ville</string>
 </resources>
