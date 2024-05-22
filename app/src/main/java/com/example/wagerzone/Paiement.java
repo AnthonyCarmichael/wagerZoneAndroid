@@ -42,12 +42,16 @@ public class Paiement extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        fetchPaiementApi();
         Button btnPaiement = findViewById(R.id.btnPaiement);
         btnPaiement.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                paymentSheet.presentWithPaymentIntent(paymentIntentClientSecret,
-                        new PaymentSheet.Configuration("Codes Easy", configuration));
+                if(paymentIntentClientSecret != null)
+                {
+                    paymentSheet.presentWithPaymentIntent(paymentIntentClientSecret,
+                            new PaymentSheet.Configuration("Codes Easy", configuration));
+                }
             }
         });
         paymentSheet = new PaymentSheet(this, this::onPaymentSheetResult);
@@ -77,7 +81,7 @@ public class Paiement extends AppCompatActivity {
         }
     }
 
-    public void fetchPaiement(){
+    public void fetchPaiementApi(){
         RequestQueue queue = Volley.newRequestQueue(this);
         String url ="localhost:8000/api/fetchPaiement";
 
