@@ -18,4 +18,13 @@
     <string name="compte">Gestion du compte</string>
     <string name="equipe">Les équipes</string>
     <string name="match">Les parties</string>
+    <string name="nom_utilisateur">Nom d\'utilisateur</string>
+    <string name="information_connexion">Information de connexion</string>
+    <string name="confirmer_mdp">Confirmer le mot de passe</string>
+    <string name="adresse_courriel">Adresse courriel</string>
+    <string name="coordonnee">Coordonnée</string>
+    <string name="adresse">Adresse</string>
+    <string name="pays">Pays</string>
+    <string name="province">Province</string>
+    <string name="tel">Téléphone</string>
 </resources>
