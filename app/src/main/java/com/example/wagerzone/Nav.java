@@ -244,7 +244,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                 }
                 if (item.getItemId() == R.id.compte && !_activity.getClass().equals(CompteActivity.class)) {
                     _changingView =true;
-                    Intent compteIntent = new Intent(_context,ConnexionActivity.class);
+                    Intent compteIntent = new Intent(_context,CompteActivity.class);
                     compteIntent.putExtra("user", _user);
                     //Avant de lancer l'activité
                     _home.setBackgroundResource(R.drawable.rounded_dark_red);
