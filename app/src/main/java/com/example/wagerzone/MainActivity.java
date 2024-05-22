@@ -50,7 +50,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK) {
+        if (resultCode == 2){
+            Intent connexionIntent = new Intent(this,ConnexionActivity.class);
+            //Avant de lancer l'activité
+            startActivityForResult(connexionIntent, 3);
+        }
+        if (requestCode == 3 && resultCode == RESULT_OK) {
             // Récupérer l'objet User de l'Intent
             if (data != null && data.hasExtra("user")) {
                 Utilisateur user = (Utilisateur) data.getSerializableExtra("user");

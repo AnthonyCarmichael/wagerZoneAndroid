@@ -204,11 +204,13 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                     //Avant de lancer l'activité
                     _home.setBackgroundResource(R.drawable.rounded_dark_red);
                     _selected = true;
-
-                    _activity.startActivityForResult(connexionIntent, 1);
-                    //_activity.startActivityForResult(connexionIntent,1);
-                    if (!_activity.getClass().equals(MainActivity.class))
+                    if (!_activity.getClass().equals(MainActivity.class)){
+                        _activity.setResult(2);
                         _activity.finish();
+                    }
+                    else {
+                        _activity.startActivityForResult(connexionIntent, 3);
+                    }
                     return true;
                 }
                 if (item.getItemId() == R.id.deconnecter) {
