@@ -36,6 +36,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
     private Button _home,_equipes,_matchs,_paris;
     private ImageButton _userIcone;
     private boolean _selected = false;
+    private boolean _changingView = false;
     Context _context;
     private Activity _activity;
     private Utilisateur _user;
@@ -144,10 +145,12 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
             showUserMenu(v);
         }
         if (v.getId() == R.id.home && !_activity.getClass().equals(MainActivity.class)){
+            _changingView =true;
             v.setBackgroundResource(R.drawable.rounded_red);
             _activity.finish();
         }
         if (v.getId() == R.id.equipes){
+            _changingView =true;
             Intent equipesIntent = new Intent(_context,EquipeActivity.class);
             equipesIntent.putExtra("user", _user);
             v.setBackgroundResource(R.drawable.rounded_red);
@@ -157,6 +160,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                 _activity.finish();
         }
         if (v.getId() == R.id.matchs) {
+            _changingView =true;
             Intent matchsIntent = new Intent(_context,MatchActivity.class);
             matchsIntent.putExtra("user", _user);
             v.setBackgroundResource(R.drawable.rounded_red);
@@ -166,6 +170,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                 _activity.finish();
         }
         if (v.getId() == R.id.paris) {
+            _changingView =true;
             Intent parisIntent = new Intent(_context,ParisActivity.class);
             parisIntent.putExtra("user", _user);
             v.setBackgroundResource(R.drawable.rounded_red);
@@ -174,14 +179,12 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
             if (!_activity.getClass().equals(MainActivity.class))
                 _activity.finish();
         }
-        /*
-        if (_activity.getClass().equals(ParisActivity.class))
+        if (_activity.getClass().equals(ParisActivity.class) &&_changingView)
             _paris.setBackgroundResource(R.drawable.rounded_dark_red);
-        else if (_activity.getClass().equals(EquipesActivity.class))
+        if (_activity.getClass().equals(EquipeActivity.class)&&_changingView)
             _equipes.setBackgroundResource(R.drawable.rounded_dark_red);
-        else if (_activity.getClass().equals(MatchActivity.class))
+        if (_activity.getClass().equals(MatchActivity.class)&&_changingView)
             _matchs.setBackgroundResource(R.drawable.rounded_dark_red);
-        */
     }
 
 
@@ -199,6 +202,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.connecter && !_activity.getClass().equals(ConnexionActivity.class)) {
+                    _changingView =true;
                     Intent connexionIntent = new Intent(_context,ConnexionActivity.class);
                     connexionIntent.putExtra("user", _user);
                     //Avant de lancer l'activité
@@ -216,6 +220,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                 if (item.getItemId() == R.id.deconnecter) {
                     //Avant de lancer l'activité
                     if (!_activity.getClass().equals(MainActivity.class)){
+                        _changingView =true;
                         _activity.setResult(9);
                         _activity.finish();
                     }
@@ -227,6 +232,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                     return true;
                 }
                 if (item.getItemId() == R.id.inscription && !_activity.getClass().equals(InscriptionActivity.class)) {
+                    _changingView =true;
                     Intent inscriptionIntent = new Intent(_context,InscriptionActivity.class);
                     //Avant de lancer l'activité
                     _home.setBackgroundResource(R.drawable.rounded_dark_red);
@@ -237,6 +243,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                     return true;
                 }
                 if (item.getItemId() == R.id.compte && !_activity.getClass().equals(CompteActivity.class)) {
+                    _changingView =true;
                     Intent compteIntent = new Intent(_context,ConnexionActivity.class);
                     compteIntent.putExtra("user", _user);
                     //Avant de lancer l'activité
@@ -248,6 +255,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                     return true;
                 }
                 if (item.getItemId() == R.id.portefeuille && !_activity.getClass().equals(Portefeuille.class)) {
+                    _changingView =true;
                     Intent portefeuilleIntent = new Intent(_context,Portefeuille.class);
                     portefeuilleIntent.putExtra("user", _user);
                     //Avant de lancer l'activité
