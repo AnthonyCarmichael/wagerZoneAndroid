@@ -84,10 +84,9 @@ public class InscriptionActivity extends AppCompatActivity  implements View.OnCl
         set_spinnerPays();
         set_spinnerVille();
         // Permission geolocalisation.
-        // Le callback permet d'attendre que l'utilisateur permet ou non le gps pour loader ensuite la page
+        // Le callback permet d'attendre que l'utilisateur donne le droit ou non au gps pour loader ensuite la page
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123);
         setButton();
-
 
     }
 
@@ -293,17 +292,20 @@ public class InscriptionActivity extends AppCompatActivity  implements View.OnCl
         if (v.getId() == R.id.btnPhoto){
             askCameraPermission();
         }
+        else if(v.getId() == R.id.btnFichier){
+            openGallery();
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Bitmap bitmap;
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+                Bitmap image = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
                 _newUserIcone = findViewById(R.id.newUserIcone);
-                _newUserIcone.setImageBitmap(bitmap);
+                _newUserIcone.setImageBitmap(image);
+                //_nav.get_userIcone().setImageBitmap(image);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -314,6 +316,7 @@ public class InscriptionActivity extends AppCompatActivity  implements View.OnCl
                 Bitmap image = (Bitmap) bundle.get("data");
                 _newUserIcone = findViewById(R.id.newUserIcone);
                 _newUserIcone.setImageBitmap(image);
+                //_nav.get_userIcone().setImageBitmap(image);
 
             } catch (Exception e) {
                 e.printStackTrace();
