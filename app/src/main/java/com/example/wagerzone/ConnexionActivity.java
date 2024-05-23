@@ -116,6 +116,7 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
                 writeToken(token+";"+username);
             }
 
+            // Obligatoire pour un post
             OutputStream os = connection.getOutputStream();
             os.write(data.toString().getBytes());
             os.flush();
@@ -152,6 +153,8 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
                 //user.set_ville(successObject.getString("ville"));
                 //user.set_pays(successObject.getString("ville"));
 
+                SQLiteManager sqLiteManager = new SQLiteManager(ConnexionActivity.this);
+                sqLiteManager.MAJParis(user.get_id());
                 // Envoi du result à l'activité main
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra("user", user);
