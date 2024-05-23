@@ -100,7 +100,6 @@ public class Paiement extends AppCompatActivity {
                             );
                             paymentIntentClientSecret = jsonObject.getString("paymentIntent");
                             PaymentConfiguration.init(getApplicationContext(), jsonObject.getString("publishableKey"));
-                            finish();
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
