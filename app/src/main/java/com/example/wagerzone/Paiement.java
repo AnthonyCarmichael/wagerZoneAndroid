@@ -1,8 +1,10 @@
 package com.example.wagerzone;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -29,9 +31,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Paiement extends AppCompatActivity {
-    private PaymentSheet paymentSheet;
-    private String paymentIntentClientSecret;
-    private PaymentSheet.CustomerConfiguration configuration;
+    private TextView editMontant;
+    private float multiplicateur = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,16 +43,13 @@ public class Paiement extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        Button btnPaiement = findViewById(R.id.btnPaiement);
-        btnPaiement.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                paymentSheet.presentWithPaymentIntent(paymentIntentClientSecret,
-                        new PaymentSheet.Configuration("Codes Easy", configuration));
-            }
-        });
-        paymentSheet = new PaymentSheet(this, this::onPaymentSheetResult);
-
+        editMontant = findViewById(R.id.montant);
+        if(getIntent().hasExtra("retrait"))
+        {
+            multiplicateur = -1;
+            TextView titre = findViewById(R.id.titreTransactions);
+            titre.setText("Retrait : ");
+        }
         //Bouton retour
         Button btnRetour = findViewById(R.id.btnRetour);
         btnRetour.setOnClickListener(new View.OnClickListener(){
@@ -60,55 +58,27 @@ public class Paiement extends AppCompatActivity {
                 finish();
             }
         });
-    }
 
-    private void onPaymentSheetResult(final PaymentSheetResult paymentSheetResult) {
-        if(paymentSheetResult instanceof PaymentSheetResult.Canceled){
-            Toast.makeText(this, "Cancellé", Toast.LENGTH_SHORT).show();
-        }
-        if(paymentSheetResult instanceof PaymentSheetResult.Failed){
-            Toast.makeText(this, ((PaymentSheetResult.Failed) paymentSheetResult).getError().getMessage(), Toast.LENGTH_SHORT).show();
-        }
-        if(paymentSheetResult instanceof PaymentSheetResult.Completed){
-            Toast.makeText(this, "Paiement effectué", Toast.LENGTH_SHORT).show();
-        }
-        else {
-
-        }
-    }
-
-    public void fetchPaiement(){
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="localhost:8000/api/fetchPaiement";
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            configuration = new PaymentSheet.CustomerConfiguration(
-                                    jsonObject.getString("customer"),
-                                    jsonObject.getString("ephemeral")
-                            );
-                            paymentIntentClientSecret = jsonObject.getString("paymentIntent");
-                            PaymentConfiguration.init(getApplicationContext(), jsonObject.getString("publishableKey"));
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                }, new Response.ErrorListener() {
+        Button btnPaiement = findViewById(R.id.btnPaiement);
+        btnPaiement.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+            public void onClick(View view){
+                float montant = 0;
+                if(!editMontant.getText().toString().trim().equals(""))
+                    montant = Float.valueOf(editMontant.getText().toString().trim());
+                if(montant >= 5)
+                {
+                    montant = montant * multiplicateur;
+                    Intent intent = new Intent(Paiement.this, ExecutionTransaction.class);
+                    intent.putExtra("montant", montant);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    Toast.makeText(Paiement.this, "Le montant minimum est 5$", Toast.LENGTH_SHORT).show();
+                }
+
             }
-        }){
-            protected Map<String, String> getParams(){
-                Map<String, String> paramV = new HashMap<>();
-                paramV.put("authKey", "abc");
-                return paramV;
-            }
-        };
-        queue.add(stringRequest);
+        });
     }
 }

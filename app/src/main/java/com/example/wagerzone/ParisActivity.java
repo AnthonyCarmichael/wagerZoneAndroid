@@ -29,7 +29,8 @@ public class ParisActivity extends AppCompatActivity implements RecyclerViewInte
         titre.setText("Mes paris");
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         SQLiteManager sqLiteManager = new SQLiteManager(ParisActivity.this);
-        sqLiteManager.MAJParis(_nav.get_user().get_id());
+
+
         ArrayList<Paris> paris;
         try {
             paris = sqLiteManager.getParis();
@@ -39,8 +40,6 @@ public class ParisActivity extends AppCompatActivity implements RecyclerViewInte
         MyAdapter myAdapter = new MyAdapter(this, paris, this);
         recyclerView.setAdapter(myAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
 
 
     }
@@ -57,7 +56,6 @@ public class ParisActivity extends AppCompatActivity implements RecyclerViewInte
 
     @Override
     public void onItemClick(int position) {
-        Intent intent = new Intent(ParisActivity.this, MainActivity.class);
-        startActivity(intent);
+
     }
 }

@@ -10,12 +10,14 @@ public class Paris {
     private String _date_heure;
     private int _receveur;
     private int _id_partie;
+    private int _id_paris;
 
     public Paris(JSONObject paris) throws JSONException {
         this._montant =Float.parseFloat(paris.getString("montant"));
         this._date_heure = paris.getString("date_heure");
         this._receveur = Integer.parseInt(paris.getString("receveur"));
         this._id_partie = Integer.parseInt(paris.getString("id_partie"));
+        this._id_paris = Integer.parseInt(paris.getString("id_paris"));
     }
 
     public Paris(){
@@ -23,8 +25,24 @@ public class Paris {
         this._date_heure = "";
         this._receveur = 0;
         this._id_partie = 0;
+        this._id_paris = 0;
     }
 
+    public int get_id_partie() {
+        return _id_partie;
+    }
+
+    public void set_id_partie(int _id_partie) {
+        this._id_partie = _id_partie;
+    }
+
+    public int get_id_paris() {
+        return _id_paris;
+    }
+
+    public void set_id_paris(int _id_paris) {
+        this._id_paris = _id_paris;
+    }
 
     public float get_montant() {
         return _montant;
@@ -51,13 +69,5 @@ public class Paris {
 
     public void set_receveur(int _receveur) {
         this._receveur = _receveur;
-    }
-
-    public int get_partie() {
-        return _id_partie;
-    }
-
-    public void set_partie(int _partie) {
-        this._id_partie = _partie;
     }
 }

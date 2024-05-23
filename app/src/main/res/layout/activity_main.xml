@@ -47,5 +47,19 @@
         <include layout="@layout/footer" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="409dp"
+        android:layout_height="549dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="101dp">
+
+        <Button
+            android:id="@+id/btnPortefeuille"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Portefeuille" />
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

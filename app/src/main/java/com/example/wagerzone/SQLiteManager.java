@@ -12,9 +12,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -28,6 +32,7 @@ public class SQLiteManager  extends SQLiteOpenHelper
     private static final String DATABASE_NAME = "wagerzone";
     private static final int DATABASE_VERSION = 1;
 
+    private static final String ID = "id";
     private static final String TABLE_PAYS = "pays";
     private static final String ID_PAYS = "id_pays";
     private static final String NOM_PAYS = "nom_pays";
@@ -148,8 +153,10 @@ public class SQLiteManager  extends SQLiteOpenHelper
                 .append("CREATE TABLE ")
                 .append(TABLE_PARIS)
                 .append(" (")
-                .append(ID_PARIS)
+                .append(ID)
                 .append(" INTEGER PRIMARY KEY AUTOINCREMENT, ")
+                .append(ID_PARIS)
+                .append(" INTEGER, ")
                 .append(MONTANT)
                 .append(" REAL, ")
                 .append(DATE_HEURE)
@@ -244,7 +251,6 @@ public class SQLiteManager  extends SQLiteOpenHelper
             insertEquipes(db);
             insertStatuts(db);
             insertParties(db);
-            insertParis(db);
             insertEquipePartie(db);
         } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
@@ -485,38 +491,6 @@ public class SQLiteManager  extends SQLiteOpenHelper
         }
     }
 
-    //à modifier pour prendre seulement les paris de l'utilisateur connecté
-    public void insertParis(SQLiteDatabase sqLiteDatabase) throws SQLException, IOException {
-
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
-        StrictMode.setThreadPolicy(policy);
-        String url = new String("http://10.0.2.2:8000/api/paris");
-
-        try(InputStream is = new URL(url).openConnection().getInputStream()) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "utf-8"));
-
-            StringBuilder builder = new StringBuilder();
-            for(String line = reader.readLine(); line != null; line = reader.readLine()) {
-                builder.append(line + "\n");
-            }
-            JSONObject data = new JSONObject(builder.toString());
-            JSONArray parisArr = data.getJSONArray("data");
-            for (int i=0; i < parisArr.length(); i++) {
-                JSONObject paris = parisArr.getJSONObject(i);
-                Paris paris2 = new Paris(paris);
-                ContentValues contentValues = new ContentValues();
-                contentValues.put(MONTANT, paris2.get_montant());
-                contentValues.put(DATE_HEURE, paris2.get_date_heure());
-                contentValues.put(RECEVEUR, paris2.get_receveur());
-                contentValues.put(ID_PARTIE, paris2.get_partie());
-                sqLiteDatabase.insert(TABLE_PARIS, null, contentValues);
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public ArrayList<Paris> getParis() throws IOException {
         ArrayList<Paris> paris = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -524,10 +498,11 @@ public class SQLiteManager  extends SQLiteOpenHelper
             if(result.getCount() != 0){
                 while (result.moveToNext()){
                     Paris pari = new Paris();
-                    pari.set_montant(result.getFloat(1));
-                    pari.set_date_heure(result.getString(2));
-                    pari.set_receveur(result.getInt(3));
-                    pari.set_partie(result.getInt(4));
+                    pari.set_id_paris(result.getInt(1));
+                    pari.set_montant(result.getFloat(2));
+                    pari.set_date_heure(result.getString(3));
+                    pari.set_receveur(result.getInt(4));
+                    pari.set_id_partie(result.getInt(5));
                     paris.add(pari);
                 }
             }
@@ -633,9 +608,10 @@ public class SQLiteManager  extends SQLiteOpenHelper
                 Paris paris2 = new Paris(paris);
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(MONTANT, paris2.get_montant());
+                contentValues.put(ID_PARIS, paris2.get_id_paris());
                 contentValues.put(DATE_HEURE, paris2.get_date_heure());
                 contentValues.put(RECEVEUR, paris2.get_receveur());
-                contentValues.put(ID_PARTIE, paris2.get_partie());
+                contentValues.put(ID_PARTIE, paris2.get_id_partie());
                 sqLiteDatabase.insert(TABLE_PARIS, null, contentValues);
             }
         } catch (JSONException | MalformedURLException e) {
@@ -643,6 +619,30 @@ public class SQLiteManager  extends SQLiteOpenHelper
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void supprimerParis(int id_paris) throws IOException {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        sqLiteDatabase.delete(TABLE_PARIS,"id_paris=?", new String[]{String.valueOf(id_paris)} );
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+        String lien = new String("http://10.0.2.2:8000/api/supprimer/paris");
+        URL url = new URL(lien);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setReadTimeout(15000);
+        conn.setConnectTimeout(15000);
+        conn.setRequestMethod("DELETE");
+        conn.setDoInput(true);
+        conn.setDoOutput(true);
+        OutputStream os = conn.getOutputStream();
+        BufferedWriter writer = new BufferedWriter(
+                new OutputStreamWriter(os, "UTF-8"));
+        writer.write("id_paris="+id_paris);
+        writer.flush();
+        writer.close();
+        os.close();
+        int responseCode=conn.getResponseCode();
     }
 
     public Equipe getEquipeVisiteur(int id_partie) throws IOException {

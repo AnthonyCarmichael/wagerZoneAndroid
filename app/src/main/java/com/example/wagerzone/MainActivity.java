@@ -3,6 +3,7 @@ package com.example.wagerzone;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -33,6 +34,15 @@ public class MainActivity extends AppCompatActivity {
         _nav = new Nav(this, findViewById(android.R.id.content),MainActivity.this);
         TextView titre = findViewById(R.id.titre);
         titre.setText(R.string.accueil);
+
+
+        Button btn = findViewById(R.id.btnPortefeuille);
+        btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Portefeuille.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
