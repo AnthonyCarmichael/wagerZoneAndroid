@@ -8,6 +8,20 @@
     tools:context=".EquipeActivity">
 
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewEquipe"
+        android:layout_width="384dp"
+        android:layout_height="613dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="168dp"
+        android:layout_marginBottom="189dp"
+        app:layout_constraintBottom_toTopOf="@+id/footer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header"
+        app:layout_constraintVertical_bias="0.451"/>
+
     <LinearLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
@@ -20,7 +34,6 @@
         app:layout_constraintTop_toTopOf="parent">
         <include layout="@layout/header"/>
     </LinearLayout>
-
 
 
     <LinearLayout
