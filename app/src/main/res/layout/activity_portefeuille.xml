@@ -67,7 +67,6 @@
                 android:id="@+id/tMontantTotal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:text="Montant total"
                 android:textColor="#2C2C2C"
@@ -88,7 +87,7 @@
                 android:id="@+id/tMontantParis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:text="Montant en paris"
                 android:textColor="#2C2C2C"
@@ -109,7 +108,7 @@
                 android:id="@+id/tMontantRetirable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:text="Montant retirable"
                 android:textColor="#2C2C2C"
@@ -132,6 +131,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
+                android:background="@drawable/bouton_vert"
                 android:text="Ajouter des fonds"
                 android:textSize="20sp" />
 
@@ -141,7 +141,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
+                android:background="@drawable/bouton_rouge"
                 android:text="Retirer des fonds"
+                android:textColor="#DCD4D4"
                 android:textSize="20sp" />
 
             <Button

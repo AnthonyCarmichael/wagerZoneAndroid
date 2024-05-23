@@ -42,12 +42,19 @@ public class Paiement extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        fetchPaiementApi();
         Button btnPaiement = findViewById(R.id.btnPaiement);
         btnPaiement.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                paymentSheet.presentWithPaymentIntent(paymentIntentClientSecret,
-                        new PaymentSheet.Configuration("Codes Easy", configuration));
+                if(paymentIntentClientSecret != null)
+                {
+                    paymentSheet.presentWithPaymentIntent(paymentIntentClientSecret,
+                            new PaymentSheet.Configuration("Codes Easy", configuration));
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "API Loading...", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         paymentSheet = new PaymentSheet(this, this::onPaymentSheetResult);
@@ -77,9 +84,9 @@ public class Paiement extends AppCompatActivity {
         }
     }
 
-    public void fetchPaiement(){
+    public void fetchPaiementApi(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="localhost:8000/api/fetchPaiement";
+        String url ="http://10.0.2.2:8000/api/fetchPaiement";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -89,7 +96,7 @@ public class Paiement extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             configuration = new PaymentSheet.CustomerConfiguration(
                                     jsonObject.getString("customer"),
-                                    jsonObject.getString("ephemeral")
+                                    jsonObject.getString("ephemeralKey")
                             );
                             paymentIntentClientSecret = jsonObject.getString("paymentIntent");
                             PaymentConfiguration.init(getApplicationContext(), jsonObject.getString("publishableKey"));
@@ -97,6 +104,7 @@ public class Paiement extends AppCompatActivity {
                             throw new RuntimeException(e);
                         }
                     }
+
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
