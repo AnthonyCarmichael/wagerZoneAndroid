@@ -52,6 +52,9 @@ public class Paiement extends AppCompatActivity {
                     paymentSheet.presentWithPaymentIntent(paymentIntentClientSecret,
                             new PaymentSheet.Configuration("Codes Easy", configuration));
                 }
+                else{
+                    Toast.makeText(getApplicationContext(), "API Loading...", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         paymentSheet = new PaymentSheet(this, this::onPaymentSheetResult);
@@ -83,7 +86,7 @@ public class Paiement extends AppCompatActivity {
 
     public void fetchPaiementApi(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="localhost:8000/api/fetchPaiement";
+        String url ="http://10.0.2.2:8000/api/fetchPaiement";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -93,14 +96,16 @@ public class Paiement extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             configuration = new PaymentSheet.CustomerConfiguration(
                                     jsonObject.getString("customer"),
-                                    jsonObject.getString("ephemeral")
+                                    jsonObject.getString("ephemeralKey")
                             );
                             paymentIntentClientSecret = jsonObject.getString("paymentIntent");
                             PaymentConfiguration.init(getApplicationContext(), jsonObject.getString("publishableKey"));
+                            finish();
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
                     }
+
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
