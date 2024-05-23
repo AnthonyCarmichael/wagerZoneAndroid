@@ -1,24 +1,32 @@
 package com.example.wagerzone;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -28,7 +36,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class InscriptionActivity extends AppCompatActivity {
+public class InscriptionActivity extends AppCompatActivity  implements View.OnClickListener{
+
+    private static final int CAMERA_PERM_CODE = 101;
+    private static final int CAMERA_REQUEST_CODE = 102 ;
+
+    private static final int PICK_IMAGE_REQUEST = 1;
 
     private Nav _nav;
     private List<Pays> _pays;
@@ -39,8 +52,14 @@ public class InscriptionActivity extends AppCompatActivity {
     private Spinner _spinnerPays;
     private String _gpsVille;
     private String _gpsPays;
-
     private Boolean _permissionGPS;
+
+    private ImageView _newUserIcone;
+
+    // button
+    private Button _btnPhoto;
+    private Button _btnFichier;
+    private Button _btnSend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +86,7 @@ public class InscriptionActivity extends AppCompatActivity {
         // Permission geolocalisation.
         // Le callback permet d'attendre que l'utilisateur permet ou non le gps pour loader ensuite la page
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123);
+        setButton();
 
 
     }
@@ -230,6 +250,73 @@ public class InscriptionActivity extends AppCompatActivity {
                 setVillePaysWithGPS();
             } else {
                 _permissionGPS = false;
+            }
+        }
+        else if (requestCode == CAMERA_REQUEST_CODE) { // permission pour la camera
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openCamera();
+            }
+        }
+    }
+
+    private void askCameraPermission(){
+        if (ContextCompat.checkSelfPermission(this,Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},CAMERA_REQUEST_CODE);
+        }
+        else {
+            openCamera();
+        }
+    }
+
+    private void openCamera() {
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+    }
+
+    private void openGallery() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST);
+    }
+
+    private void setButton(){
+        _btnSend = findViewById(R.id.btnSend);
+        _btnFichier = findViewById(R.id.btnFichier);
+        _btnPhoto = findViewById(R.id.btnPhoto);
+
+        _btnPhoto.setOnClickListener(this);
+        _btnFichier.setOnClickListener(this);
+        _btnSend.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.btnPhoto){
+            askCameraPermission();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Bitmap bitmap;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+                _newUserIcone = findViewById(R.id.newUserIcone);
+                _newUserIcone.setImageBitmap(bitmap);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            try {
+                Bundle bundle = data.getExtras();
+                Bitmap image = (Bitmap) bundle.get("data");
+                _newUserIcone = findViewById(R.id.newUserIcone);
+                _newUserIcone.setImageBitmap(image);
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }

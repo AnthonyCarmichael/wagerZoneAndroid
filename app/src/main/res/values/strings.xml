@@ -29,4 +29,6 @@
     <string name="tel">Téléphone</string>
     <string name="photo">Icone</string>
     <string name="ville">Ville</string>
+    <string name="photoInscription">Photo</string>
+    <string name="fichier">fichier</string>
 </resources>

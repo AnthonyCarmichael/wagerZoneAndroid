@@ -148,22 +148,39 @@
 
             <TextView
                 android:text="@string/photo"
-                android:layout_columnSpan="2"/>
+                android:layout_columnSpan="2"
+                android:layout_marginBottom="16dp"/>
             <Button
                 android:id="@+id/btnPhoto"
-                android:layout_columnSpan="2"
+                android:layout_columnSpan="1"
                 android:background="@drawable/bouton_vert"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Photo"
+                android:text="@string/photoInscription"
+                android:layout_marginBottom="16dp"/>
+
+            <ImageView
+                android:id="@+id/newUserIcone"
+                android:layout_width="wrap_content"
+                android:layout_rowSpan="2"
+                />
+
+            <Button
+                android:id="@+id/btnFichier"
+                android:layout_columnSpan="1"
+                android:background="@drawable/bouton_vert"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fichier"
                 android:layout_marginBottom="16dp"/>
 
 
             <Button
                 android:layout_marginTop="16dp"
                 android:layout_columnSpan="2"
-                android:id="@+id/button"
+                android:id="@+id/btnSend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Envoyer"
