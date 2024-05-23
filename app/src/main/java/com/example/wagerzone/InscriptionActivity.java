@@ -98,6 +98,7 @@ public class InscriptionActivity extends AppCompatActivity {
         _spinnerPays.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
                 _villes.clear();
                 _nomVilles.clear();
                 fetchVille(_pays.get(position).get_id_pays());
@@ -112,6 +113,8 @@ public class InscriptionActivity extends AppCompatActivity {
                     arrayAdapterVilles.notifyDataSetChanged();
                     setSelectedItem(_spinnerVille,_gpsVille);
                 }
+
+
 
             }
 
@@ -157,10 +160,12 @@ public class InscriptionActivity extends AppCompatActivity {
                 boolean villeTrouve = false;
                 boolean paysTrouve = false;
                 _gpsPays=countryName;
+                int idPaysTrouve = 0;
                 for (Pays pays : _pays) {
                     if (pays.get_nom_pays().equals(countryName)) {
                         setSelectedItem(_spinnerPays, pays.get_nom_pays());
                         paysTrouve =true;
+                        idPaysTrouve = pays.get_id_pays();
                         cpt =0;
                         for (Ville ville : _villes) {
                             if (ville.get_nom_ville().equals(cityName)) {
@@ -178,13 +183,22 @@ public class InscriptionActivity extends AppCompatActivity {
                 }
                 if (!paysTrouve){
                     _nomPays.add(countryName);
+                    Pays paysGPS = new Pays();
+                    paysGPS.set_nom_pays(countryName);
+                    _pays.add(paysGPS);
                     ArrayAdapter<String> arrayAdapterPays=new ArrayAdapter<String>(InscriptionActivity.this,
                             android.R.layout.simple_spinner_dropdown_item, _nomPays);
                     _spinnerPays.setAdapter(arrayAdapterPays);
-                    setSelectedItem(_spinnerVille,countryName);
+                    setSelectedItem(_spinnerPays,countryName);
                 }
                 if (!villeTrouve){
                     _gpsVille=cityName;
+                    Ville villeGPS =new Ville();
+                    villeGPS.set_nom_ville(cityName);
+                    if (paysTrouve && idPaysTrouve != 0)
+                        villeGPS.set_id_pays(idPaysTrouve);
+                    _villes.add(villeGPS);
+
                     _nomVilles.add(cityName);
                     ArrayAdapter<String> arrayAdapterVilles=new ArrayAdapter<String>(InscriptionActivity.this,
                             android.R.layout.simple_spinner_dropdown_item, _nomVilles);
@@ -192,7 +206,6 @@ public class InscriptionActivity extends AppCompatActivity {
                     setSelectedItem(_spinnerVille,cityName);
 
                 }
-
             }
         } catch (IOException e) {
             e.printStackTrace();
