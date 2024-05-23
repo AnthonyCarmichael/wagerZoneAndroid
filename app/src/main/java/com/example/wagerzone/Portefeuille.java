@@ -64,7 +64,8 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
         if(v.getId()==R.id.buttonRetirFonds){
-            Intent intent = new Intent(Portefeuille.this, Retrait.class);
+            Intent intent = new Intent(Portefeuille.this, Paiement.class);
+            intent.putExtra("retrait", -1);
             startActivity(intent);
         }
         if(v.getId()==R.id.btnRetour){
