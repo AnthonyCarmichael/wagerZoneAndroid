@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".EquipesActivity">
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="333dp"
@@ -48,6 +47,7 @@
 
         <include layout="@layout/footer" />
     </LinearLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

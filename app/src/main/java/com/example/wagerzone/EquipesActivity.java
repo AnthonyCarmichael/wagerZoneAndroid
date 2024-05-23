@@ -20,9 +20,17 @@ public class EquipesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_equipes);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
         setContentView(R.layout.activity_equipes);
         this._nav = new Nav(this,findViewById(android.R.id.content),EquipesActivity.this);
-        TextView titre = findViewById(R.id.titre);
+        /*TextView titre = findViewById(R.id.titre);
         titre.setText("Equipes");
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         SQLiteManager sqLiteManager = new SQLiteManager(EquipesActivity.this);
@@ -34,6 +42,6 @@ public class EquipesActivity extends AppCompatActivity {
         }
         //MyAdapter myAdapter = new MyAdapter(this, equipes, this);
         ///recyclerView.setAdapter(myAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));*/
     }
 }

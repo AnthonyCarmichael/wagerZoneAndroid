@@ -21,6 +21,9 @@
             android:name=".MatchsActivity"
             android:exported="false" />
         <activity
+            android:name=".EquipesActivity"
+            android:exported="false" />
+        <activity
             android:name=".AjoutParisActivity"
             android:exported="false" />
         <activity
