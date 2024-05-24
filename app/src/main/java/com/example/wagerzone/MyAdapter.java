@@ -79,6 +79,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             mise = (TextView) itemView.findViewById(R.id.mise);
             match = (TextView) itemView.findViewById(R.id.match);
             Button annuler = (Button) itemView.findViewById(R.id.annuler);
+            Button modifier = (Button) itemView.findViewById(R.id.modifier);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -123,6 +124,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                     });
                     AlertDialog alert = builder.create();
                     alert.show();
+                }
+            });
+            modifier.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), ModificationParisActivity.class);
+                    startActivity(v.getContext(), intent, null);
+                    ((ParisActivity)context).finish();
                 }
             });
         }

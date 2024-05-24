@@ -20,6 +20,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -62,7 +63,14 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
         userIcone.setBackgroundResource(R.drawable.rounded_red);
 
         _messageErreurSucces = findViewById(R.id.messageErreurSucces);
+
+        int requestCode = getIntent().getIntExtra("inscription", -1);
+
         setBoutons();
+        if(requestCode==200)
+        {
+            _messageErreurSucces.setVisibility(View.VISIBLE);
+        }
 
     }
 
@@ -103,7 +111,7 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
             connection.setRequestProperty("Content-Type","application/json");
-            connection.setConnectTimeout(3000);
+            connection.setConnectTimeout(1000);
             JSONObject data = new JSONObject();
 
             // Écriture de la requête
@@ -137,21 +145,24 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
 
                 JSONObject jsonResponse = new JSONObject(response.toString());
                 Log.d("JSON Response", jsonResponse.toString());
-                JSONObject successObject = jsonResponse.getJSONObject("SUCCESS");
+                JSONArray successArray = jsonResponse.getJSONArray("SUCCESS");
+                JSONObject userObject = successArray.getJSONObject(0);
+                JSONObject paysObject = successArray.getJSONObject(1);
+                JSONObject villeObject = successArray.getJSONObject(2);
 
                 // Création du user:
                 user = new Utilisateur();
-                user.set_nom(successObject.getString("nom"));
-                user.set_prenom(successObject.getString("prenom"));
-                user.set_name(successObject.getString("name")); // USERNAME
-                user.set_email(successObject.getString("name"));
-                user.set_id(successObject.getInt("id"));
-                user.set_date_naissance(successObject.getString("date_naissance"));
-                user.set_telephone(successObject.getString("telephone"));
-                user.set_adresse(successObject.getString("adresse"));
-                user.set_fonds(successObject.getString("fonds"));
-                //user.set_ville(successObject.getString("ville"));
-                //user.set_pays(successObject.getString("ville"));
+                user.set_nom(userObject.getString("nom"));
+                user.set_prenom(userObject.getString("prenom"));
+                user.set_name(userObject.getString("name")); // USERNAME
+                user.set_email(userObject.getString("email"));
+                user.set_id(userObject.getInt("id"));
+                user.set_date_naissance(userObject.getString("date_naissance"));
+                user.set_telephone(userObject.getString("telephone"));
+                user.set_adresse(userObject.getString("adresse"));
+                user.set_fonds(userObject.getString("fonds"));
+                user.set_ville(villeObject.getString("nom_ville"));
+                user.set_pays(paysObject.getString("nom_pays"));
 
                 SQLiteManager sqLiteManager = new SQLiteManager(ConnexionActivity.this);
                 sqLiteManager.MAJParis(user.get_id());
