@@ -343,7 +343,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                 user.set_nom(userObject.getString("nom"));
                 user.set_prenom(userObject.getString("prenom"));
                 user.set_name(userObject.getString("name")); // USERNAME
-                user.set_email(userObject.getString("name"));
+                user.set_email(userObject.getString("email"));
                 user.set_id(userObject.getInt("id"));
                 user.set_date_naissance(userObject.getString("date_naissance"));
                 user.set_telephone(userObject.getString("telephone"));
