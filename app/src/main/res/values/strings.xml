@@ -44,4 +44,8 @@
     <string name="date_de_naissance">Date de naissance</string>
     <string name="confirmedInscription">L\'inscription été complétée</string>
     <string name="revoirForm">Revoir les champs précédents</string>
+    <string name="information_compte">Informations du compte</string>
+    <string name="modifier">Modifier</string>
+    <string name="supprimer">supprimer</string>
+    <string name="hide">*********</string>
 </resources>
