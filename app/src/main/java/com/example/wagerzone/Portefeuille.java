@@ -12,14 +12,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 public class Portefeuille extends AppCompatActivity implements View.OnClickListener{
 
-    private TextView montantTotal;
-    private TextView montantParis;
+    private TextView montantTotalView;
+    private TextView montantParisView;
     private TextView montantRetirable;
+    private Utilisateur user;
 
     private static final DecimalFormat decfor = new DecimalFormat("0.00");
     @Override
@@ -32,9 +32,12 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        user = (Utilisateur) getIntent().getSerializableExtra("user");
+
+        //nav = new Nav(this, findViewById(android.R.id.content),Portefeuille.this);
         //Déclare les TextView des montants
-        montantTotal = findViewById(R.id.montantTotal);
-        montantParis = findViewById(R.id.montantParis);
+        montantTotalView = findViewById(R.id.montantTotal);
+        montantParisView = findViewById(R.id.montantParis);
         montantRetirable = findViewById(R.id.montantRetirable);
         //Affecte le text des montant
         chargeMontantTotal();
@@ -56,17 +59,20 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.buttonAjoutFonds){
-            Intent intent = new Intent(Portefeuille.this, Paiement.class);
-            startActivity(intent);
+            Intent intentAjoutFonds = new Intent(Portefeuille.this, Paiement.class);
+            intentAjoutFonds.putExtra("user", user);
+            startActivity(intentAjoutFonds);
         }
         if(v.getId()==R.id.buttonTransactions){
-            Intent intent = new Intent(Portefeuille.this, MesTransactions.class);
-            startActivity(intent);
+            Intent intentTransactions = new Intent(Portefeuille.this, MesTransactions.class);
+            intentTransactions.putExtra("user", user);
+            startActivity(intentTransactions);
         }
         if(v.getId()==R.id.buttonRetirFonds){
-            Intent intent = new Intent(Portefeuille.this, Paiement.class);
-            intent.putExtra("retrait", -1);
-            startActivity(intent);
+            Intent intentRetirFonds = new Intent(Portefeuille.this, Paiement.class);
+            intentRetirFonds.putExtra("retrait", -1);
+            intentRetirFonds.putExtra("user", user);
+            startActivity(intentRetirFonds);
         }
         if(v.getId()==R.id.btnRetour){
             finish();
@@ -76,13 +82,13 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
     private void chargeMontantTotal(){
         double total = 0;
         
-        montantTotal.setText(decfor.format(total) + '$');
+        montantTotalView.setText(decfor.format(total) + '$');
     }
 
     private void chargeMontanParis(){
         double total = 0;
 
-        montantParis.setText(decfor.format(total) + '$');
+        montantParisView.setText(decfor.format(total) + '$');
     }
 
     private void chargeMontantRetirable(){

@@ -37,6 +37,8 @@ public class ExecutionTransaction extends AppCompatActivity {
     private String paymentIntentClientSecret;
     private PaymentSheet.CustomerConfiguration configuration;
     private float montant;
+    private Utilisateur user;
+    private boolean estRetrait;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +49,10 @@ public class ExecutionTransaction extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        user = (Utilisateur) getIntent().getSerializableExtra("user");
         montant = getIntent().getFloatExtra("montant", 0);
+        estRetrait = getIntent().hasExtra("retrait");
         if(montant < 5)
         {
             Toast.makeText(getApplicationContext(), "Minimum de 5$ requis", Toast.LENGTH_SHORT).show();
@@ -62,11 +67,22 @@ public class ExecutionTransaction extends AppCompatActivity {
                 finish();
             }
         });
-        fetchPaiementApi();
+        if(estRetrait){
+            fetchRetraitApi();
+        }
+        else{
+            fetchPaiementApi();
+        }
 
 
     }
-    public void fetchPaiementApi() {
+
+    private void fetchRetraitApi() {
+        montant = montant * -1;
+        effectueTransaction();
+    }
+
+    private void fetchPaiementApi() {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url ="http://10.0.2.2:8000/api/fetchPaiement";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -105,7 +121,7 @@ public class ExecutionTransaction extends AppCompatActivity {
     }
 
 
-    public void ouverturePaiement(){
+    private void ouverturePaiement(){
         if(paymentIntentClientSecret != null)
         {
             paymentSheet.presentWithPaymentIntent(paymentIntentClientSecret,
@@ -176,7 +192,7 @@ public class ExecutionTransaction extends AppCompatActivity {
                 paramV.put("authKey", "abc");
                 paramV.put("date", LocalDateTime.now().toString());
                 //Ajouter l'id de l'utilisateur
-                paramV.put("id_user", "6");
+                paramV.put("id_user", String.valueOf(user.get_id()));
                 paramV.put("montant", String.valueOf(montant));
                 return paramV;
             }

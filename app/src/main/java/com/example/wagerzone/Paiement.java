@@ -32,7 +32,8 @@ import java.util.Map;
 
 public class Paiement extends AppCompatActivity {
     private TextView editMontant;
-    private float multiplicateur = 1;
+    private boolean estRetrait;
+    private Utilisateur user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,10 +44,11 @@ public class Paiement extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        user = (Utilisateur) getIntent().getSerializableExtra("user");
         editMontant = findViewById(R.id.montant);
-        if(getIntent().hasExtra("retrait"))
+        estRetrait = getIntent().hasExtra("retrait");
+        if(estRetrait)
         {
-            multiplicateur = -1;
             TextView titre = findViewById(R.id.titreTransactions);
             titre.setText("Retrait : ");
         }
@@ -68,9 +70,11 @@ public class Paiement extends AppCompatActivity {
                     montant = Float.valueOf(editMontant.getText().toString().trim());
                 if(montant >= 5)
                 {
-                    montant = montant * multiplicateur;
                     Intent intent = new Intent(Paiement.this, ExecutionTransaction.class);
                     intent.putExtra("montant", montant);
+                    intent.putExtra("user", user);
+                    if(estRetrait)
+                        intent.putExtra("retrait", true);
                     startActivity(intent);
                     finish();
                 }
