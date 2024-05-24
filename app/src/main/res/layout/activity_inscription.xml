@@ -41,10 +41,24 @@
                 android:layout_marginBottom="16dp"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/inscriptionError"
+                android:layout_columnSpan="2"
+                android:text="@string/erreur_inscription"
+                android:textColor="@color/rougeFonce"
+                android:layout_marginBottom="16dp"
+                android:textStyle="bold"
+                android:visibility="gone"/>
+
 
             <TextView
                 android:text="@string/nom_utilisateur" />
-
+            <TextView
+                android:text="@string/obligatoire"
+                android:id="@+id/usernameError"
+                android:textColor="@color/rougeFonce"
+                android:layout_columnSpan="2"
+                android:visibility="gone"/>
             <EditText
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
@@ -57,30 +71,48 @@
 
             <TextView
                 android:text="@string/mot_de_passe" />
+            <TextView
+                android:text="@string/obligatoire"
+                android:id="@+id/mdpError"
+                android:textColor="@color/rougeFonce"
+                android:layout_columnSpan="2"
+                android:visibility="gone"/>
             <EditText
                 android:id="@+id/mdp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="text"
+                android:inputType="textPassword"
                 android:text=""
                 android:layout_columnSpan="2"
                 android:layout_marginBottom="16dp"/>
 
             <TextView
                 android:text="@string/confirmer_mdp" />
+            <TextView
+                android:text="@string/obligatoire"
+                android:id="@+id/mdp2Error"
+                android:textColor="@color/rougeFonce"
+                android:layout_columnSpan="2"
+                android:visibility="gone"/>
             <EditText
                 android:id="@+id/mdp2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="text"
+                android:inputType="textPassword"
                 android:text=""
                 android:layout_columnSpan="2"
                 android:layout_marginBottom="16dp"/>
 
             <TextView
                 android:text="@string/adresse_courriel" />
+            <TextView
+                android:text="@string/obligatoire"
+                android:id="@+id/emailError"
+                android:textColor="@color/rougeFonce"
+                android:layout_columnSpan="2"
+                android:visibility="gone"/>
             <EditText
                 android:id="@+id/email"
                 android:layout_width="wrap_content"
@@ -89,7 +121,65 @@
                 android:inputType="textEmailAddress"
                 android:text=""
                 android:layout_columnSpan="2"
+                android:layout_marginBottom="16dp"/>
+            <TextView
+                android:text="@string/nom" />
+            <TextView
+                android:text="@string/obligatoire"
+                android:id="@+id/nomError"
+                android:textColor="@color/rougeFonce"
+                android:layout_columnSpan="2"
+                android:visibility="gone"/>
+            <EditText
+                android:id="@+id/nom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                android:text=""
+                android:layout_columnSpan="2"
+                android:layout_marginBottom="16dp"/>
+            <TextView
+                android:text="@string/prenom" />
+            <TextView
+                android:text="@string/obligatoire"
+                android:id="@+id/prenomError"
+                android:textColor="@color/rougeFonce"
+                android:layout_columnSpan="2"
+                android:visibility="gone"/>
+            <EditText
+                android:id="@+id/prenom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                android:text=""
+                android:layout_columnSpan="2"
+                android:layout_marginBottom="16dp"/>
+            <TextView
+                android:text="@string/obligatoire"
+                android:id="@+id/ddnError"
+                android:textColor="@color/rougeFonce"
+                android:layout_columnSpan="2"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/chooseDateButton"
+                android:background="@drawable/bouton_rouge"
+                android:paddingHorizontal="16dp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/date_de_naissance"
+                android:layout_columnSpan="2"
+                android:layout_marginBottom="16dp"/>
+            <TextView
+                android:id="@+id/ddn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="2"
                 android:layout_marginBottom="40dp"/>
+
 
             <TextView
                 android:layout_columnSpan="2"
@@ -123,6 +213,12 @@
 
             <TextView
                 android:text="@string/adresse" />
+            <TextView
+                android:text="@string/obligatoire"
+                android:id="@+id/adresseError"
+                android:textColor="@color/rougeFonce"
+                android:layout_columnSpan="2"
+                android:visibility="gone"/>
             <EditText
                 android:id="@+id/adresse"
                 android:layout_width="wrap_content"
@@ -136,13 +232,19 @@
 
             <TextView
                 android:text="@string/tel" />
+            <TextView
+                android:text="@string/obligatoire"
+                android:id="@+id/telephoneError"
+                android:textColor="@color/rougeFonce"
+                android:layout_columnSpan="2"
+                android:visibility="gone"/>
             <EditText
                 android:id="@+id/telephone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="phone"
-                android:text=""
+                android:maxLength="10"
                 android:layout_columnSpan="2"
                 android:layout_marginBottom="16dp"/>
 
@@ -174,27 +276,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/fichier"
-                android:layout_marginBottom="16dp"/>
+                android:layout_marginBottom="30dp"/>
 
-
+            <TextView
+                android:text="@string/revoirForm"
+                android:id="@+id/formError"
+                android:textColor="@color/rougeFonce"
+                android:layout_columnSpan="2"
+                android:visibility="gone"/>
             <Button
                 android:layout_marginTop="16dp"
                 android:layout_columnSpan="2"
                 android:id="@+id/btnSend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Envoyer"
+                android:text="@string/envoyer"
                 android:background="@drawable/bouton_rouge"
                 android:textColor="@color/white"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:layout_marginBottom="30dp"/>
         </GridLayout>
-
-
-
     </ScrollView>
-
-
-
 
     <LinearLayout
         android:id="@+id/footer"

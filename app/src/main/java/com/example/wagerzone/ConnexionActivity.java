@@ -62,7 +62,14 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
         userIcone.setBackgroundResource(R.drawable.rounded_red);
 
         _messageErreurSucces = findViewById(R.id.messageErreurSucces);
+
+        int requestCode = getIntent().getIntExtra("inscription", -1);
+
         setBoutons();
+        if(requestCode==200)
+        {
+            _messageErreurSucces.setVisibility(View.VISIBLE);
+        }
 
     }
 
@@ -103,7 +110,7 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
             connection.setRequestProperty("Content-Type","application/json");
-            connection.setConnectTimeout(3000);
+            connection.setConnectTimeout(1000);
             JSONObject data = new JSONObject();
 
             // Écriture de la requête

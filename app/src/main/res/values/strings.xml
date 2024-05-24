@@ -31,4 +31,17 @@
     <string name="ville">Ville</string>
     <string name="photoInscription">Photo</string>
     <string name="fichier">fichier</string>
+    <string name="envoyer">Envoyer</string>
+    <string name="obligatoire">Champ obligatoire</string>
+    <string name="pas_pareil">Les mots de passes ne sont pas identiques</string>
+    <string name="invalide">Ce champ est invalide</string>
+    <string name="erreur_inscription">Erreur, impossible de vous inscrire. Réessayer plus tard</string>
+    <string name="nom">nom</string>
+    <string name="prenom">Prénom</string>
+    <string name="erreur_email">Ce courriel est déjà utilisé</string>
+    <string name="erreur_username">Ce nom d\'utilisateur est déjà utilisé</string>
+    <string name="ddn">Date de naissance</string>
+    <string name="date_de_naissance">Date de naissance</string>
+    <string name="confirmedInscription">L\'inscription été complétée</string>
+    <string name="revoirForm">Revoir les champs précédents</string>
 </resources>
