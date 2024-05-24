@@ -14,6 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MesTransactions extends AppCompatActivity {
 
+    private Utilisateur user;
+    private String dateTransaction[];
+    private String monatanTransaction[];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,15 +35,9 @@ public class MesTransactions extends AppCompatActivity {
                 finish();
             }
         });
+        afficherTransactions();
 
-        //Set les données à mettre dans le recycle view
-        String test[] = new String[]{"test1", "test2", "test3", "test4"};
-        //Déclaration du recyclerView et de son adaptateur
-        RecyclerView rv = (RecyclerView) findViewById(R.id.rvTransactions);
-        TransactionAdaptor adaptor = new TransactionAdaptor(this, test,test,test);
-        //Application des données dans le recycleView
-        rv.setAdapter(adaptor);
-        rv.setLayoutManager(new LinearLayoutManager(this));
+        this.user = (Utilisateur) getIntent().getSerializableExtra("user");
     }
 
     //Déclaration des transactions
@@ -53,5 +51,9 @@ public class MesTransactions extends AppCompatActivity {
         //Application des données dans le recycleView
         rv.setAdapter(adaptor);
         rv.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void fetchTransactions(){
+
     }
 }
