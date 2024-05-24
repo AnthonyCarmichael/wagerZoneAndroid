@@ -36,13 +36,6 @@ public class MainActivity extends AppCompatActivity {
         titre.setText(R.string.accueil);
 
 
-        Button btn = findViewById(R.id.btnPortefeuille);
-        btn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Portefeuille.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
