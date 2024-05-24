@@ -250,7 +250,7 @@ public class InscriptionActivity extends AppCompatActivity  implements View.OnCl
 
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             Log.e("GeocoderError", "Unable to get address from location", e);
         }
@@ -466,6 +466,7 @@ public class InscriptionActivity extends AppCompatActivity  implements View.OnCl
             badForm = true;
         }
         if(badForm){
+            formError.setText(R.string.revoirForm);
             formError.setVisibility(View.VISIBLE);
             return form;
         }
@@ -532,22 +533,22 @@ public class InscriptionActivity extends AppCompatActivity  implements View.OnCl
                 finish();
 
             } else if (codeReponse == 501) {
-                TextView inscriptionError = findViewById(R.id.inscriptionError);
+                TextView inscriptionError = findViewById(R.id.formError);
                 inscriptionError.setText(R.string.erreur_email);
                 inscriptionError.setVisibility(View.VISIBLE);
             } else if (codeReponse == 502) {
-                TextView inscriptionError = findViewById(R.id.inscriptionError);
+                TextView inscriptionError = findViewById(R.id.formError);
                 inscriptionError.setText(R.string.erreur_username);
                 inscriptionError.setVisibility(View.VISIBLE);
             } else {
-                TextView inscriptionError = findViewById(R.id.inscriptionError);
+                TextView inscriptionError = findViewById(R.id.formError);
                 inscriptionError.setText(R.string.erreur_inscription);
                 inscriptionError.setVisibility(View.VISIBLE);
             }
             connection.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
-            TextView inscriptionError = findViewById(R.id.inscriptionError);
+            TextView inscriptionError = findViewById(R.id.formError);
             inscriptionError.setText(R.string.erreur_inscription);
             inscriptionError.setVisibility(View.VISIBLE);
         }
