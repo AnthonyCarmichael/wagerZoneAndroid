@@ -85,5 +85,10 @@ public class MainActivity extends AppCompatActivity {
             TextView messageErreurSuccesMain = _nav.get_messageErreurSuccesMain();
             messageErreurSuccesMain.setVisibility(View.INVISIBLE);
         }
+        if (resultCode == 200){ // Inscription redirection vers activité connexion
+            Intent connexionIntent = new Intent(this,ConnexionActivity.class);
+            connexionIntent.putExtra("inscription", 200);
+            startActivityForResult(connexionIntent, 200);
+        }
     }
 }

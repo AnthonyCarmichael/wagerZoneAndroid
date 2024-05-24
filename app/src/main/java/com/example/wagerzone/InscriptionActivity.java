@@ -1,6 +1,7 @@
 package com.example.wagerzone;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -8,16 +9,20 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
@@ -31,10 +36,25 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class InscriptionActivity extends AppCompatActivity  implements View.OnClickListener{
 
@@ -60,6 +80,12 @@ public class InscriptionActivity extends AppCompatActivity  implements View.OnCl
     private Button _btnPhoto;
     private Button _btnFichier;
     private Button _btnSend;
+    private Button _btnDdn;
+    private Calendar _calendrier;
+    private Calendar _dateLimite;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +112,7 @@ public class InscriptionActivity extends AppCompatActivity  implements View.OnCl
         // Permission geolocalisation.
         // Le callback permet d'attendre que l'utilisateur donne le droit ou non au gps pour loader ensuite la page
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123);
+        set_calendrier();
         setButton();
 
     }
@@ -132,9 +159,6 @@ public class InscriptionActivity extends AppCompatActivity  implements View.OnCl
                     arrayAdapterVilles.notifyDataSetChanged();
                     setSelectedItem(_spinnerVille,_gpsVille);
                 }
-
-
-
             }
 
             @Override
@@ -281,10 +305,12 @@ public class InscriptionActivity extends AppCompatActivity  implements View.OnCl
         _btnSend = findViewById(R.id.btnSend);
         _btnFichier = findViewById(R.id.btnFichier);
         _btnPhoto = findViewById(R.id.btnPhoto);
+        _btnDdn = findViewById(R.id.chooseDateButton);
 
         _btnPhoto.setOnClickListener(this);
         _btnFichier.setOnClickListener(this);
         _btnSend.setOnClickListener(this);
+        _btnDdn.setOnClickListener(this);
     }
 
     @Override
@@ -294,6 +320,31 @@ public class InscriptionActivity extends AppCompatActivity  implements View.OnCl
         }
         else if(v.getId() == R.id.btnFichier){
             openGallery();
+        }
+        else if(v.getId() == R.id.btnSend){
+            try {
+                JSONObject data = checkInput();
+                if (data.length()!=0)
+                    insertUser(data);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (v.getId()==R.id.chooseDateButton) {
+            int year = _calendrier.get(Calendar.YEAR);
+            int month = _calendrier.get(Calendar.MONTH);
+            int dayOfMonth = _calendrier.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(InscriptionActivity.this,
+                    new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                            TextView ddn = findViewById(R.id.ddn);
+                            String date = year+"-"+(monthOfYear + 1) +"-"+dayOfMonth;
+                            ddn.setText(date);
+                        }
+                    }, year, month, dayOfMonth);
+            datePickerDialog.getDatePicker().setMaxDate(_dateLimite.getTimeInMillis());
+            datePickerDialog.show();
         }
     }
 
@@ -324,4 +375,189 @@ public class InscriptionActivity extends AppCompatActivity  implements View.OnCl
         }
     }
 
+    private JSONObject checkInput() throws JSONException {
+        JSONObject form = new JSONObject();
+        Boolean badForm = false;
+
+        EditText nom = findViewById(R.id.nom);
+        EditText prenom = findViewById(R.id.prenom);
+        EditText username = findViewById(R.id.username);
+        EditText mdp = findViewById(R.id.mdp);
+        EditText mdp2 = findViewById(R.id.mdp2);
+        EditText email = findViewById(R.id.email);
+        EditText telephone = findViewById(R.id.telephone);
+        EditText adresse = findViewById(R.id.adresse);
+        TextView ddn = findViewById(R.id.ddn);
+
+        TextView nomError = findViewById(R.id.nomError);
+        TextView prenomError = findViewById(R.id.prenomError);
+        TextView usernameError = findViewById(R.id.usernameError);
+        TextView mdpError = findViewById(R.id.mdpError);
+        TextView mdp2Error = findViewById(R.id.mdp2Error);
+        TextView emailError = findViewById(R.id.emailError);
+        TextView telephoneError = findViewById(R.id.telephoneError);
+        TextView adresseError = findViewById(R.id.adresseError);
+        TextView ddnError = findViewById(R.id.ddnError);
+        TextView formError = findViewById(R.id.formError);
+
+        // Reset tout les messages d'erreurs:
+        usernameError.setVisibility(View.GONE);
+        mdpError.setVisibility(View.GONE);
+        mdp2Error.setVisibility(View.GONE);
+        emailError.setVisibility(View.GONE);
+        telephoneError.setVisibility(View.GONE);
+        adresseError.setVisibility(View.GONE);
+        nomError.setVisibility(View.GONE);
+        prenomError.setVisibility(View.GONE);
+        ddnError.setVisibility(View.GONE);
+        formError.setVisibility(View.GONE);
+
+
+        if (nom.getText().toString().isEmpty()){
+            nomError.setVisibility(View.VISIBLE);
+            badForm = true;
+        }
+        if (prenom.getText().toString().isEmpty()){
+            prenomError.setVisibility(View.VISIBLE);
+            badForm = true;
+        }
+        if (username.getText().toString().isEmpty()){
+            usernameError.setVisibility(View.VISIBLE);
+            badForm = true;
+        }
+        if (mdp.getText().toString().isEmpty()){
+            mdpError.setVisibility(View.VISIBLE);
+            mdpError.setText(R.string.obligatoire);
+            badForm = true;
+        } else if (!mdp.getText().toString().equals(mdp2.getText().toString())) {
+            mdpError.setVisibility(View.VISIBLE);
+            mdpError.setText(R.string.pas_pareil);
+            badForm = true;
+        }
+        if (mdp2.getText().toString().isEmpty()){
+            mdp2Error.setVisibility(View.VISIBLE);
+            badForm = true;
+        }
+        if (email.getText().toString().isEmpty()){
+            emailError.setText(R.string.obligatoire);
+            emailError.setVisibility(View.VISIBLE);
+            badForm = true;
+        } else if (!emailValidator(email.getText().toString())){
+            emailError.setText(R.string.invalide);
+            emailError.setVisibility(View.VISIBLE);
+            badForm = true;
+        }
+        if (adresse.getText().toString().isEmpty()){
+            adresseError.setVisibility(View.VISIBLE);
+            badForm = true;
+        }
+        if (telephone.getText().toString().isEmpty()) {
+            telephoneError.setText(R.string.obligatoire);
+            telephoneError.setVisibility(View.VISIBLE);
+            badForm = true;
+        } else if (!phoneValidator(telephone.getText().toString())) {
+            telephoneError.setText(R.string.invalide);
+            telephoneError.setVisibility(View.VISIBLE);
+            badForm = true;
+        }
+        if (ddn.getText().toString().isEmpty()) {
+            ddnError.setText(R.string.obligatoire);
+            ddnError.setVisibility(View.VISIBLE);
+            badForm = true;
+        }
+        if(badForm){
+            formError.setVisibility(View.VISIBLE);
+            return form;
+        }
+        else {
+            form.put("name",username.getText().toString());
+            form.put("nom",nom.getText().toString());
+            form.put("prenom",prenom.getText().toString());
+            form.put("email",email.getText().toString());
+            form.put("password",mdp.getText().toString());
+            form.put("telephone",telephone.getText().toString());
+            form.put("adresse",adresse.getText().toString());
+            form.put("nomPays",_spinnerPays.getSelectedItem());
+            form.put("nomVille",_spinnerVille.getSelectedItem());
+            form.put("ddn",ddn.getText().toString());
+            return form;
+        }
+
+    }
+
+    public boolean emailValidator(String email)
+    {
+        Pattern pattern;
+        Matcher matcher;
+        final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        pattern = Pattern.compile(EMAIL_PATTERN);
+        matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    public boolean phoneValidator(String phone)
+    {
+        Pattern pattern;
+        Matcher matcher;
+        final String EMAIL_PATTERN = "^(\\d{3}[- .]?){2}\\d{4}$";
+        pattern = Pattern.compile(EMAIL_PATTERN);
+        matcher = pattern.matcher(phone);
+        return matcher.matches();
+    }
+
+    public void insertUser(JSONObject data)
+    {
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            URL url = new URL("http://10.0.2.2:8000/api/insertNewUser");
+
+            // Crée la connection
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Content-Type","application/json");
+            connection.setConnectTimeout(1000);
+
+            // Obligatoire pour un post
+            OutputStream os = connection.getOutputStream();
+            os.write(data.toString().getBytes());
+            os.flush();
+            os.close();
+
+            int codeReponse = connection.getResponseCode();
+            String reponse = connection.getResponseMessage();
+            if (codeReponse == HttpURLConnection.HTTP_OK) {
+                setResult(200);
+                finish();
+
+            } else if (codeReponse == 501) {
+                TextView inscriptionError = findViewById(R.id.inscriptionError);
+                inscriptionError.setText(R.string.erreur_email);
+                inscriptionError.setVisibility(View.VISIBLE);
+            } else if (codeReponse == 502) {
+                TextView inscriptionError = findViewById(R.id.inscriptionError);
+                inscriptionError.setText(R.string.erreur_username);
+                inscriptionError.setVisibility(View.VISIBLE);
+            } else {
+                TextView inscriptionError = findViewById(R.id.inscriptionError);
+                inscriptionError.setText(R.string.erreur_inscription);
+                inscriptionError.setVisibility(View.VISIBLE);
+            }
+            connection.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+            TextView inscriptionError = findViewById(R.id.inscriptionError);
+            inscriptionError.setText(R.string.erreur_inscription);
+            inscriptionError.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    private void set_calendrier(){
+        _calendrier = Calendar.getInstance();
+        _dateLimite = Calendar.getInstance();
+        _dateLimite.add(Calendar.YEAR, -18);
+    }
+    
 }
