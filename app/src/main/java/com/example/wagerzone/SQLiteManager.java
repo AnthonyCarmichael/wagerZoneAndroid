@@ -23,7 +23,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 public class SQLiteManager  extends SQLiteOpenHelper
 {
@@ -359,7 +359,7 @@ public class SQLiteManager  extends SQLiteOpenHelper
                 Ville ville2 = new Ville(ville);
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(NOM_VILLE, ville2.get_nom_ville());
-                contentValues.put(ID_PAYS, ville2.get_pays());
+                contentValues.put(ID_PAYS, ville2.get_id_pays());
                 sqLiteDatabase.insert(TABLE_VILLE, null, contentValues);
             }
         } catch (JSONException e) {
@@ -705,6 +705,58 @@ public class SQLiteManager  extends SQLiteOpenHelper
     }
 
 
+    public List<Ville> fetchAllVillesByPaysId(int idPays){
+        ArrayList<Ville> villes = new ArrayList<>();
+
+        String requete = "SELECT * FROM " + TABLE_VILLE + " " + " WHERE " + ID_PAYS + " = " + "'" + idPays + "'";
+
+
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery(requete,null);
+
+        if (cursor.moveToFirst())
+        {
+            do {
+                Ville ville =new Ville();
+                ville.set_id_ville(cursor.getInt(0));
+                ville.set_nom_ville(cursor.getString(1));
+                ville.set_id_pays(cursor.getInt(2));
+                villes.add(ville);
+            } while (cursor.moveToNext());
+
+        } else {
+            // No results
+        }
+
+        cursor.close();
+
+        return villes;
+    }
+
+    public List<Pays> fetchAllPays(){
+        ArrayList<Pays> paysArr = new ArrayList<>();
+
+        String requete = "SELECT * FROM " + TABLE_PAYS;
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery(requete,null);
+
+        if (cursor.moveToFirst())
+        {
+            do {
+                Pays pays =new Pays();
+                pays.set_id_pays(cursor.getInt(0));
+                pays.set_nom_pays(cursor.getString(1));
+                paysArr.add(pays);
+            } while (cursor.moveToNext());
+
+        } else {
+            // No results
+        }
+        cursor.close();
+        return paysArr;
+    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

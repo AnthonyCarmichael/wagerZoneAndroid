@@ -116,6 +116,7 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
                 writeToken(token+";"+username);
             }
 
+            // Obligatoire pour un post
             OutputStream os = connection.getOutputStream();
             os.write(data.toString().getBytes());
             os.flush();

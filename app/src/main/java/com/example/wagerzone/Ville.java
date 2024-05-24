@@ -3,18 +3,21 @@ package com.example.wagerzone;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Objects;
 
 public class Ville {
     private int _id_ville;
     private String _nom_ville;
-    private String _pays;
+    private int _id_pays;
+
+    public Ville() {
+        this._nom_ville=null;
+    }
 
     public Ville(JSONObject ville) throws JSONException {
         this._id_ville = Integer.parseInt(Objects.requireNonNull(ville.getString("id_ville")));
         this._nom_ville = ville.getString("nom_ville");
-        this._pays = (Objects.requireNonNull(ville.getString("id_pays")));
+        this._id_pays = (ville.getInt("id_pays"));
     }
 
     public int get_id_ville() {
@@ -33,11 +36,11 @@ public class Ville {
         this._nom_ville = _nom_ville;
     }
 
-    public String get_pays() {
-        return _pays;
+    public int get_id_pays() {
+        return _id_pays;
     }
 
-    public void set_pays(String _pays) {
-        this._pays = _pays;
+    public void set_id_pays(int _id_pays) {
+        this._id_pays = _id_pays;
     }
 }
