@@ -535,22 +535,23 @@ public class SQLiteManager  extends SQLiteOpenHelper
                 while (result.moveToNext()) {
                     Equipe equipe = new Equipe();
 
-                    equipe.set_id_equipe(result.getInt(1));
-                    equipe.set_nom_equipe(result.getString(2));
-                    equipe.set_entraineur(result.getString(3));
-                    equipe.set_stade(result.getString(4));
-                    equipe.set_match_joue(result.getInt(5));
-                    equipe.set_victoire(result.getInt(6));
-                    equipe.set_defaite(result.getInt(7));
-                    equipe.set_match_nul(result.getInt(8));
-                    equipe.set_defaite_prolongation(result.getInt(9));
-                    equipe.set_sport(result.getString(10));
-                    equipe.set_ville(result.getString(11));
+                    equipe.set_id_equipe(result.getInt(0));
+                    equipe.set_nom_equipe(result.getString(1));
+                    equipe.set_entraineur(result.getString(2));
+                    equipe.set_stade(result.getString(3));
+                    equipe.set_match_joue(result.getInt(4));
+                    equipe.set_victoire(result.getInt(5));
+                    equipe.set_defaite(result.getInt(6));
+                    equipe.set_match_nul(result.getInt(7));
+                    equipe.set_defaite_prolongation(result.getInt(8));
+                    equipe.set_sport(result.getString(9));
+                    equipe.set_ville(result.getString(10));
 
                     equipes.add(equipe);
                 }
             }
         }
+
         return equipes;
     }
 
