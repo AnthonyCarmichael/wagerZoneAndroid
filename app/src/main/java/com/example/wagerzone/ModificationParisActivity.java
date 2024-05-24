@@ -1,5 +1,6 @@
 package com.example.wagerzone;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -17,7 +18,27 @@ public class ModificationParisActivity extends AppCompatActivity {
         setContentView(R.layout.activity_modification_paris);
         this._nav = new Nav(this,findViewById(android.R.id.content),ModificationParisActivity.this);
         TextView titre = findViewById(R.id.titre);
+        TextView match = findViewById(R.id.match2);
+        TextView nomVisiteur = findViewById(R.id.nomVisiteur);
+        TextView nomReceveur = findViewById(R.id.nomReceveur);
+        TextView coteVisiteur = findViewById(R.id.coteVisiteur);
+        TextView coteReceveur = findViewById(R.id.coteReceveur);
+        TextView miseReceveur = findViewById(R.id.miseReceveur);
+        TextView miseVisiteur = findViewById(R.id.miseVisiteur);
         titre.setText("Modification paris");
+        Intent intent = getIntent();
+        match.setText("Match : " + intent.getStringExtra("nomVisiteur") + " vs " + intent.getStringExtra("nomReceveur"));
+        nomVisiteur.setText(intent.getStringExtra("nomVisiteur"));
+        nomReceveur.setText(intent.getStringExtra("nomReceveur"));
+        coteVisiteur.setText("Cote : " + String.valueOf(intent.getIntExtra("coteVisiteur", 0)));
+        coteReceveur.setText("Cote : " + String.valueOf(intent.getIntExtra("coteReceveur", 0)));
+        if(intent.getIntExtra("equipeMise", 2) == 0){
+            miseVisiteur.setText(String.valueOf(intent.getFloatExtra("montant", 0)));
+        }
+        if(intent.getIntExtra("equipeMise", 2) == 1){
+            miseReceveur.setText(String.valueOf(intent.getFloatExtra("montant", 0)));
+        }
+
     }
 
     @Override

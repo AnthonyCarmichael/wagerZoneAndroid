@@ -586,6 +586,34 @@ public class SQLiteManager  extends SQLiteOpenHelper
         return equipe;
     }
 
+    public int getCoteReceveur(int id_partie) throws IOException {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        int cote = 0;
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_EQUIPE_PARTIE + " WHERE " + ID_PARTIE + " = " + id_partie + " AND " + RECEVEUR + " =  1", null)){
+            if(result.getCount() != 0){
+                while (result.moveToNext()){
+                    cote = result.getInt(1);
+                }
+            }
+        }
+
+        return cote;
+    }
+    public int getCoteVisiteur(int id_partie) throws IOException {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        int cote = 0;
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_EQUIPE_PARTIE + " WHERE " + ID_PARTIE + " = " + id_partie + " AND " + RECEVEUR + " =  0", null)){
+            if(result.getCount() != 0){
+                while (result.moveToNext()){
+                    cote = result.getInt(1);
+                }
+            }
+        }
+
+        return cote;
+    }
+
+
     public void MAJParis(int id_user){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         sqLiteDatabase.delete(TABLE_PARIS,null, null );

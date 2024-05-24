@@ -100,7 +100,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                     SQLiteManager sqLiteManager = new SQLiteManager(context);
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setTitle(R.string.app_name);
-                    builder.setMessage("Voulez vous vraiment annuler ce paris?" + pari.get_id_paris());
+                    builder.setMessage("Voulez vous vraiment annuler ce paris?");
                     builder.setIcon(R.drawable.ic_launcher_foreground);
                     builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
@@ -129,7 +129,32 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             modifier.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    Partie partie = new Partie();
+                    Equipe visiteur = new Equipe();
+                    Equipe receveur = new Equipe();
+                    int coteVisiteur = 0;
+                    int coteReceveur = 0;
+                    Paris pari = new Paris();
+                    pari = paris.get(getAdapterPosition());
+                    SQLiteManager sqLiteManager = new SQLiteManager(context);
+                    try {
+                        partie = sqLiteManager.getPartie(pari.get_id_partie());
+                        visiteur = sqLiteManager.getEquipeVisiteur(partie.get_id_partie());
+                        receveur = sqLiteManager.getEquipeReceveur(partie.get_id_partie());
+                        coteVisiteur = sqLiteManager.getCoteVisiteur(partie.get_id_partie());
+                        coteReceveur = sqLiteManager.getCoteReceveur(partie.get_id_partie());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                     Intent intent = new Intent(v.getContext(), ModificationParisActivity.class);
+                    intent.putExtra("montant", pari.get_montant());
+                    intent.putExtra("nomVisiteur", visiteur.get_nom_equipe());
+                    intent.putExtra("nomReceveur", receveur.get_nom_equipe());
+                    intent.putExtra("nomReceveur", receveur.get_nom_equipe());
+                    intent.putExtra("coteVisiteur", coteVisiteur);
+                    intent.putExtra("coteReceveur", coteReceveur);
+                    intent.putExtra("equipeMise", pari.get_receveur());
                     startActivity(v.getContext(), intent, null);
                     ((ParisActivity)context).finish();
                 }
