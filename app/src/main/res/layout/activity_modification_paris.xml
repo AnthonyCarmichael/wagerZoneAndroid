@@ -100,7 +100,9 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="Modifier"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:background="@drawable/bouton_paris_final"
+                android:textColor="@color/white"/>
 
         </LinearLayout>
 
@@ -154,7 +156,9 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="Annuler"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:background="@drawable/bouton_paris_final"
+                android:textColor="@color/white"/>
         </LinearLayout>
 
     </LinearLayout>

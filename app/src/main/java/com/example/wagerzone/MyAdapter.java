@@ -155,6 +155,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                     intent.putExtra("coteVisiteur", coteVisiteur);
                     intent.putExtra("coteReceveur", coteReceveur);
                     intent.putExtra("equipeMise", pari.get_receveur());
+                    intent.putExtra("id_paris", pari.get_id_paris());
                     startActivity(v.getContext(), intent, null);
                     ((ParisActivity)context).finish();
                 }
