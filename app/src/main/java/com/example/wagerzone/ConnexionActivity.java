@@ -2,6 +2,8 @@ package com.example.wagerzone;
 
 import android.content.Intent;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -32,7 +34,10 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import android.util.Base64;
 import java.util.UUID;
+
+import kotlin.UByteArray;
 
 public class ConnexionActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -163,6 +168,12 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
                 user.set_fonds(userObject.getString("fonds"));
                 user.set_ville(villeObject.getString("nom_ville"));
                 user.set_pays(paysObject.getString("nom_pays"));
+                String imageBase64 = userObject.getString("image");
+                if (!imageBase64.isEmpty()) {
+                    byte[] imageBytes = null;
+                    imageBytes = Base64.decode(imageBase64, Base64.DEFAULT);
+                    user.set_image(imageBytes);
+                }
 
                 SQLiteManager sqLiteManager = new SQLiteManager(ConnexionActivity.this);
                 sqLiteManager.MAJParis(user.get_id());

@@ -50,4 +50,5 @@
     <string name="hide">*********</string>
     <string name="erreur_modif">Erreur, impossible de modifier les informations du compte.</string>
     <string name="annuler">Annuler</string>
+    <string name="erreur_suppression">Impossible de supprimer le compte</string>
 </resources>

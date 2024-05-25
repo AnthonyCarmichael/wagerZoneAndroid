@@ -2,6 +2,8 @@ package com.example.wagerzone;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.graphics.Insets;
@@ -126,7 +129,27 @@ public class CompteActivity extends AppCompatActivity  implements View.OnClickLi
         }
         else if (v.getId() == R.id.supprimer){
             // Confirmation
-            // Si confirmer
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(true);
+
+            builder.setTitle("Supprimer le compte");
+            builder.setMessage("Êtes-vous certain de vouloir supprimer ce compte?");
+
+            builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            builder.setPositiveButton("Confirmer", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    desactiverUser();
+                }
+            });
+            builder.show();
+
         } else if(v.getId() == R.id.btnSend){
             try {
                 JSONObject data = _gestionForm.checkInput();
@@ -278,6 +301,46 @@ public class CompteActivity extends AppCompatActivity  implements View.OnClickLi
         ddn.setText(_nav.get_user().get_date_naissance());
         adresse.setText(_nav.get_user().get_adresse());
         telephone.setText(_nav.get_user().get_telephone());
+    }
+
+    protected void desactiverUser(){
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            URL url = new URL("http://10.0.2.2:8000/api/desactiverUser");
+
+            // Crée la connection
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Content-Type","application/json");
+            connection.setConnectTimeout(1000);
+
+            JSONObject data = new JSONObject();
+            data.put("id",_nav.get_user().get_id());
+            // Obligatoire pour un post
+            OutputStream os = connection.getOutputStream();
+            os.write(data.toString().getBytes());
+            os.flush();
+            os.close();
+
+            int codeReponse = connection.getResponseCode();
+            String reponse = connection.getResponseMessage();
+            if (codeReponse == HttpURLConnection.HTTP_OK) {
+                setResult(9);
+                finish();
+            } else {
+                TextView suppressionError = findViewById(R.id.suppressionError);
+                suppressionError.setText(R.string.erreur_suppression);
+                suppressionError.setVisibility(View.VISIBLE);
+            }
+            connection.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+            TextView inscriptionError = findViewById(R.id.formError);
+            inscriptionError.setText(R.string.erreur_modif);
+            inscriptionError.setVisibility(View.VISIBLE);
+        }
     }
 
 

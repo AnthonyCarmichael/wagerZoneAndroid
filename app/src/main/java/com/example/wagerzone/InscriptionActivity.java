@@ -41,12 +41,14 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import android.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -481,6 +483,11 @@ public class InscriptionActivity extends AppCompatActivity  implements View.OnCl
             form.put("nomPays",_spinnerPays.getSelectedItem());
             form.put("nomVille",_spinnerVille.getSelectedItem());
             form.put("ddn",ddn.getText().toString());
+            if (_newUserIcone.getDrawable() != null) {
+                byte[] byteArray = convertImageViewToByteArr(_newUserIcone);
+                String image = Base64.encodeToString(byteArray,Base64.DEFAULT);
+                form.put("image",image);
+            }
             return form;
         }
 
@@ -559,6 +566,24 @@ public class InscriptionActivity extends AppCompatActivity  implements View.OnCl
         _calendrier = Calendar.getInstance();
         _dateLimite = Calendar.getInstance();
         _dateLimite.add(Calendar.YEAR, -18);
+    }
+
+    private byte[] convertImageViewToByteArr(ImageView image){
+        image.setDrawingCacheEnabled(true);
+        image.buildDrawingCache();
+        Bitmap bitmap = image.getDrawingCache();
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        if (image.getDrawingCache().getConfig() == Bitmap.Config.ARGB_8888) {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        } else {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        }
+
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+        return byteArray;
     }
     
 }
