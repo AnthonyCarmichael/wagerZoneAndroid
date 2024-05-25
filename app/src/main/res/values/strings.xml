@@ -48,4 +48,6 @@
     <string name="modifier">Modifier</string>
     <string name="supprimer">supprimer</string>
     <string name="hide">*********</string>
+    <string name="erreur_modif">Erreur, impossible de modifier les informations du compte.</string>
+    <string name="annuler">Annuler</string>
 </resources>

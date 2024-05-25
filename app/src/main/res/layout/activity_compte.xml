@@ -43,7 +43,8 @@
                 android:textSize="20sp"
                 android:textStyle="bold"/>
             <TextView
-                android:text="@string/nom_utilisateur" />
+                android:text="@string/nom_utilisateur"
+                android:layout_marginEnd="30dp"/>
             <TextView
                 android:id="@+id/usernameDatabase" />
             <TextView
@@ -331,7 +332,7 @@
             <Button
                 android:id="@+id/btnPhoto"
                 android:layout_columnSpan="1"
-                android:background="@drawable/bouton_vert"
+                android:background="@drawable/bouton_rouge"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -347,7 +348,7 @@
             <Button
                 android:id="@+id/btnFichier"
                 android:layout_columnSpan="1"
-                android:background="@drawable/bouton_vert"
+                android:background="@drawable/bouton_rouge"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -362,14 +363,25 @@
                 android:visibility="gone"/>
             <Button
                 android:layout_marginTop="16dp"
-                android:layout_columnSpan="2"
+                android:layout_columnSpan="1"
                 android:id="@+id/btnSend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/envoyer"
+                android:background="@drawable/bouton_vert"
+                android:textColor="@color/white"
+                android:layout_gravity="left"
+                android:layout_marginBottom="30dp"/>
+            <Button
+                android:layout_marginTop="16dp"
+                android:layout_columnSpan="1"
+                android:id="@+id/btnAnnuler"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/annuler"
                 android:background="@drawable/bouton_rouge"
                 android:textColor="@color/white"
-                android:layout_gravity="center"
+                android:layout_gravity="left"
                 android:layout_marginBottom="30dp"/>
         </GridLayout>
     </ScrollView>
