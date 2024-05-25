@@ -71,11 +71,11 @@ public class MainActivity extends AppCompatActivity {
                     messageErreurSuccesMain.setTextColor(getResources().getColor(R.color.vertFonce));
                     messageErreurSuccesMain.setVisibility(View.VISIBLE);
                     _nav.set_user(user);
-                    if (_nav.get_user()!=null && _nav.get_user().get_image() != null)
-                    {
+                    if (_nav.get_user().get_image().length > 3) {
                         Bitmap newicone = BitmapFactory.decodeByteArray(_nav.get_user().get_image(), 0, _nav.get_user().get_image().length);
                         _nav.get_userIcone().setImageBitmap(newicone);
                     }
+
                 }
 
             }
