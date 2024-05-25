@@ -1,5 +1,7 @@
 package com.example.wagerzone;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -26,6 +28,7 @@ import com.stripe.android.paymentsheet.PaymentSheetResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -56,7 +59,7 @@ public class ExecutionTransaction extends AppCompatActivity {
         if(montant < 5)
         {
             Toast.makeText(getApplicationContext(), "Minimum de 5$ requis", Toast.LENGTH_SHORT).show();
-            finish();
+            retourne();
         }
         paymentSheet = new PaymentSheet(this, this::onPaymentSheetResult);
         //Bouton retour
@@ -64,7 +67,7 @@ public class ExecutionTransaction extends AppCompatActivity {
         btnRetour.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                finish();
+                retourne();
             }
         });
         if(estRetrait){
@@ -129,7 +132,7 @@ public class ExecutionTransaction extends AppCompatActivity {
         }
         else{
             Toast.makeText(getApplicationContext(), "Erreur du serveur", Toast.LENGTH_SHORT).show();
-            finish();
+            retourne();
         }
     }
 
@@ -137,23 +140,23 @@ public class ExecutionTransaction extends AppCompatActivity {
         //si l'action est cancellé
         if(paymentSheetResult instanceof PaymentSheetResult.Canceled){
             Toast.makeText(this, "Cancellé", Toast.LENGTH_SHORT).show();
-            finish();
+            retourne();
         }
         //Si le paiment n'a pas fonctionné
         if(paymentSheetResult instanceof PaymentSheetResult.Failed){
             Toast.makeText(this, ((PaymentSheetResult.Failed) paymentSheetResult).getError().getMessage(), Toast.LENGTH_SHORT).show();
-            finish();
+            retourne();
         }
         //Si la transaction a réussi
         if(paymentSheetResult instanceof PaymentSheetResult.Completed){
             effectueTransaction();
             Toast.makeText(this, "Paiement effectué", Toast.LENGTH_SHORT).show();
-            finish();
+            retourne();
         }
         //Autre erreur
         else {
             Toast.makeText(this, "Erreur du PaymentSheetResult", Toast.LENGTH_SHORT).show();
-            finish();
+            retourne();
 
         }
     }
@@ -170,10 +173,13 @@ public class ExecutionTransaction extends AppCompatActivity {
                             //capture le retour JSON et la met dans la configuration
                             JSONObject jsonObject = new JSONObject(response);
                             if(jsonObject.has("Succes"))
+                            {
                                 Toast.makeText(ExecutionTransaction.this, "Succes, la transaction c'est bien effectuée", Toast.LENGTH_SHORT).show();
+                                changerFondsUtilisateur();
+                            }
                             else
                                 Toast.makeText(ExecutionTransaction.this, "Erreur, une erreur c'est produit durant la transaction, veuillez contacter le support technique", Toast.LENGTH_SHORT).show();
-                            finish();
+                            retourne();
                             //Ouvre la page de paiement Stripe
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
@@ -198,5 +204,19 @@ public class ExecutionTransaction extends AppCompatActivity {
             }
         };
         queue.add(stringRequest);
+    }
+
+    private void retourne(){
+        Intent retour = new Intent();
+        retour.putExtra("user", user);
+        setResult(Activity.RESULT_OK, retour);
+        finish();
+    }
+
+    private void changerFondsUtilisateur(){
+        BigDecimal montantBig = new BigDecimal(montant);
+        BigDecimal fonds = user.get_fonds().add(montantBig);
+        //fonds = fonds.setScale(2,BigDecimal.ROUND_HALF_EVEN);
+        user.set_fonds(fonds.toString());
     }
 }

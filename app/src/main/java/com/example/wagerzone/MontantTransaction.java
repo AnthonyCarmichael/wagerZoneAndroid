@@ -1,5 +1,6 @@
 package com.example.wagerzone;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,24 +14,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.stripe.android.PaymentConfiguration;
-import com.stripe.android.paymentsheet.PaymentSheet;
-import com.stripe.android.paymentsheet.PaymentSheetResult;
-import com.stripe.android.paymentsheet.PaymentSheetResultCallback;
+import java.math.BigDecimal;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
-public class Paiement extends AppCompatActivity {
+public class MontantTransaction extends AppCompatActivity {
     private TextView editMontant;
     private boolean estRetrait;
     private Utilisateur user;
@@ -70,19 +56,41 @@ public class Paiement extends AppCompatActivity {
                     montant = Float.valueOf(editMontant.getText().toString().trim());
                 if(montant >= 5)
                 {
-                    Intent intent = new Intent(Paiement.this, ExecutionTransaction.class);
-                    intent.putExtra("montant", montant);
-                    intent.putExtra("user", user);
-                    if(estRetrait)
+                    BigDecimal bigMontant;
+                    Intent intent = new Intent(MontantTransaction.this, ExecutionTransaction.class);
+                    if(estRetrait && user.get_fonds().floatValue() > montant){
+                        intent.putExtra("montant", montant);
+                        intent.putExtra("user", user);
                         intent.putExtra("retrait", true);
-                    startActivity(intent);
-                    finish();
+                        startActivityForResult(intent, 0);
+                    }
+                    else if (!estRetrait) {
+                        intent.putExtra("montant", montant);
+                        intent.putExtra("user", user);
+                        startActivityForResult(intent, 0);
+                    }
+                    else {
+                        Toast.makeText(MontantTransaction.this, "Le montant doit etre moindre que vois fonds", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else {
-                    Toast.makeText(Paiement.this, "Le montant minimum est 5$", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MontantTransaction.this, "Le montant minimum est 5$", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                user = (Utilisateur) data.getSerializableExtra("user");
+                Intent retour = new Intent();
+                retour.putExtra("user", user);
+                setResult(Activity.RESULT_OK, retour);
+                finish();
+            }
+        }
     }
 }

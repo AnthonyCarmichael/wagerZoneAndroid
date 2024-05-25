@@ -55,7 +55,7 @@
             android:name=".Retrait"
             android:exported="false" />
         <activity
-            android:name=".Paiement"
+            android:name=".MontantTransaction"
             android:exported="false" />
         <activity
             android:name=".Portefeuille"
