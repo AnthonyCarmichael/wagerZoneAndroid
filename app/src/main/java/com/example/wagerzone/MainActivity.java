@@ -1,6 +1,8 @@
 package com.example.wagerzone;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -36,13 +38,6 @@ public class MainActivity extends AppCompatActivity {
         titre.setText(R.string.accueil);
 
 
-        Button btn = findViewById(R.id.btnPortefeuille);
-        btn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Portefeuille.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -60,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
+
         if (resultCode == 2){
             Intent connexionIntent = new Intent(this,ConnexionActivity.class);
             //Avant de lancer l'activité
@@ -76,6 +72,11 @@ public class MainActivity extends AppCompatActivity {
                     messageErreurSuccesMain.setTextColor(getResources().getColor(R.color.vertFonce));
                     messageErreurSuccesMain.setVisibility(View.VISIBLE);
                     _nav.set_user(user);
+                    if (_nav.get_user().get_image().length > 3) {
+                        Bitmap newicone = BitmapFactory.decodeByteArray(_nav.get_user().get_image(), 0, _nav.get_user().get_image().length);
+                        _nav.get_userIcone().setImageBitmap(newicone);
+                    }
+
                 }
 
             }
@@ -84,11 +85,20 @@ public class MainActivity extends AppCompatActivity {
             _nav.set_user(null);
             TextView messageErreurSuccesMain = _nav.get_messageErreurSuccesMain();
             messageErreurSuccesMain.setVisibility(View.INVISIBLE);
+            _nav.get_userIcone().setImageResource(R.drawable.user);
         }
         if (resultCode == 200){ // Inscription redirection vers activité connexion
+            // Temporaire
+            TextView messageErreurSuccesMain = _nav.get_messageErreurSuccesMain();
+            messageErreurSuccesMain.setText(R.string.vous_avez_bien_t_inscrit);
+            messageErreurSuccesMain.setTextColor(getResources().getColor(R.color.vertFonce));
+            messageErreurSuccesMain.setVisibility(View.VISIBLE);
+            /* Bug pour l'instant
             Intent connexionIntent = new Intent(this,ConnexionActivity.class);
+            connexionIntent.putExtra("user", _nav.get_user());
             connexionIntent.putExtra("inscription", 200);
             startActivityForResult(connexionIntent, 200);
+            */
         }
     }
 }

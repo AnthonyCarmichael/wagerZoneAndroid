@@ -1,7 +1,9 @@
 package com.example.wagerzone;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -18,54 +20,36 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import android.util.Base64;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class InscriptionActivity extends AppCompatActivity  implements View.OnClickListener{
-
+public class GestionFormUser extends AppCompatActivity implements View.OnClickListener{
     private static final int CAMERA_PERM_CODE = 101;
     private static final int CAMERA_REQUEST_CODE = 102 ;
 
     private static final int PICK_IMAGE_REQUEST = 1;
-
-    private Nav _nav;
+    private Context _context;
+    private Activity _activity;
     private List<Pays> _pays;
     private List<Ville> _villes;
     private ArrayList<String> _nomVilles;
@@ -86,60 +70,177 @@ public class InscriptionActivity extends AppCompatActivity  implements View.OnCl
     private Calendar _calendrier;
     private Calendar _dateLimite;
 
-
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_inscription);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-        // Set le nav et récupere le titre
-        this._nav = new Nav(this,findViewById(android.R.id.content),InscriptionActivity.this);
-        TextView titre = findViewById(R.id.titre);
-
-        // Mise a jour du titre, et surlignement de l'iconeUser
-        titre.setText(R.string.inscription);
-        ImageButton userIcone = findViewById(R.id.userIcone);
-        userIcone.setBackgroundResource(R.drawable.rounded_red);
-
-        // Set les spinner
-        set_spinnerPays();
-        set_spinnerVille();
-        // Permission geolocalisation.
-        // Le callback permet d'attendre que l'utilisateur donne le droit ou non au gps pour loader ensuite la page
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123);
-        set_calendrier();
-        setButton();
-
+    public GestionFormUser(Context context,Activity activity) {
+        this._context = context;
+        this._activity = activity;
+        this.setForm();
     }
 
-    private void fetchVille(int idPays) {
-        SQLiteManager sqLiteManager = new SQLiteManager(InscriptionActivity.this);
+    public Context get_context() {
+        return _context;
+    }
+
+    public void set_context(Context _context) {
+        this._context = _context;
+    }
+
+    public Activity get_activity() {
+        return _activity;
+    }
+
+    public void set_activity(Activity _activity) {
+        this._activity = _activity;
+    }
+
+    public List<Pays> get_pays() {
+        return _pays;
+    }
+
+    public void set_pays(List<Pays> _pays) {
+        this._pays = _pays;
+    }
+
+    public List<Ville> get_villes() {
+        return _villes;
+    }
+
+    public void set_villes(List<Ville> _villes) {
+        this._villes = _villes;
+    }
+
+    public ArrayList<String> get_nomVilles() {
+        return _nomVilles;
+    }
+
+    public void set_nomVilles(ArrayList<String> _nomVilles) {
+        this._nomVilles = _nomVilles;
+    }
+
+    public ArrayList<String> get_nomPays() {
+        return _nomPays;
+    }
+
+    public void set_nomPays(ArrayList<String> _nomPays) {
+        this._nomPays = _nomPays;
+    }
+
+    public Spinner get_spinnerVille() {
+        return _spinnerVille;
+    }
+
+    public void set_spinnerVille(Spinner _spinnerVille) {
+        this._spinnerVille = _spinnerVille;
+    }
+
+    public Spinner get_spinnerPays() {
+        return _spinnerPays;
+    }
+
+    public void set_spinnerPays(Spinner _spinnerPays) {
+        this._spinnerPays = _spinnerPays;
+    }
+
+    public String get_gpsVille() {
+        return _gpsVille;
+    }
+
+    public void set_gpsVille(String _gpsVille) {
+        this._gpsVille = _gpsVille;
+    }
+
+    public String get_gpsPays() {
+        return _gpsPays;
+    }
+
+    public void set_gpsPays(String _gpsPays) {
+        this._gpsPays = _gpsPays;
+    }
+
+    public Boolean get_permissionGPS() {
+        return _permissionGPS;
+    }
+
+    public void set_permissionGPS(Boolean _permissionGPS) {
+        this._permissionGPS = _permissionGPS;
+    }
+
+    public ImageView get_newUserIcone() {
+        return _newUserIcone;
+    }
+
+    public void set_newUserIcone(ImageView _newUserIcone) {
+        this._newUserIcone = _newUserIcone;
+    }
+
+    public Button get_btnPhoto() {
+        return _btnPhoto;
+    }
+
+    public void set_btnPhoto(Button _btnPhoto) {
+        this._btnPhoto = _btnPhoto;
+    }
+
+    public Button get_btnFichier() {
+        return _btnFichier;
+    }
+
+    public void set_btnFichier(Button _btnFichier) {
+        this._btnFichier = _btnFichier;
+    }
+
+    public Button get_btnSend() {
+        return _btnSend;
+    }
+
+    public void set_btnSend(Button _btnSend) {
+        this._btnSend = _btnSend;
+    }
+
+    public Button get_btnDdn() {
+        return _btnDdn;
+    }
+
+    public void set_btnDdn(Button _btnDdn) {
+        this._btnDdn = _btnDdn;
+    }
+
+    public Calendar get_calendrier() {
+        return _calendrier;
+    }
+
+    public void set_calendrier(Calendar _calendrier) {
+        this._calendrier = _calendrier;
+    }
+
+    public Calendar get_dateLimite() {
+        return _dateLimite;
+    }
+
+    public void set_dateLimite(Calendar _dateLimite) {
+        this._dateLimite = _dateLimite;
+    }
+
+    public void fetchVille(int idPays) {
+        SQLiteManager sqLiteManager = new SQLiteManager(_context);
         _villes = sqLiteManager.fetchAllVillesByPaysId(idPays);
     }
 
-    private void fetchPays() {
-        SQLiteManager sqLiteManager = new SQLiteManager(InscriptionActivity.this);
+    public void fetchPays() {
+        SQLiteManager sqLiteManager = new SQLiteManager(_context);
         _pays = sqLiteManager.fetchAllPays();
     }
 
-    private void set_spinnerVille(){
+    public void set_spinnerVille(){
         // Set les spinner:
         fetchVille(1);
         _nomVilles = new ArrayList<>();
         for (Ville ville: _villes) {
             _nomVilles.add(ville.get_nom_ville());
         }
-        ArrayAdapter<String> arrayAdapterVilles=new ArrayAdapter<String>(InscriptionActivity.this,
+        ArrayAdapter<String> arrayAdapterVilles=new ArrayAdapter<String>(_context,
                 android.R.layout.simple_spinner_dropdown_item, _nomVilles);
 
-        Spinner spinnerVille= findViewById(R.id.villes);
+        Spinner spinnerVille= _activity.findViewById(R.id.villes);
 
         spinnerVille.setAdapter(arrayAdapterVilles);
         this._spinnerVille = spinnerVille;
@@ -153,7 +254,7 @@ public class InscriptionActivity extends AppCompatActivity  implements View.OnCl
                 for (Ville ville: _villes) {
                     _nomVilles.add(ville.get_nom_ville());
                 }
-                ArrayAdapter<String> arrayAdapterVilles=new ArrayAdapter<String>(InscriptionActivity.this,
+                ArrayAdapter<String> arrayAdapterVilles=new ArrayAdapter<String>(_context,
                         android.R.layout.simple_spinner_dropdown_item, _nomVilles);
                 _spinnerVille.setAdapter(arrayAdapterVilles);
                 if (_gpsVille!= null && _gpsPays.equals(_pays.get(position).get_nom_pays())){
@@ -169,26 +270,26 @@ public class InscriptionActivity extends AppCompatActivity  implements View.OnCl
         });
     }
 
-    private void set_spinnerPays(){
+    public void set_spinnerPays(){
         // Set les spinner:
         fetchPays();
         _nomPays= new ArrayList<>();
         for (Pays pays: _pays) {
             _nomPays.add(pays.get_nom_pays());
         }
-        ArrayAdapter<String> arrayAdapterVilles=new ArrayAdapter<String>(InscriptionActivity.this,
+        ArrayAdapter<String> arrayAdapterVilles=new ArrayAdapter<String>(_context,
                 android.R.layout.simple_spinner_dropdown_item, _nomPays);
 
-        Spinner spinnerPays= findViewById(R.id.pays);
+        Spinner spinnerPays= _activity.findViewById(R.id.pays);
 
         spinnerPays.setAdapter(arrayAdapterVilles);
         this._spinnerPays = spinnerPays;
     }
 
-    private void setVillePaysWithGPS() {
-        GPStracker gpsTracker = new GPStracker(this);
+    public void setVillePaysWithGPS() {
+        GPStracker gpsTracker = new GPStracker(_context);
         Location location = gpsTracker.getLocation();
-        Geocoder geocoder = new Geocoder(this, Locale.FRENCH);
+        Geocoder geocoder = new Geocoder(_context, Locale.FRENCH);
         try {
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
             if (addresses != null && !addresses.isEmpty()) {
@@ -231,7 +332,7 @@ public class InscriptionActivity extends AppCompatActivity  implements View.OnCl
                     Pays paysGPS = new Pays();
                     paysGPS.set_nom_pays(countryName);
                     _pays.add(paysGPS);
-                    ArrayAdapter<String> arrayAdapterPays=new ArrayAdapter<String>(InscriptionActivity.this,
+                    ArrayAdapter<String> arrayAdapterPays=new ArrayAdapter<String>(_context,
                             android.R.layout.simple_spinner_dropdown_item, _nomPays);
                     _spinnerPays.setAdapter(arrayAdapterPays);
                     setSelectedItem(_spinnerPays,countryName);
@@ -245,7 +346,7 @@ public class InscriptionActivity extends AppCompatActivity  implements View.OnCl
                     _villes.add(villeGPS);
 
                     _nomVilles.add(cityName);
-                    ArrayAdapter<String> arrayAdapterVilles=new ArrayAdapter<String>(InscriptionActivity.this,
+                    ArrayAdapter<String> arrayAdapterVilles=new ArrayAdapter<String>(_context,
                             android.R.layout.simple_spinner_dropdown_item, _nomVilles);
                     _spinnerVille.setAdapter(arrayAdapterVilles);
                     setSelectedItem(_spinnerVille,cityName);
@@ -258,7 +359,7 @@ public class InscriptionActivity extends AppCompatActivity  implements View.OnCl
         }
     }
 
-    private void setSelectedItem(Spinner spinner, String value) {
+    public void setSelectedItem(Spinner spinner, String value) {
         ArrayAdapter<String> adapter = (ArrayAdapter<String>) spinner.getAdapter();
         int position = adapter.getPosition(value);
         if (position >= 0) {
@@ -266,141 +367,49 @@ public class InscriptionActivity extends AppCompatActivity  implements View.OnCl
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 123) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                _permissionGPS = true;
-                setVillePaysWithGPS();
-            } else {
-                _permissionGPS = false;
-            }
-        }
-        else if (requestCode == CAMERA_REQUEST_CODE) { // permission pour la camera
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openCamera();
-            }
-        }
-    }
-
-    private void askCameraPermission(){
-        if (ContextCompat.checkSelfPermission(this,Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},CAMERA_REQUEST_CODE);
+    public void askCameraPermission(){
+        if (ContextCompat.checkSelfPermission(_context, android.Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(_activity,new String[]{Manifest.permission.CAMERA},CAMERA_REQUEST_CODE);
         }
         else {
             openCamera();
         }
     }
 
-    private void openCamera() {
+    public void openCamera() {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+        _activity.startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
     }
 
-    private void openGallery() {
+    public void openGallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST);
+        _activity.startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST);
     }
 
-    private void setButton(){
-        _btnSend = findViewById(R.id.btnSend);
-        _btnFichier = findViewById(R.id.btnFichier);
-        _btnPhoto = findViewById(R.id.btnPhoto);
-        _btnDdn = findViewById(R.id.chooseDateButton);
-
-        _btnPhoto.setOnClickListener(this);
-        _btnFichier.setOnClickListener(this);
-        _btnSend.setOnClickListener(this);
-        _btnDdn.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.btnPhoto){
-            askCameraPermission();
-        }
-        else if(v.getId() == R.id.btnFichier){
-            openGallery();
-        }
-        else if(v.getId() == R.id.btnSend){
-            try {
-                JSONObject data = checkInput();
-                if (data.length()!=0)
-                    insertUser(data);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else if (v.getId()==R.id.chooseDateButton) {
-            int year = _calendrier.get(Calendar.YEAR);
-            int month = _calendrier.get(Calendar.MONTH);
-            int dayOfMonth = _calendrier.get(Calendar.DAY_OF_MONTH);
-
-            DatePickerDialog datePickerDialog = new DatePickerDialog(InscriptionActivity.this,
-                    new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                            TextView ddn = findViewById(R.id.ddn);
-                            String date = year+"-"+(monthOfYear + 1) +"-"+dayOfMonth;
-                            ddn.setText(date);
-                        }
-                    }, year, month, dayOfMonth);
-            datePickerDialog.getDatePicker().setMaxDate(_dateLimite.getTimeInMillis());
-            datePickerDialog.show();
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
-            try {
-                Bitmap image = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
-                _newUserIcone = findViewById(R.id.newUserIcone);
-                _newUserIcone.setImageBitmap(image);
-                //_nav.get_userIcone().setImageBitmap(image);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        else if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
-            try {
-                Bundle bundle = data.getExtras();
-                Bitmap image = (Bitmap) bundle.get("data");
-                _newUserIcone = findViewById(R.id.newUserIcone);
-                _newUserIcone.setImageBitmap(image);
-                //_nav.get_userIcone().setImageBitmap(image);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private JSONObject checkInput() throws JSONException {
+    public JSONObject checkInput() throws JSONException {
         JSONObject form = new JSONObject();
         Boolean badForm = false;
 
-        EditText nom = findViewById(R.id.nom);
-        EditText prenom = findViewById(R.id.prenom);
-        EditText username = findViewById(R.id.username);
-        EditText mdp = findViewById(R.id.mdp);
-        EditText mdp2 = findViewById(R.id.mdp2);
-        EditText email = findViewById(R.id.email);
-        EditText telephone = findViewById(R.id.telephone);
-        EditText adresse = findViewById(R.id.adresse);
-        TextView ddn = findViewById(R.id.ddn);
+        EditText nom = _activity.findViewById(R.id.nom);
+        EditText prenom = _activity.findViewById(R.id.prenom);
+        EditText username = _activity.findViewById(R.id.username);
+        EditText mdp = _activity.findViewById(R.id.mdp);
+        EditText mdp2 = _activity.findViewById(R.id.mdp2);
+        EditText email = _activity.findViewById(R.id.email);
+        EditText telephone = _activity.findViewById(R.id.telephone);
+        EditText adresse = _activity.findViewById(R.id.adresse);
+        TextView ddn = _activity.findViewById(R.id.ddn);
 
-        TextView nomError = findViewById(R.id.nomError);
-        TextView prenomError = findViewById(R.id.prenomError);
-        TextView usernameError = findViewById(R.id.usernameError);
-        TextView mdpError = findViewById(R.id.mdpError);
-        TextView mdp2Error = findViewById(R.id.mdp2Error);
-        TextView emailError = findViewById(R.id.emailError);
-        TextView telephoneError = findViewById(R.id.telephoneError);
-        TextView adresseError = findViewById(R.id.adresseError);
-        TextView ddnError = findViewById(R.id.ddnError);
-        TextView formError = findViewById(R.id.formError);
+        TextView nomError = _activity.findViewById(R.id.nomError);
+        TextView prenomError = _activity.findViewById(R.id.prenomError);
+        TextView usernameError = _activity.findViewById(R.id.usernameError);
+        TextView mdpError = _activity.findViewById(R.id.mdpError);
+        TextView mdp2Error = _activity.findViewById(R.id.mdp2Error);
+        TextView emailError = _activity.findViewById(R.id.emailError);
+        TextView telephoneError = _activity.findViewById(R.id.telephoneError);
+        TextView adresseError = _activity.findViewById(R.id.adresseError);
+        TextView ddnError = _activity.findViewById(R.id.ddnError);
+        TextView formError = _activity.findViewById(R.id.formError);
 
         // Reset tout les messages d'erreurs:
         usernameError.setVisibility(View.GONE);
@@ -483,11 +492,6 @@ public class InscriptionActivity extends AppCompatActivity  implements View.OnCl
             form.put("nomPays",_spinnerPays.getSelectedItem());
             form.put("nomVille",_spinnerVille.getSelectedItem());
             form.put("ddn",ddn.getText().toString());
-            if (_newUserIcone.getDrawable() != null) {
-                byte[] byteArray = convertImageViewToByteArr(_newUserIcone);
-                String image = Base64.encodeToString(byteArray,Base64.DEFAULT);
-                form.put("image",image);
-            }
             return form;
         }
 
@@ -536,54 +540,95 @@ public class InscriptionActivity extends AppCompatActivity  implements View.OnCl
             int codeReponse = connection.getResponseCode();
             String reponse = connection.getResponseMessage();
             if (codeReponse == HttpURLConnection.HTTP_OK) {
-                setResult(200);
-                finish();
+                _activity.setResult(200);
+                _activity.finish();
 
             } else if (codeReponse == 501) {
-                TextView inscriptionError = findViewById(R.id.formError);
+                TextView inscriptionError = _activity.findViewById(R.id.formError);
                 inscriptionError.setText(R.string.erreur_email);
                 inscriptionError.setVisibility(View.VISIBLE);
             } else if (codeReponse == 502) {
-                TextView inscriptionError = findViewById(R.id.formError);
+                TextView inscriptionError = _activity.findViewById(R.id.formError);
                 inscriptionError.setText(R.string.erreur_username);
                 inscriptionError.setVisibility(View.VISIBLE);
             } else {
-                TextView inscriptionError = findViewById(R.id.formError);
+                TextView inscriptionError = _activity.findViewById(R.id.formError);
                 inscriptionError.setText(R.string.erreur_inscription);
                 inscriptionError.setVisibility(View.VISIBLE);
             }
             connection.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
-            TextView inscriptionError = findViewById(R.id.formError);
+            TextView inscriptionError = _activity.findViewById(R.id.formError);
             inscriptionError.setText(R.string.erreur_inscription);
             inscriptionError.setVisibility(View.VISIBLE);
         }
-
     }
 
-    private void set_calendrier(){
+    public void set_calendrier(){
         _calendrier = Calendar.getInstance();
         _dateLimite = Calendar.getInstance();
         _dateLimite.add(Calendar.YEAR, -18);
     }
 
-    private byte[] convertImageViewToByteArr(ImageView image){
-        image.setDrawingCacheEnabled(true);
-        image.buildDrawingCache();
-        Bitmap bitmap = image.getDrawingCache();
+    private void setForm(){
+        // Set les spinner
+        set_spinnerPays();
+        set_spinnerVille();
+        // Permission geolocalisation.
+        // Le callback permet d'attendre que l'utilisateur donne le droit ou non au gps pour loader ensuite la page
 
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
-        if (image.getDrawingCache().getConfig() == Bitmap.Config.ARGB_8888) {
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        } else {
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-        }
-
-        byte[] byteArray = byteArrayOutputStream.toByteArray();
-
-        return byteArray;
+        set_calendrier();
+        setButton();
     }
-    
+
+    private void setButton(){
+        _btnSend = _activity.findViewById(R.id.btnSend);
+        _btnFichier = _activity.findViewById(R.id.btnFichier);
+        _btnPhoto = _activity.findViewById(R.id.btnPhoto);
+        _btnDdn = _activity.findViewById(R.id.chooseDateButton);
+
+        _btnPhoto.setOnClickListener(this);
+        _btnFichier.setOnClickListener(this);
+        //_btnSend.setOnClickListener(this);
+        _btnDdn.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.btnPhoto){
+            askCameraPermission();
+        }
+        else if(v.getId() == R.id.btnFichier){
+            openGallery();
+        }
+        else if(v.getId() == R.id.btnSend && _activity.getClass() == InscriptionActivity.class){
+            try {
+                JSONObject data = checkInput();
+                if (data.length()!=0)
+                    insertUser(data);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (v.getId()==R.id.chooseDateButton) {
+            int year = _calendrier.get(Calendar.YEAR);
+            int month = _calendrier.get(Calendar.MONTH);
+            int dayOfMonth = _calendrier.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(_context,
+                    new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                            TextView ddn = _activity.findViewById(R.id.ddn);
+                            String date = year+"-"+(monthOfYear + 1) +"-"+dayOfMonth;
+                            ddn.setText(date);
+                        }
+                    }, year, month, dayOfMonth);
+            datePickerDialog.getDatePicker().setMaxDate(_dateLimite.getTimeInMillis());
+            datePickerDialog.show();
+        }
+    }
+
+
+
 }

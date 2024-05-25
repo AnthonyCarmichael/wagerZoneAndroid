@@ -3,6 +3,8 @@ package com.example.wagerzone;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -56,6 +58,14 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
 
         if (_activity.getIntent() != null && _activity.getIntent().hasExtra("user")) {
             this._user = (Utilisateur) _activity.getIntent().getSerializableExtra("user");
+            if (_user!=null){
+                if (_user.get_image().length > 3) {
+                    Bitmap newicone = BitmapFactory.decodeByteArray(get_user().get_image(), 0, get_user().get_image().length);
+                    get_userIcone().setImageBitmap(newicone);
+                }
+            }
+
+
         } else {
             this._user = null;
         }
@@ -227,6 +237,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                     }
                     else {
                         _user = null;
+                        get_userIcone().setImageResource(R.drawable.user);
                         _messageErreurSuccesMain.setVisibility(View.INVISIBLE);
                     }
                     cleanFileToken();
@@ -263,9 +274,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                     _home.setBackgroundResource(R.drawable.rounded_dark_red);
                     _selected = true;
                     _activity.startActivityForResult(portefeuilleIntent,1);
-                    if (!_activity.getClass().equals(MainActivity.class))
-                        _activity.finish();
-                    return true;
+                    _activity.finish();
                 }
                 return false;
             }
@@ -351,6 +360,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                 user.set_fonds(userObject.getString("fonds"));
                 user.set_ville(villeObject.getString("nom_ville"));
                 user.set_pays(paysObject.getString("nom_pays"));
+                user.set_password(paysObject.getString("nom_pays"));
                 this._user = user;
 
             } else if (codeReponse == 501) {

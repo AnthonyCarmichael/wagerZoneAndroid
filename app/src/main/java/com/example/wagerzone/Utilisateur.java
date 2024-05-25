@@ -1,4 +1,6 @@
 package com.example.wagerzone;
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -18,6 +20,7 @@ public class Utilisateur implements Serializable {
     private String _ville;
     private String _pays;
     private BigDecimal _fonds;
+    private byte[] _image;
 
     public Utilisateur() {
         this._id = 0;
@@ -32,7 +35,9 @@ public class Utilisateur implements Serializable {
         this._ville = null;
         this._pays = null;
         this._fonds = null;
+        this._image = null;
     }
+
 
     public Utilisateur(HashMap<String, String> user) {
         this._id = Integer.parseInt(Objects.requireNonNull(user.get("id")));
@@ -144,5 +149,14 @@ public class Utilisateur implements Serializable {
 
     public void set_id(int _id) {
         this._id = _id;
+    }
+
+
+    public byte[] get_image() {
+        return _image;
+    }
+
+    public void set_image(byte[] _image) {
+        this._image = _image;
     }
 }

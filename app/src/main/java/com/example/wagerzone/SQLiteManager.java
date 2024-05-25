@@ -587,6 +587,34 @@ public class SQLiteManager  extends SQLiteOpenHelper
         return equipe;
     }
 
+    public int getCoteReceveur(int id_partie) throws IOException {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        int cote = 0;
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_EQUIPE_PARTIE + " WHERE " + ID_PARTIE + " = " + id_partie + " AND " + RECEVEUR + " =  1", null)){
+            if(result.getCount() != 0){
+                while (result.moveToNext()){
+                    cote = result.getInt(1);
+                }
+            }
+        }
+
+        return cote;
+    }
+    public int getCoteVisiteur(int id_partie) throws IOException {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        int cote = 0;
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_EQUIPE_PARTIE + " WHERE " + ID_PARTIE + " = " + id_partie + " AND " + RECEVEUR + " =  0", null)){
+            if(result.getCount() != 0){
+                while (result.moveToNext()){
+                    cote = result.getInt(1);
+                }
+            }
+        }
+
+        return cote;
+    }
+
+
     public void MAJParis(int id_user){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         sqLiteDatabase.delete(TABLE_PARIS,null, null );
@@ -645,6 +673,35 @@ public class SQLiteManager  extends SQLiteOpenHelper
         os.close();
         int responseCode=conn.getResponseCode();
     }
+    public void modifierParis(int id_paris, float montant, int receveur) throws IOException {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MONTANT, montant);
+        contentValues.put(RECEVEUR, receveur);
+        sqLiteDatabase.update(TABLE_PARIS, contentValues, "id_paris=?", new String[]{String.valueOf(id_paris)} );
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+        String lien = new String("http://10.0.2.2:8000/api/modifier/paris");
+        URL url = new URL(lien);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setReadTimeout(15000);
+        conn.setConnectTimeout(15000);
+        conn.setRequestMethod("POST");
+        conn.setDoInput(true);
+        conn.setDoOutput(true);
+        OutputStream os = conn.getOutputStream();
+        BufferedWriter writer = new BufferedWriter(
+                new OutputStreamWriter(os, "UTF-8"));
+        writer.write("id_paris="+id_paris);
+        writer.write("&montant="+montant);
+        writer.write("&receveur="+receveur);
+        writer.flush();
+        writer.close();
+        os.close();
+        int responseCode=conn.getResponseCode();
+    }
+
 
     public Equipe getEquipeVisiteur(int id_partie) throws IOException {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
