@@ -3,6 +3,8 @@ package com.example.wagerzone;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -56,6 +58,11 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
 
         if (_activity.getIntent() != null && _activity.getIntent().hasExtra("user")) {
             this._user = (Utilisateur) _activity.getIntent().getSerializableExtra("user");
+            if (_user != null && _user.get_image()!=null) {
+                Bitmap newicone = BitmapFactory.decodeByteArray(get_user().get_image(), 0, get_user().get_image().length);
+                get_userIcone().setImageBitmap(newicone);
+            }
+
         } else {
             this._user = null;
         }
