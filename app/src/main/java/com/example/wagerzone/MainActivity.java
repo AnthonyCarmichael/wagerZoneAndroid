@@ -84,11 +84,20 @@ public class MainActivity extends AppCompatActivity {
             _nav.set_user(null);
             TextView messageErreurSuccesMain = _nav.get_messageErreurSuccesMain();
             messageErreurSuccesMain.setVisibility(View.INVISIBLE);
+            _nav.get_userIcone().setImageResource(R.drawable.user);
         }
         if (resultCode == 200){ // Inscription redirection vers activité connexion
+            // Temporaire
+            TextView messageErreurSuccesMain = _nav.get_messageErreurSuccesMain();
+            messageErreurSuccesMain.setText(R.string.vous_avez_bien_t_inscrit);
+            messageErreurSuccesMain.setTextColor(getResources().getColor(R.color.vertFonce));
+            messageErreurSuccesMain.setVisibility(View.VISIBLE);
+            /* Bug pour l'instant
             Intent connexionIntent = new Intent(this,ConnexionActivity.class);
+            connexionIntent.putExtra("user", _nav.get_user());
             connexionIntent.putExtra("inscription", 200);
             startActivityForResult(connexionIntent, 200);
+            */
         }
     }
 }
