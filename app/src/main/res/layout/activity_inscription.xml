@@ -41,14 +41,6 @@
                 android:layout_marginBottom="16dp"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
-            <TextView
-                android:id="@+id/inscriptionError"
-                android:layout_columnSpan="2"
-                android:text="@string/erreur_inscription"
-                android:textColor="@color/rougeFonce"
-                android:layout_marginBottom="16dp"
-                android:textStyle="bold"
-                android:visibility="gone"/>
 
 
             <TextView
@@ -255,7 +247,7 @@
             <Button
                 android:id="@+id/btnPhoto"
                 android:layout_columnSpan="1"
-                android:background="@drawable/bouton_vert"
+                android:background="@drawable/bouton_rouge"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -271,7 +263,7 @@
             <Button
                 android:id="@+id/btnFichier"
                 android:layout_columnSpan="1"
-                android:background="@drawable/bouton_vert"
+                android:background="@drawable/bouton_rouge"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -291,7 +283,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/envoyer"
-                android:background="@drawable/bouton_rouge"
+                android:background="@drawable/bouton_vert"
                 android:textColor="@color/white"
                 android:layout_gravity="center"
                 android:layout_marginBottom="30dp"/>

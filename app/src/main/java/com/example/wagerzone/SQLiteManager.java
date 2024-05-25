@@ -535,22 +535,23 @@ public class SQLiteManager  extends SQLiteOpenHelper
                 while (result.moveToNext()) {
                     Equipe equipe = new Equipe();
 
-                    equipe.set_id_equipe(result.getInt(1));
-                    equipe.set_nom_equipe(result.getString(2));
-                    equipe.set_entraineur(result.getString(3));
-                    equipe.set_stade(result.getString(4));
-                    equipe.set_match_joue(result.getInt(5));
-                    equipe.set_victoire(result.getInt(6));
-                    equipe.set_defaite(result.getInt(7));
-                    equipe.set_match_nul(result.getInt(8));
-                    equipe.set_defaite_prolongation(result.getInt(9));
-                    equipe.set_sport(result.getString(10));
-                    equipe.set_ville(result.getString(11));
+                    equipe.set_id_equipe(result.getInt(0));
+                    equipe.set_nom_equipe(result.getString(1));
+                    equipe.set_entraineur(result.getString(2));
+                    equipe.set_stade(result.getString(3));
+                    equipe.set_match_joue(result.getInt(4));
+                    equipe.set_victoire(result.getInt(5));
+                    equipe.set_defaite(result.getInt(6));
+                    equipe.set_match_nul(result.getInt(7));
+                    equipe.set_defaite_prolongation(result.getInt(8));
+                    equipe.set_sport(result.getString(9));
+                    equipe.set_ville(result.getString(10));
 
                     equipes.add(equipe);
                 }
             }
         }
+
         return equipes;
     }
 
@@ -585,6 +586,34 @@ public class SQLiteManager  extends SQLiteOpenHelper
         }
         return equipe;
     }
+
+    public int getCoteReceveur(int id_partie) throws IOException {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        int cote = 0;
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_EQUIPE_PARTIE + " WHERE " + ID_PARTIE + " = " + id_partie + " AND " + RECEVEUR + " =  1", null)){
+            if(result.getCount() != 0){
+                while (result.moveToNext()){
+                    cote = result.getInt(1);
+                }
+            }
+        }
+
+        return cote;
+    }
+    public int getCoteVisiteur(int id_partie) throws IOException {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        int cote = 0;
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_EQUIPE_PARTIE + " WHERE " + ID_PARTIE + " = " + id_partie + " AND " + RECEVEUR + " =  0", null)){
+            if(result.getCount() != 0){
+                while (result.moveToNext()){
+                    cote = result.getInt(1);
+                }
+            }
+        }
+
+        return cote;
+    }
+
 
     public void MAJParis(int id_user){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -644,6 +673,35 @@ public class SQLiteManager  extends SQLiteOpenHelper
         os.close();
         int responseCode=conn.getResponseCode();
     }
+    public void modifierParis(int id_paris, float montant, int receveur) throws IOException {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MONTANT, montant);
+        contentValues.put(RECEVEUR, receveur);
+        sqLiteDatabase.update(TABLE_PARIS, contentValues, "id_paris=?", new String[]{String.valueOf(id_paris)} );
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+        String lien = new String("http://10.0.2.2:8000/api/modifier/paris");
+        URL url = new URL(lien);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setReadTimeout(15000);
+        conn.setConnectTimeout(15000);
+        conn.setRequestMethod("POST");
+        conn.setDoInput(true);
+        conn.setDoOutput(true);
+        OutputStream os = conn.getOutputStream();
+        BufferedWriter writer = new BufferedWriter(
+                new OutputStreamWriter(os, "UTF-8"));
+        writer.write("id_paris="+id_paris);
+        writer.write("&montant="+montant);
+        writer.write("&receveur="+receveur);
+        writer.flush();
+        writer.close();
+        os.close();
+        int responseCode=conn.getResponseCode();
+    }
+
 
     public Equipe getEquipeVisiteur(int id_partie) throws IOException {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();

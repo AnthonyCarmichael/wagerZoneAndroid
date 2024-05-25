@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -332,21 +333,25 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                 _messageErreurSuccesMain.setTextColor(_context.getResources().getColor(R.color.vertFonce));
                 _messageErreurSuccesMain.setVisibility(View.VISIBLE);
 
-                JSONObject successObject = jsonResponse.getJSONObject("SUCCESS");
+                JSONArray successArray = jsonResponse.getJSONArray("SUCCESS");
+                JSONObject userObject = successArray.getJSONObject(0);
+                JSONObject paysObject = successArray.getJSONObject(1);
+                JSONObject villeObject = successArray.getJSONObject(2);
 
                 // Création du user:
                 user = new Utilisateur();
-                user.set_nom(successObject.getString("nom"));
-                user.set_prenom(successObject.getString("prenom"));
-                user.set_name(successObject.getString("name")); // USERNAME
-                user.set_email(successObject.getString("name"));
-                user.set_id(successObject.getInt("id"));
-                user.set_date_naissance(successObject.getString("date_naissance"));
-                user.set_telephone(successObject.getString("telephone"));
-                user.set_adresse(successObject.getString("adresse"));
-                user.set_fonds(successObject.getString("fonds"));
-                //user.set_ville(successObject.getString("ville"));
-                //user.set_pays(successObject.getString("ville"));
+                user.set_nom(userObject.getString("nom"));
+                user.set_prenom(userObject.getString("prenom"));
+                user.set_name(userObject.getString("name")); // USERNAME
+                user.set_email(userObject.getString("email"));
+                user.set_id(userObject.getInt("id"));
+                user.set_date_naissance(userObject.getString("date_naissance"));
+                user.set_telephone(userObject.getString("telephone"));
+                user.set_adresse(userObject.getString("adresse"));
+                user.set_fonds(userObject.getString("fonds"));
+                user.set_ville(villeObject.getString("nom_ville"));
+                user.set_pays(paysObject.getString("nom_pays"));
+                user.set_password(paysObject.getString("nom_pays"));
                 this._user = user;
 
             } else if (codeReponse == 501) {

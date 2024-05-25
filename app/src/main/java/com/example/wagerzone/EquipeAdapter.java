@@ -22,7 +22,7 @@ public class EquipeAdapter extends RecyclerView.Adapter<EquipeAdapter.MyViewHold
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.equipe_row, parent, false);
-        return new EquipeAdapter.MyViewHolder(view);
+        return new MyViewHolder(view);
     }
 
     public EquipeAdapter(Context context, ArrayList<Equipe> equipe, RecyclerViewInterface recyclerViewInterface){
