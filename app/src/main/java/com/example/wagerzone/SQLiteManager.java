@@ -493,21 +493,26 @@ public class SQLiteManager  extends SQLiteOpenHelper
 
     public ArrayList<Paris> getParis() throws IOException {
         ArrayList<Paris> paris = new ArrayList<>();
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_PARIS, null)){
-            if(result.getCount() != 0){
-                while (result.moveToNext()){
+            if(result.moveToFirst()){
+                do{
                     Paris pari = new Paris();
-                    pari.set_id_paris(result.getInt(1));
-                    pari.set_montant(result.getFloat(2));
-                    pari.set_date_heure(result.getString(3));
-                    pari.set_receveur(result.getInt(4));
-                    pari.set_id_partie(result.getInt(5));
+                    pari.set_id_paris(result.getInt(0));
+                    pari.set_montant(result.getFloat(1));
+                    pari.set_date_heure(result.getString(2));
+                    pari.set_receveur(result.getInt(3));
+                    pari.set_id_partie(result.getInt(4));
                     paris.add(pari);
-                }
+                }while (result.moveToNext());
+            }
+            else{
+                paris = null;
             }
         }
         return paris;
+
+
     }
 
     public Partie getPartie(int id_partie) throws IOException {
