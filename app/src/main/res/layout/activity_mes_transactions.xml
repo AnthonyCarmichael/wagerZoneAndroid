@@ -75,6 +75,12 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
+            <ProgressBar
+                android:id="@+id/progressBar2"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <LinearLayout
                 android:layout_width="300dp"
                 android:layout_height="30dp"
