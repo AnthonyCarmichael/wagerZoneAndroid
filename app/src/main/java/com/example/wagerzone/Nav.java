@@ -351,6 +351,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                 user.set_fonds(userObject.getString("fonds"));
                 user.set_ville(villeObject.getString("nom_ville"));
                 user.set_pays(paysObject.getString("nom_pays"));
+                user.set_password(paysObject.getString("nom_pays"));
                 this._user = user;
 
             } else if (codeReponse == 501) {
