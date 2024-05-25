@@ -234,6 +234,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                     }
                     else {
                         _user = null;
+                        get_userIcone().setImageResource(R.drawable.user);
                         _messageErreurSuccesMain.setVisibility(View.INVISIBLE);
                     }
                     cleanFileToken();
