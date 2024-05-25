@@ -82,9 +82,9 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
             startActivityForResult(intentRetirFonds, 0);
         }
         if(v.getId()==R.id.btnRetour){
-            Intent retour = new Intent();
+            Intent retour = new Intent(Portefeuille.this, MainActivity.class);
             retour.putExtra("user", user);
-            setResult(Activity.RESULT_OK, retour);
+            startActivity(retour);
             finish();
         }
     }

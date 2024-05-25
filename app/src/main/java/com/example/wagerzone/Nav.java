@@ -271,9 +271,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                     _home.setBackgroundResource(R.drawable.rounded_dark_red);
                     _selected = true;
                     _activity.startActivityForResult(portefeuilleIntent,1);
-                    if (!_activity.getClass().equals(MainActivity.class))
-                        _activity.finish();
-                    return true;
+                    _activity.finish();
                 }
                 return false;
             }

@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
+
         if (resultCode == 2){
             Intent connexionIntent = new Intent(this,ConnexionActivity.class);
             //Avant de lancer l'activité
