@@ -41,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 GestionNotifications notif = new GestionNotifications(MainActivity.this);
-                notif.creationNouveauParis("Demain");
+                notif.notifBouton(1 ,"Notification", "test de petit texte mais avec probalement plus que une ligne au total");
+                notif.notifBouton(2, "notification2", "test");
             }
         });
 
