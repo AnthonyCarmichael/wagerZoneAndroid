@@ -11,6 +11,7 @@ public class GestionFonds{
     private File fichier;
     static private String path = "/data/data/com.example.wagerzone/files/fonds.txt";
     private BigDecimal fonds;
+    //Crée/ouvre le fichier contenant le
     public GestionFonds(){
         fichier = new File(path);
         if (!fichier.exists()) {
@@ -22,19 +23,18 @@ public class GestionFonds{
                 throw new RuntimeException(e);
             }
         }else {
-            fonds = lireFonds();
+            lireFonds();
         }
     }
-    private BigDecimal lireFonds(){
+    private void lireFonds(){
         try {
             Scanner scanner = new Scanner(fichier);
             if (scanner.hasNext()) {
-                return new BigDecimal(scanner.nextLine());
+                fonds = new BigDecimal(scanner.nextLine());
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return BigDecimal.ZERO;
     }
     private void ecrireFonds(){
         try {
@@ -62,9 +62,11 @@ public class GestionFonds{
 
     public void setFonds(BigDecimal fonds) {
         this.fonds = fonds;
+        ecrireFonds();
     }
     //Efface le fichier
     public boolean deleteFonds() {
+        fonds = BigDecimal.ZERO;
         return fichier.delete();
     }
 }

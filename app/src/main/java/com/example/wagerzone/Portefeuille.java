@@ -12,17 +12,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Date;
 import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.TimeZone;
 
 public class Portefeuille extends AppCompatActivity implements View.OnClickListener{
 
@@ -33,7 +26,8 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
     private SQLiteManager db;
     private Utilisateur user;
     private float totalMontantParis;
-    private BigDecimal totalFonds = BigDecimal.valueOf(0);
+    private BigDecimal fonds = BigDecimal.valueOf(0);
+    GestionFonds gestionFonds;
     private static final DecimalFormat decfor = new DecimalFormat("0.00");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +42,8 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
         //Déclare les variables globales
         user = (Utilisateur) getIntent().getSerializableExtra("user");
         db = new SQLiteManager(Portefeuille.this);
+        gestionFonds = new GestionFonds();
         //Déclare les paris et le montant total
-
         paris = db.getParisActifs();
         for (Paris pari:paris) {
             totalMontantParis += pari.get_montant();
@@ -63,13 +57,11 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
         chargeMontantRetirable();
         chargeMontanParis();
         chargeMontantTotal();
-
         //Déclare les bouttons
         Button btnAjouteFonds = findViewById(R.id.buttonAjoutFonds);
         Button btnRetout = findViewById(R.id.btnRetour);
         Button btnTransactions = findViewById(R.id.buttonTransactions);
         Button btnRetrait = findViewById(R.id.buttonRetirFonds);
-
         //affecte les onClickListener sur les bouttons
         btnAjouteFonds.setOnClickListener(this);
         btnRetout.setOnClickListener(this);
@@ -82,7 +74,7 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
             Intent intentAjoutFonds = new Intent(Portefeuille.this, MontantTransaction.class);
             //Ajoute les informations dans l'intent
             intentAjoutFonds.putExtra("user", user);
-            intentAjoutFonds.putExtra("fonds", totalFonds.toString());
+            intentAjoutFonds.putExtra("fonds", fonds.toString());
             startActivityForResult(intentAjoutFonds, 0);
         }
         if(v.getId()==R.id.buttonTransactions){
@@ -96,14 +88,10 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
             //Ajoute les informations dans l'intent
             intentRetirFonds.putExtra("retrait", -1);
             intentRetirFonds.putExtra("user", user);
-            intentRetirFonds.putExtra("fonds", totalFonds.toString());
+            intentRetirFonds.putExtra("fonds", fonds.toString());
             startActivityForResult(intentRetirFonds, 0);
         }
         if(v.getId()==R.id.btnRetour){
-            Intent retour = new Intent(Portefeuille.this, MainActivity.class);
-            //Ajoute les informations dans l'intent
-            retour.putExtra("user", user);
-            startActivity(retour);
             finish();
         }
     }
@@ -123,14 +111,14 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
     }
 
     private void chargeMontantRetirable(){
-        totalFonds = user.get_fonds().setScale(2, RoundingMode.HALF_EVEN);
-        montantRetirable.setText(totalFonds.toString() + '$');
+        fonds = gestionFonds.getFonds();
+        montantRetirable.setText(fonds.toString() + '$');
     }
     private void chargeMontanParis(){
         montantParisView.setText(decfor.format(totalMontantParis) + '$');
     }
     private void chargeMontantTotal(){
-        BigDecimal total = totalFonds.add(BigDecimal.valueOf(totalMontantParis)).setScale(2, RoundingMode.HALF_EVEN);
+        BigDecimal total = fonds.add(BigDecimal.valueOf(totalMontantParis)).setScale(2, RoundingMode.HALF_EVEN);
         montantTotalView.setText(total.toString() + '$');
     }
 

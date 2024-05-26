@@ -274,7 +274,6 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                     _home.setBackgroundResource(R.drawable.rounded_dark_red);
                     _selected = true;
                     _activity.startActivityForResult(portefeuilleIntent,1);
-                    _activity.finish();
                 }
                 return false;
             }
@@ -362,6 +361,10 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                 user.set_pays(paysObject.getString("nom_pays"));
                 user.set_password(paysObject.getString("nom_pays"));
                 this._user = user;
+                //Met les fonds dans le fichier
+                //ajuste le fichier de fonds
+                GestionFonds fonds = new GestionFonds();
+                fonds.setFonds(user.get_fonds());
 
             } else if (codeReponse == 501) {
                 // Compte inactif
