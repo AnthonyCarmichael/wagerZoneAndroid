@@ -536,7 +536,8 @@ public class InscriptionActivity extends AppCompatActivity  implements View.OnCl
             int codeReponse = connection.getResponseCode();
             String reponse = connection.getResponseMessage();
             if (codeReponse == HttpURLConnection.HTTP_OK) {
-                setResult(200);
+                Intent resultIntent = new Intent();
+                setResult(200, resultIntent);
                 finish();
 
             } else if (codeReponse == 501) {
