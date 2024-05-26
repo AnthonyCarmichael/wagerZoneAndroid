@@ -77,7 +77,7 @@ public class GestionNotifications {
                 .setContentTitle(titre)
                 .setContentText(grandTexte)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(grandTexte))
-                .setSmallIcon(R.drawable.logo_app)
+                .setSmallIcon(R.drawable.owl_icon)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
         //Création du manager (envoyeur)
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(context);
