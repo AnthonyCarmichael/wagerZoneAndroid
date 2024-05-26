@@ -67,6 +67,12 @@
             android:layout_width="match_parent"
             android:layout_height="262dp"
             app:srcCompat="@drawable/logo_app" />
+
+        <Button
+            android:id="@+id/notificationButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Notification" />
     </LinearLayout>
 
 

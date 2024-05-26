@@ -36,6 +36,14 @@ public class MainActivity extends AppCompatActivity {
         _nav = new Nav(this, findViewById(android.R.id.content),MainActivity.this);
         TextView titre = findViewById(R.id.titre);
         titre.setText(R.string.accueil);
+        Button notification = findViewById(R.id.notificationButton);
+        notification.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                GestionNotifications notif = new GestionNotifications(MainActivity.this);
+                notif.creationNouveauParis("Demain");
+            }
+        });
 
 
     }
