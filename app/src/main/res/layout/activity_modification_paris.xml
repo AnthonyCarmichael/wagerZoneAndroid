@@ -114,8 +114,8 @@
 
             <ImageView
                 android:id="@+id/logoReceveur"
-                android:layout_width="150dp"
-                android:layout_height="131dp"
+                android:layout_width="match_parent"
+                android:layout_height="129dp"
                 app:srcCompat="@drawable/logo" />
 
             <TextView
@@ -155,10 +155,10 @@
                 android:id="@+id/retour"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="Annuler"
-                android:textSize="18sp"
                 android:background="@drawable/bouton_paris_final"
-                android:textColor="@color/white"/>
+                android:text="Retour"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
         </LinearLayout>
 
     </LinearLayout>
