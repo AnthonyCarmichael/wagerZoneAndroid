@@ -515,8 +515,6 @@ public class SQLiteManager  extends SQLiteOpenHelper
             }
         }
         return paris;
-
-
     }
 
     public ArrayList<Paris> getParisActifs(){
@@ -557,6 +555,27 @@ public class SQLiteManager  extends SQLiteOpenHelper
             }
         }
         return partie;
+    }
+
+    public ArrayList<Partie> getParties() throws IOException {
+        ArrayList<Partie> parties = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_PARTIE + " WHERE " + ID_STATUT + " != " + 2, null)){
+            if(result.moveToFirst()){
+                do{
+                    Partie partie = new Partie();
+                    partie.set_id_partie(result.getInt(0));
+                    partie.set_prolongation(result.getString(1));
+                    partie.set_date_heure(result.getString(2));
+                    partie.set_statut(result.getString(3));
+                    parties.add(partie);
+                }while (result.moveToNext());
+            }
+            else{
+                parties = null;
+            }
+        }
+        return parties;
     }
 
     public ArrayList<Equipe> getEquipes() throws IOException {
@@ -852,6 +871,28 @@ public class SQLiteManager  extends SQLiteOpenHelper
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+
+    public ArrayList<EquipePartie> getEquipesParties(int idPartie) {
+        ArrayList<EquipePartie> equipesParties = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_EQUIPE_PARTIE + " WHERE " + ID_PARTIE + " = " + idPartie, null)){
+            if(result.moveToFirst()){
+                do{
+                    EquipePartie equipePartie = new EquipePartie();
+                    equipePartie.set_equipe(result.getString(0));
+                    equipePartie.set_partie(result.getString(1));
+                    equipePartie.set_but_marque(result.getInt(2));
+                    equipePartie.set_cote(result.getInt(3));
+                    equipePartie.set_receveur(result.getInt(4));
+                    equipesParties.add(equipePartie);
+                }while (result.moveToNext());
+            }
+            else{
+                equipesParties = null;
+            }
+        }
+        return equipesParties;
     }
 }
 

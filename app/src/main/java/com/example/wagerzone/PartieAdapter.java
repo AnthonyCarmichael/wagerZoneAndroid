@@ -12,11 +12,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class PartieAdapter extends RecyclerView.Adapter<PartieAdapter.MyViewHolder>{
     private final RecyclerViewInterface recyclerViewInterface;
-    private ArrayList<Equipe> equipes;
+    private ArrayList<Partie> parties;
     private Context context;
 
     @NonNull
@@ -27,37 +28,37 @@ public class PartieAdapter extends RecyclerView.Adapter<PartieAdapter.MyViewHold
         return new PartieAdapter.MyViewHolder(view);
     }
 
-    public PartieAdapter(Context context, ArrayList<Equipe> equipe, RecyclerViewInterface recyclerViewInterface){
+    public PartieAdapter(Context context, ArrayList<Partie> partie, RecyclerViewInterface recyclerViewInterface){
         this.context = context;
-        this.equipes = equipe;
+        this.parties = partie;
         this.recyclerViewInterface = recyclerViewInterface;
     }
 
     @Override
     public void onBindViewHolder(@NonNull PartieAdapter.MyViewHolder holder, int position) {
-        Equipe equipe = new Equipe();
-        equipe = equipes.get(position);
-        int imageId = context.getResources().getIdentifier(equipe.get_nom_equipe().toLowerCase(), "drawable", context.getPackageName());
+        Partie partie = new Partie();
+        partie = parties.get(position);
 
         SQLiteManager sqLiteManager = new SQLiteManager(context);
 
-        holder.nomEquipe.setText(equipe.get_nom_equipe());
-        holder.imageView.setImageResource(imageId);
-        Equipe finalEquipe = equipe;
+        ArrayList<EquipePartie> equipesParties = sqLiteManager.getEquipesParties(partie.get_id_partie());
+
+
+        int imageId1 = context.getResources().getIdentifier(equipesParties.get(0).get_equipe().toLowerCase(), "drawable", context.getPackageName());
+        int imageId2 = context.getResources().getIdentifier(equipesParties.get(1).get_equipe().toLowerCase(), "drawable", context.getPackageName());
+
+        holder.nomEquipe1.setText(equipesParties.get(0).get_equipe());
+        holder.nomEquipe2.setText(equipesParties.get(1).get_equipe());
+
+        holder.imageView1.setImageResource(imageId1);
+        holder.imageView2.setImageResource(imageId2);
+
+        Partie finalPartie = partie;
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DetailsEquipeActivity.class);
 
-                intent.putExtra("imageId", imageId);
-                intent.putExtra("nomEquipe", finalEquipe.get_nom_equipe());
-                intent.putExtra("entraineurEquipe", finalEquipe.get_entraineur());
-                intent.putExtra("stadeEquipe", finalEquipe.get_stade());
-                intent.putExtra("matchJoue", finalEquipe.get_match_joue());
-                intent.putExtra("victoire", finalEquipe.get_victoire());
-                intent.putExtra("defaite", finalEquipe.get_defaite());
-                intent.putExtra("matchNull", finalEquipe.get_match_nul());
-                intent.putExtra("defaiteProlongation", finalEquipe.get_defaite_prolongation());
                 context.startActivity(intent);
             }
         });
@@ -65,18 +66,24 @@ public class PartieAdapter extends RecyclerView.Adapter<PartieAdapter.MyViewHold
 
     @Override
     public int getItemCount() {
-        return equipes.size();
+        return parties.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
-        TextView nomEquipe;
+        ImageView imageView1;
+        ImageView imageView2;
+        TextView nomEquipe1;
+        TextView nomEquipe2;
         Button button;
         public MyViewHolder(View itemView){
             super(itemView);
-            nomEquipe = (TextView) itemView.findViewById(R.id.nomEquipe);
-            imageView = (ImageView) itemView.findViewById(R.id.imageView);
-            button = itemView.findViewById(R.id.button);
+            nomEquipe1 = (TextView) itemView.findViewById(R.id.nomEquipe1);
+            nomEquipe2 = (TextView) itemView.findViewById(R.id.nomEquipe2);
+
+            imageView1 = (ImageView) itemView.findViewById(R.id.imageEquipe1);
+            imageView2 = (ImageView) itemView.findViewById(R.id.imageEquipe2);
+
+            button = itemView.findViewById(R.id.buttonParis);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -36,21 +36,21 @@ public class PartieActivity extends AppCompatActivity implements RecyclerViewInt
 
         // Mise a jour du titre, et surlignement de l'iconeUser
         titre.setText("Les matchs");
-        Button btnEquipe = findViewById(R.id.match);
-        btnEquipe.setBackgroundResource(R.drawable.rounded_red);
+        Button btnMatch = findViewById(R.id.matchs);
+        btnMatch.setBackgroundResource(R.drawable.rounded_red);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerViewPartie);
         SQLiteManager sqLiteManager = new SQLiteManager(PartieActivity.this);
 
-        ArrayList<Equipe> equipes;
+        ArrayList<Partie> parties;
         try {
-            equipes = sqLiteManager.getEquipes();
+            parties = sqLiteManager.getParties();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        EquipeAdapter equipeAdapter = new EquipeAdapter(this, equipes, this);
-        recyclerView.setAdapter(equipeAdapter);
+        PartieAdapter partieAdapter = new PartieAdapter(this, parties, this);
+        recyclerView.setAdapter(partieAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
