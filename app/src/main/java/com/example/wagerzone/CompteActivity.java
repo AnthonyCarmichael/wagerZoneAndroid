@@ -67,7 +67,6 @@ public class CompteActivity extends AppCompatActivity  implements View.OnClickLi
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
         // Set le nav et récupere le titre
         this._nav = new Nav(this,findViewById(android.R.id.content),CompteActivity.this);
         TextView titre = findViewById(R.id.titre);
@@ -238,6 +237,7 @@ public class CompteActivity extends AppCompatActivity  implements View.OnClickLi
             if (codeReponse == HttpURLConnection.HTTP_OK) {
                 _nav.get_user().set_name(data.get("name").toString());
                 _nav.get_user().set_prenom(data.get("prenom").toString());
+                _nav.get_user().set_nom(data.get("nom").toString());
                 _nav.get_user().set_email(data.get("email").toString());
                 _nav.get_user().set_password(data.get("password").toString());
                 _nav.get_user().set_telephone(data.get("telephone").toString());
@@ -343,5 +343,11 @@ public class CompteActivity extends AppCompatActivity  implements View.OnClickLi
         }
     }
 
+    @Override
+    public void finish() {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("user", _nav.get_user());
+        super.finish();
+    }
 
 }
