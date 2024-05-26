@@ -56,12 +56,12 @@ public class ModificationParisActivity extends AppCompatActivity {
             miseReceveur.setText(String.valueOf(intent.getFloatExtra("montant", 0)));
         }
 
-        String uriVisiteur = "@drawable/"+(intent.getStringExtra("nomVisiteur")).toLowerCase();
+        String uriVisiteur = "@drawable/"+(intent.getStringExtra("nomVisiteur")).replaceAll(" ", "").toLowerCase();
         int imageResourceVisiteur = getResources().getIdentifier(uriVisiteur, null, getPackageName());
         Drawable logoDrawableVisiteur = getResources().getDrawable(imageResourceVisiteur);
         logoVisiteur.setImageDrawable(logoDrawableVisiteur);
 
-        String uriReceveur = "@drawable/"+(intent.getStringExtra("nomReceveur")).toLowerCase();
+        String uriReceveur = "@drawable/"+(intent.getStringExtra("nomReceveur")).replaceAll(" ", "").toLowerCase();
         int imageResourceReceveur = getResources().getIdentifier(uriReceveur, null, getPackageName());
         Drawable logoDrawableReceveur = getResources().getDrawable(imageResourceReceveur);
         logoReceveur.setImageDrawable(logoDrawableReceveur);
