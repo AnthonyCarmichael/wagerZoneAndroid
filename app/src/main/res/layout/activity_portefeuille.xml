@@ -88,7 +88,6 @@
                 android:id="@+id/tMontantParis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:text="Montant en paris"
                 android:textColor="#2C2C2C"
@@ -107,6 +106,7 @@
 
             <TextView
                 android:id="@+id/tMontantTotal"
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
