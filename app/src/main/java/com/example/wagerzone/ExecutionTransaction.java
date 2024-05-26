@@ -156,7 +156,6 @@ public class ExecutionTransaction extends AppCompatActivity {
         if(paymentSheetResult instanceof PaymentSheetResult.Completed){
             effectueTransaction();
             Toast.makeText(this, "Paiement effectué", Toast.LENGTH_SHORT).show();
-            retourne();
         }
         //Autre erreur
         else {

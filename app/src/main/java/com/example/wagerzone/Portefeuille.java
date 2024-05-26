@@ -97,15 +97,11 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0) {
-            if (resultCode == RESULT_OK) {
-                //Au retour, affecte les données de l'utilisateur
-                user = (Utilisateur) data.getSerializableExtra("user");
-                //Affecte les données de la page
-                chargeMontantRetirable();
-                chargeMontantTotal();
-            }
-        }
+        //Au retour, affecte les données de l'utilisateur
+        user = (Utilisateur) data.getSerializableExtra("user");
+        //Affecte les données de la page
+        chargeMontantRetirable();
+        chargeMontantTotal();
     }
 
     private void chargeMontantRetirable(){
