@@ -18,7 +18,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class MainActivity extends AppCompatActivity {
 
     private Nav _nav;
-
+    private GestionFonds fonds;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if (resultCode == 9){ // Déconnexion
             _nav.set_user(null);
+            fonds.resetFonds();
             TextView messageErreurSuccesMain = _nav.get_messageErreurSuccesMain();
             messageErreurSuccesMain.setVisibility(View.INVISIBLE);
             _nav.get_userIcone().setImageResource(R.drawable.user);

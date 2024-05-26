@@ -177,6 +177,9 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
 
                 SQLiteManager sqLiteManager = new SQLiteManager(ConnexionActivity.this);
                 sqLiteManager.MAJParis(user.get_id());
+                //ajuste le fichier de fonds
+                GestionFonds fonds = new GestionFonds();
+                fonds.setFonds(user.get_fonds());
                 // Envoi du result à l'activité main
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra("user", user);
