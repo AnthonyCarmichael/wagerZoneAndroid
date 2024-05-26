@@ -101,5 +101,11 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(connexionIntent, 200);
             */
         }
+        if (data != null && data.hasExtra("user")) {
+            Utilisateur user = (Utilisateur) data.getSerializableExtra("user");
+            _nav.set_user(user);
+
+        }
+
     }
 }

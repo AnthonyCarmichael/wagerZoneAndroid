@@ -1,6 +1,7 @@
 package com.example.wagerzone;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -343,10 +344,12 @@ public class CompteActivity extends AppCompatActivity  implements View.OnClickLi
         }
     }
 
+
     @Override
     public void finish() {
         Intent resultIntent = new Intent();
         resultIntent.putExtra("user", _nav.get_user());
+        setResult(Activity.RESULT_OK, resultIntent);
         super.finish();
     }
 
