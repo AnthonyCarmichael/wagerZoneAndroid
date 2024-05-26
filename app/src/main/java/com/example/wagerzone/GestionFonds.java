@@ -63,7 +63,8 @@ public class GestionFonds{
     public void setFonds(BigDecimal fonds) {
         this.fonds = fonds;
     }
-    public boolean resetFonds() {
+    //Efface le fichier
+    public boolean deleteFonds() {
         return fichier.delete();
     }
 }
