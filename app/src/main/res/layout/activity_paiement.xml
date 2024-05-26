@@ -27,7 +27,7 @@
             android:text="Retour" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/titrePetitePage"
             android:layout_width="84dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

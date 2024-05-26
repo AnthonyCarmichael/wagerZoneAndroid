@@ -6,240 +6,258 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DetailsEquipeActivity">
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#700E0E"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include layout="@layout/header_small_page"/>
+
+    </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_width="409dp"
+        android:layout_height="629dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header"
+        app:layout_constraintVertical_bias="0.0">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
             android:orientation="horizontal"
             android:padding="16dp"
-            tools:context=".DetailsEquipeActivity"
-            android:layout_marginBottom="25dp">
+            tools:context=".DetailsEquipeActivity">
 
             <ImageView
                 android:id="@+id/logoImageView"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_launcher_background"/>
+                android:src="@drawable/ic_launcher_background" />
 
             <TextView
                 android:id="@+id/nomEquipeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:layout_marginTop="40dp"
                 android:layout_marginLeft="30dp"
+                android:layout_marginTop="40dp"
+                android:text="Nom de l'équipe"
                 android:textColor="@android:color/black"
-                android:text="Nom de l'équipe"/>
+                android:textSize="24sp" />
 
         </LinearLayout>
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/textView20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Entraineur : "
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/entraineur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="000"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/textView22"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Stade :"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/stade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Sherldon monvoyage"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp" />
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="Statistiques"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Statistiques"
-                android:textSize="24sp"
-                android:textColor="@android:color/black" />
-        </LinearLayout>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginLeft="25dp">
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Matchs joués : "
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Matchs joués"
-                android:textSize="15sp"
-                android:textColor="@android:color/black" />
+                <TextView
+                    android:id="@+id/matchsJoues"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="000"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp" />
+            </TableRow>
 
-            <TextView
-                android:id="@+id/matchJoue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView"
-                android:textSize="15sp"
-                android:textColor="@android:color/black" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp">
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Victoires : "
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="58dp"
-            android:layout_marginLeft="25dp">
+                <TextView
+                    android:id="@+id/victoires"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="000"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp" />
+            </TableRow>
 
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Victoire"
-                android:textSize="15sp"
-                android:textColor="@android:color/black" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp">
 
-            <TextView
-                android:id="@+id/victoire"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView"
-                android:textSize="15sp"
-                android:textColor="@android:color/black"/>
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Defaites : "
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/defaites"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="000"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp" />
+            </TableRow>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="39dp"
-            android:layout_marginLeft="25dp">
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp">
 
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Defaite"
-                android:textSize="15sp"
-                android:textColor="@android:color/black"/>
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Matchs nuls :"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/defaite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textSize="15sp"
-                android:textColor="@android:color/black" />
+                <TextView
+                    android:id="@+id/matchsNuls"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="000"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp" />
 
-        </LinearLayout>
+            </TableRow>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="58dp"
-            android:layout_marginLeft="25dp">
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp">
 
-            <TextView
-                android:id="@+id/textView16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Matchs nuls"
-                android:textSize="15sp"
-                android:textColor="@android:color/black" />
+                <TextView
+                    android:id="@+id/textView18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="40dp"
+                    android:text="Defaites prolongation :"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/matchNul"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView"
-                android:textSize="15sp"
-                android:textColor="@android:color/black" />
+                <TextView
+                    android:id="@+id/defaitesProlongation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="000"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp" />
+            </TableRow>
 
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="39dp"
-            android:layout_marginLeft="25dp">
+        </TableLayout>
 
-            <TextView
-                android:id="@+id/textView18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Defaites prolongation"
-                android:textSize="15sp"
-                android:textColor="@android:color/black"/>
 
-            <TextView
-                android:id="@+id/defaiteProlongation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView"
-                android:textSize="15sp"
-                android:textColor="@android:color/black"/>
 
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="39dp">
-
-            <TextView
-                android:id="@+id/textView20"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Entraineur"
-                android:textSize="24sp"
-                android:textColor="@android:color/black"/>
-
-            <TextView
-                android:id="@+id/entraineur"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView"
-                android:textSize="15sp"
-                android:textColor="@android:color/black" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="39dp">
-
-            <TextView
-                android:id="@+id/textView22"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Stade"
-                android:textSize="24sp"
-                android:textColor="@android:color/black" />
-
-            <TextView
-                android:id="@+id/stade"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textSize="15sp"
-                android:textColor="@android:color/black" />
-        </LinearLayout>
 
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

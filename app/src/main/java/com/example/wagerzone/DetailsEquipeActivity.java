@@ -1,6 +1,8 @@
 package com.example.wagerzone;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,11 +29,11 @@ public class DetailsEquipeActivity extends AppCompatActivity {
         TextView nomEquipeTextView = findViewById(R.id.nomEquipeTextView);
         TextView entraineur = findViewById(R.id.entraineur);
         TextView stade = findViewById(R.id.stade);
-        TextView matchJoueTextView = findViewById(R.id.matchJoue);
-        TextView victoireTextView = findViewById(R.id.victoire);
-        TextView defaiteTextView = findViewById(R.id.defaite);
-        TextView matchNulTextView = findViewById(R.id.matchNul);
-        TextView defaiteProlongationTextView = findViewById(R.id.defaiteProlongation);
+        TextView matchJoueTextView = findViewById(R.id.matchsJoues);
+        TextView victoireTextView = findViewById(R.id.victoires);
+        TextView defaiteTextView = findViewById(R.id.defaites);
+        TextView matchNulTextView = findViewById(R.id.matchsNuls);
+        TextView defaiteProlongationTextView = findViewById(R.id.defaitesProlongation);
 
         // Récupérer les données passées depuis l'activité précédente
         int imageId = getIntent().getIntExtra("imageId", 0);
@@ -58,5 +60,13 @@ public class DetailsEquipeActivity extends AppCompatActivity {
         if (imageId != 0) {
             logoImageView.setImageResource(imageId);
         }
+        //Bouton retour
+        Button btnRetour = findViewById(R.id.btnRetour);
+        btnRetour.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                finish();
+            }
+        });
     }
 }

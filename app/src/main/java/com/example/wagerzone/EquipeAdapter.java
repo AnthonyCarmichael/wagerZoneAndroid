@@ -39,20 +39,22 @@ public class EquipeAdapter extends RecyclerView.Adapter<EquipeAdapter.MyViewHold
     public void onBindViewHolder(@NonNull EquipeAdapter.MyViewHolder holder, int position) {
         Equipe equipe = new Equipe();
         equipe = equipes.get(position);
-        int imageId = context.getResources().getIdentifier(equipe.get_nom_equipe().toLowerCase(), "drawable", context.getPackageName());
+        String nom_equipe = equipe.get_nom_equipe().toLowerCase().replace(' ', '_');
+        int imageId = context.getResources().getIdentifier(nom_equipe, "drawable", context.getPackageName());
 
         SQLiteManager sqLiteManager = new SQLiteManager(context);
 
         holder.nomEquipe.setText(equipe.get_nom_equipe());
         holder.imageView.setImageResource(imageId);
         Equipe finalEquipe = equipe;
+        int nb_victoire = finalEquipe.get_victoire();
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DetailsEquipeActivity.class);
 
                 intent.putExtra("imageId", imageId);
-                intent.putExtra("nomEquipe", finalEquipe.get_nom_equipe());
+                intent.putExtra("equipe", );
                 intent.putExtra("entraineurEquipe", finalEquipe.get_entraineur());
                 intent.putExtra("stadeEquipe", finalEquipe.get_stade());
                 intent.putExtra("matchJoue", finalEquipe.get_match_joue());
