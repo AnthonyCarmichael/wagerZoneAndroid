@@ -59,7 +59,7 @@ public class EquipeAdapter extends RecyclerView.Adapter<EquipeAdapter.MyViewHold
                 intent.putExtra("matchJoue", String.valueOf(finalEquipe.get_match_joue()));
                 intent.putExtra("victoire", String.valueOf(finalEquipe.get_victoire()));
                 intent.putExtra("defaite", String.valueOf(finalEquipe.get_defaite()));
-                intent.putExtra("matchNull", String.valueOf(finalEquipe.get_match_nul()));
+                intent.putExtra("matchNul", String.valueOf(finalEquipe.get_match_nul()));
                 intent.putExtra("defaiteProlongation", String.valueOf(finalEquipe.get_defaite_prolongation()));
                 context.startActivity(intent);
             }
