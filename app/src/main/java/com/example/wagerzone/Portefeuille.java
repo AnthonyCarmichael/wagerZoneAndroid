@@ -27,7 +27,6 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
     private Utilisateur user;
     private float totalMontantParis;
     private BigDecimal fonds = BigDecimal.valueOf(0);
-    GestionFonds gestionFonds;
     private static final DecimalFormat decfor = new DecimalFormat("0.00");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +41,6 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
         //Déclare les variables globales
         user = (Utilisateur) getIntent().getSerializableExtra("user");
         db = new SQLiteManager(Portefeuille.this);
-        gestionFonds = new GestionFonds();
         //Déclare les paris et le montant total
         paris = db.getParisActifs();
         for (Paris pari:paris) {
@@ -111,7 +109,8 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
     }
 
     private void chargeMontantRetirable(){
-        fonds = gestionFonds.getFonds();
+        GestionFonds gestionFonds = new GestionFonds();
+        fonds = gestionFonds.getFonds().setScale(2, RoundingMode.HALF_EVEN);
         montantRetirable.setText(fonds.toString() + '$');
     }
     private void chargeMontanParis(){

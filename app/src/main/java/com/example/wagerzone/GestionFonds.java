@@ -59,6 +59,9 @@ public class GestionFonds{
     public BigDecimal getFonds() {
         return fonds;
     }
+    public float getFloatFonds() {
+        return fonds.floatValue();
+    }
 
     public void setFonds(BigDecimal fonds) {
         this.fonds = fonds;

@@ -42,6 +42,7 @@ public class ExecutionTransaction extends AppCompatActivity {
     private float montant;
     private Utilisateur user;
     private boolean estRetrait;
+    private GestionFonds gestionFonds;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +55,7 @@ public class ExecutionTransaction extends AppCompatActivity {
         });
 
         user = (Utilisateur) getIntent().getSerializableExtra("user");
+        gestionFonds = new GestionFonds();
         montant = getIntent().getFloatExtra("montant", 0);
         estRetrait = getIntent().hasExtra("retrait");
         if(montant < 5)
@@ -172,11 +174,13 @@ public class ExecutionTransaction extends AppCompatActivity {
                         try {
                             //capture le retour JSON et la met dans la configuration
                             JSONObject jsonObject = new JSONObject(response);
+                            //Si la fonction a fonctionné
                             if(jsonObject.has("Succes"))
                             {
                                 Toast.makeText(ExecutionTransaction.this, "Succes, la transaction c'est bien effectuée", Toast.LENGTH_SHORT).show();
-                                changerFondsUtilisateur();
+                                gestionFonds.add(montant);
                             }
+                            //si non
                             else
                                 Toast.makeText(ExecutionTransaction.this, "Erreur, une erreur c'est produit durant la transaction, veuillez contacter le support technique", Toast.LENGTH_SHORT).show();
                             retourne();
@@ -212,11 +216,11 @@ public class ExecutionTransaction extends AppCompatActivity {
         setResult(Activity.RESULT_OK, retour);
         finish();
     }
-
+    /* Vestige de l'ancien code
     private void changerFondsUtilisateur(){
         BigDecimal montantBig = new BigDecimal(montant);
         BigDecimal fonds = user.get_fonds().add(montantBig);
         //fonds = fonds.setScale(2,BigDecimal.ROUND_HALF_EVEN);
         user.set_fonds(fonds.toString());
-    }
+    }*/
 }
