@@ -142,7 +142,10 @@ public class ExecutionTransaction extends AppCompatActivity {
         //si l'action est cancellé
         if(paymentSheetResult instanceof PaymentSheetResult.Canceled){
             Toast.makeText(this, "Cancellé", Toast.LENGTH_SHORT).show();
-            retourne();
+            Intent retour = new Intent();
+            retour.putExtra("canceled", true);
+            setResult(Activity.RESULT_OK, retour);
+            finish();
         }
         //Si le paiment n'a pas fonctionné
         if(paymentSheetResult instanceof PaymentSheetResult.Failed){
@@ -159,7 +162,6 @@ public class ExecutionTransaction extends AppCompatActivity {
         else {
             Toast.makeText(this, "Erreur du PaymentSheetResult", Toast.LENGTH_SHORT).show();
             retourne();
-
         }
     }
 

@@ -20,6 +20,7 @@ public class MontantTransaction extends AppCompatActivity {
     private TextView editMontant;
     private boolean estRetrait;
     private Utilisateur user;
+    private TextView fondsView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +31,8 @@ public class MontantTransaction extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        fondsView = findViewById(R.id.fondsView);
+        fondsView.setText("Fonds : " + getIntent().getStringExtra("fonds"));
         user = (Utilisateur) getIntent().getSerializableExtra("user");
         editMontant = findViewById(R.id.montant);
         estRetrait = getIntent().hasExtra("retrait");
@@ -85,11 +88,13 @@ public class MontantTransaction extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
-                user = (Utilisateur) data.getSerializableExtra("user");
-                Intent retour = new Intent();
-                retour.putExtra("user", user);
-                setResult(Activity.RESULT_OK, retour);
-                finish();
+                if(!data.hasExtra("canceled"))
+                {
+                    Intent retour = new Intent();
+                    retour.putExtra("user", user);
+                    setResult(Activity.RESULT_OK, retour);
+                    finish();
+                }
             }
         }
     }
