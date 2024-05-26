@@ -22,8 +22,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class SQLiteManager  extends SQLiteOpenHelper
 {
@@ -493,10 +497,10 @@ public class SQLiteManager  extends SQLiteOpenHelper
 
     public ArrayList<Paris> getParis() throws IOException {
         ArrayList<Paris> paris = new ArrayList<>();
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_PARIS, null)){
-            if(result.getCount() != 0){
-                while (result.moveToNext()){
+            if(result.moveToFirst()){
+                do{
                     Paris pari = new Paris();
                     pari.set_id_paris(result.getInt(1));
                     pari.set_montant(result.getFloat(2));
@@ -504,10 +508,39 @@ public class SQLiteManager  extends SQLiteOpenHelper
                     pari.set_receveur(result.getInt(4));
                     pari.set_id_partie(result.getInt(5));
                     paris.add(pari);
-                }
+                }while (result.moveToNext());
+            }
+            else{
+                paris = null;
             }
         }
         return paris;
+
+
+    }
+
+    public ArrayList<Paris> getParisActifs(){
+        ArrayList<Paris> paris = new ArrayList<>();
+        ArrayList<Paris> parisActifs = new ArrayList<>();
+        try {
+            paris = getParis();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        for (Paris pari:paris) {
+            SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            format.setTimeZone(TimeZone.getTimeZone("America/New_York"));
+            try {
+                Date date = (Date) format.parse(pari.get_date_heure());
+                //s'assure que le paris ne soit pas encore envoyé
+                if(date.getTime() > System.currentTimeMillis())
+                    parisActifs.add(pari);
+
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return parisActifs;
     }
 
     public Partie getPartie(int id_partie) throws IOException {

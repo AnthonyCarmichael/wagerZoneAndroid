@@ -1,6 +1,5 @@
 package com.example.wagerzone;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,8 +15,14 @@ import androidx.core.view.WindowInsetsCompat;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Date;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.TimeZone;
 
 public class Portefeuille extends AppCompatActivity implements View.OnClickListener{
 
@@ -27,7 +32,8 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
     private ArrayList<Paris> paris;
     private SQLiteManager db;
     private Utilisateur user;
-
+    private float totalMontantParis;
+    private BigDecimal totalFonds = BigDecimal.valueOf(0);
     private static final DecimalFormat decfor = new DecimalFormat("0.00");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,17 +45,24 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        //Déclare les variables globales
         user = (Utilisateur) getIntent().getSerializableExtra("user");
+        db = new SQLiteManager(Portefeuille.this);
+        //Déclare les paris et le montant total
 
+        paris = db.getParisActifs();
+        for (Paris pari:paris) {
+            totalMontantParis += pari.get_montant();
+        }
         //nav = new Nav(this, findViewById(android.R.id.content),Portefeuille.this);
         //Déclare les TextView des montants
         montantTotalView = findViewById(R.id.montantTotal);
         montantParisView = findViewById(R.id.montantParis);
         montantRetirable = findViewById(R.id.montantRetirable);
         //Affecte le text des montant
-        chargeMontantTotal();
-        chargeMontanParis();
         chargeMontantRetirable();
+        chargeMontanParis();
+        chargeMontantTotal();
 
         //Déclare les bouttons
         Button btnAjouteFonds = findViewById(R.id.buttonAjoutFonds);
@@ -67,22 +80,28 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if(v.getId()==R.id.buttonAjoutFonds){
             Intent intentAjoutFonds = new Intent(Portefeuille.this, MontantTransaction.class);
+            //Ajoute les informations dans l'intent
             intentAjoutFonds.putExtra("user", user);
+            intentAjoutFonds.putExtra("fonds", totalFonds.toString());
             startActivityForResult(intentAjoutFonds, 0);
         }
         if(v.getId()==R.id.buttonTransactions){
             Intent intentTransactions = new Intent(Portefeuille.this, MesTransactions.class);
+            //Ajoute les informations dans l'intent
             intentTransactions.putExtra("user", user);
             startActivity(intentTransactions);
         }
         if(v.getId()==R.id.buttonRetirFonds){
             Intent intentRetirFonds = new Intent(Portefeuille.this, MontantTransaction.class);
+            //Ajoute les informations dans l'intent
             intentRetirFonds.putExtra("retrait", -1);
             intentRetirFonds.putExtra("user", user);
+            intentRetirFonds.putExtra("fonds", totalFonds.toString());
             startActivityForResult(intentRetirFonds, 0);
         }
         if(v.getId()==R.id.btnRetour){
             Intent retour = new Intent(Portefeuille.this, MainActivity.class);
+            //Ajoute les informations dans l'intent
             retour.putExtra("user", user);
             startActivity(retour);
             finish();
@@ -94,26 +113,26 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
+                //Au retour, affecte les données de l'utilisateur
                 user = (Utilisateur) data.getSerializableExtra("user");
+                //Affecte les données de la page
                 chargeMontantRetirable();
                 chargeMontantTotal();
             }
         }
     }
 
-    private void chargeMontantTotal(){
-        double total = 0;
-        montantTotalView.setText(decfor.format(total) + '$');
-    }
-
-    private void chargeMontanParis(){
-
-        double total = 0;
-        montantParisView.setText(decfor.format(total) + '$');
-    }
-
     private void chargeMontantRetirable(){
-        BigDecimal total = user.get_fonds().setScale(2, RoundingMode.HALF_EVEN);
-        montantRetirable.setText(total.toString() + '$');
+        totalFonds = user.get_fonds().setScale(2, RoundingMode.HALF_EVEN);
+        montantRetirable.setText(totalFonds.toString() + '$');
     }
+    private void chargeMontanParis(){
+        montantParisView.setText(decfor.format(totalMontantParis) + '$');
+    }
+    private void chargeMontantTotal(){
+        BigDecimal total = totalFonds.add(BigDecimal.valueOf(totalMontantParis)).setScale(2, RoundingMode.HALF_EVEN);
+        montantTotalView.setText(total.toString() + '$');
+    }
+
+
 }

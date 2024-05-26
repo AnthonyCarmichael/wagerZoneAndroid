@@ -64,17 +64,18 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tMontantTotal"
+                android:id="@+id/tMontantRetirable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:gravity="center"
-                android:text="Montant total"
+                android:text="Fonds"
                 android:textColor="#2C2C2C"
                 android:textSize="34sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/montantTotal"
+                android:id="@+id/montantRetirable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -87,7 +88,6 @@
                 android:id="@+id/tMontantParis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:text="Montant en paris"
                 android:textColor="#2C2C2C"
@@ -105,18 +105,18 @@
                 android:textSize="34sp" />
 
             <TextView
-                android:id="@+id/tMontantRetirable"
+                android:id="@+id/tMontantTotal"
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:gravity="center"
-                android:text="Montant retirable"
+                android:text="Montant total"
                 android:textColor="#2C2C2C"
                 android:textSize="34sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/montantRetirable"
+                android:id="@+id/montantTotal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
