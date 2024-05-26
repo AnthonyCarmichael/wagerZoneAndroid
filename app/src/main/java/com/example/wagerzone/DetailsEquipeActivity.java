@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class DetailsEquipeActivity extends AppCompatActivity {
 
+    private Equipe equipe;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -47,21 +47,20 @@ public class EquipeAdapter extends RecyclerView.Adapter<EquipeAdapter.MyViewHold
         holder.nomEquipe.setText(equipe.get_nom_equipe());
         holder.imageView.setImageResource(imageId);
         Equipe finalEquipe = equipe;
-        int nb_victoire = finalEquipe.get_victoire();
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DetailsEquipeActivity.class);
 
                 intent.putExtra("imageId", imageId);
-                intent.putExtra("equipe", );
+                intent.putExtra("equipe", finalEquipe.get_nom_equipe());
                 intent.putExtra("entraineurEquipe", finalEquipe.get_entraineur());
                 intent.putExtra("stadeEquipe", finalEquipe.get_stade());
-                intent.putExtra("matchJoue", finalEquipe.get_match_joue());
-                intent.putExtra("victoire", finalEquipe.get_victoire());
-                intent.putExtra("defaite", finalEquipe.get_defaite());
-                intent.putExtra("matchNull", finalEquipe.get_match_nul());
-                intent.putExtra("defaiteProlongation", finalEquipe.get_defaite_prolongation());
+                intent.putExtra("matchJoue", String.valueOf(finalEquipe.get_match_joue()));
+                intent.putExtra("victoire", String.valueOf(finalEquipe.get_victoire()));
+                intent.putExtra("defaite", String.valueOf(finalEquipe.get_defaite()));
+                intent.putExtra("matchNull", String.valueOf(finalEquipe.get_match_nul()));
+                intent.putExtra("defaiteProlongation", String.valueOf(finalEquipe.get_defaite_prolongation()));
                 context.startActivity(intent);
             }
         });
