@@ -6,7 +6,12 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Objects;
 
-
+/**
+ * C'est une classe permet de gérer le transfert et le traitement des
+ * données d'un utilisateur.
+ *  @author Anthony Carmichael
+ *  @version 1.0
+ */
 public class Utilisateur implements Serializable {
     private int _id;
     private String _name; // username
