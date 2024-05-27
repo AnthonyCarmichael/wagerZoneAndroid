@@ -61,6 +61,7 @@ public class DetailsEquipeActivity extends AppCompatActivity {
         if (imageId != 0) {
             logoImageView.setImageResource(imageId);
         }
+
         //Bouton retour
         Button btnRetour = findViewById(R.id.btnRetour);
         btnRetour.setOnClickListener(new View.OnClickListener(){
