@@ -177,7 +177,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
         }
         if (v.getId() == R.id.matchs) {
             _changingView =true;
-            Intent matchsIntent = new Intent(_context,MatchActivity.class);
+            Intent matchsIntent = new Intent(_context,PartieActivity.class);
             matchsIntent.putExtra("user", _user);
             v.setBackgroundResource(R.drawable.rounded_red);
             _home.setBackgroundResource(R.drawable.rounded_dark_red);
@@ -199,7 +199,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
             _paris.setBackgroundResource(R.drawable.rounded_dark_red);
         if (_activity.getClass().equals(EquipeActivity.class)&&_changingView)
             _equipes.setBackgroundResource(R.drawable.rounded_dark_red);
-        if (_activity.getClass().equals(MatchActivity.class)&&_changingView)
+        if (_activity.getClass().equals(PartieActivity.class)&&_changingView)
             _matchs.setBackgroundResource(R.drawable.rounded_dark_red);
     }
 
