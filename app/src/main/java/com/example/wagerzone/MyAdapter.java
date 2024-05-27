@@ -106,7 +106,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.dismiss();
                             try {
-                                sqLiteManager.supprimerParis(pari.get_id_paris());
+                                sqLiteManager.supprimerParis(pari.get_id_paris(), pari.get_montant());
                                 Intent intent = new Intent(v.getContext(), ParisActivity.class);
                                 startActivity(v.getContext(), intent, null);
                                 ((ParisActivity)context).finish();

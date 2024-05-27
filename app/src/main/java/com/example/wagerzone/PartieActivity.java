@@ -49,7 +49,7 @@ public class PartieActivity extends AppCompatActivity implements RecyclerViewInt
             throw new RuntimeException(e);
         }
 
-        PartieAdapter partieAdapter = new PartieAdapter(this, parties, this);
+        PartieAdapter partieAdapter = new PartieAdapter(this, _nav, parties, this);
         recyclerView.setAdapter(partieAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
