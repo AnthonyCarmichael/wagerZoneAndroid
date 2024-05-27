@@ -3,7 +3,7 @@ package com.example.wagerzone;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Objects;
-<<<<<<< HEAD
+
 
 /**
  * La classe Transaction représente une transaction avec sa date et son montant.
