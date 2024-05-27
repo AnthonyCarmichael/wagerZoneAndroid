@@ -392,7 +392,7 @@ public class CompteActivity extends AppCompatActivity  implements View.OnClickLi
     /**
      * Permet de s'assurer que lorsque l'activité est terminée, on renvoi l'utilisateur courrant
      */
-    /*
+
     @Override
     public void finish() {
         Intent resultIntent = new Intent();
@@ -400,5 +400,4 @@ public class CompteActivity extends AppCompatActivity  implements View.OnClickLi
         setResult(Activity.RESULT_OK, resultIntent);
         super.finish();
     }
-*/
 }
