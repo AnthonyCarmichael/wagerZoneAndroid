@@ -44,11 +44,11 @@ public class PartieAdapter extends RecyclerView.Adapter<PartieAdapter.MyViewHold
         ArrayList<EquipePartie> equipesParties = sqLiteManager.getEquipesParties(partie.get_id_partie());
 
 
-        int imageId1 = context.getResources().getIdentifier(equipesParties.get(0).get_equipe().toLowerCase(), "drawable", context.getPackageName());
-        int imageId2 = context.getResources().getIdentifier(equipesParties.get(1).get_equipe().toLowerCase(), "drawable", context.getPackageName());
+        int imageId1 = context.getResources().getIdentifier(equipesParties.get(1).get_equipe().toLowerCase(), "drawable", context.getPackageName());
+        int imageId2 = context.getResources().getIdentifier(equipesParties.get(2).get_equipe().toLowerCase(), "drawable", context.getPackageName());
 
-        holder.nomEquipe1.setText(equipesParties.get(0).get_equipe());
-        holder.nomEquipe2.setText(equipesParties.get(1).get_equipe());
+        holder.nomEquipe1.setText(equipesParties.get(1).get_equipe());
+        holder.nomEquipe2.setText(equipesParties.get(2).get_equipe());
 
         holder.imageView1.setImageResource(imageId1);
         holder.imageView2.setImageResource(imageId2);
