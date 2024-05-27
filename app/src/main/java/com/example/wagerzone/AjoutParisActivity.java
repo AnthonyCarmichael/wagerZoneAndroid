@@ -164,6 +164,8 @@ public class AjoutParisActivity extends AppCompatActivity {
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
+                            GestionNotifications notif = new GestionNotifications(AjoutParisActivity.this);
+                            notif.notifBouton(3 ,"Notification", "Paris ajouté");
                             dialog.dismiss();
                             Intent intent3 = new Intent(AjoutParisActivity.this, ParisActivity.class);
                             startActivity(intent3);
@@ -188,6 +190,8 @@ public class AjoutParisActivity extends AppCompatActivity {
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
+                            GestionNotifications notif = new GestionNotifications(AjoutParisActivity.this);
+                            notif.notifBouton(3 ,"Notification", "Paris ajouté");
                             dialog.dismiss();
                             Intent intent3 = new Intent(AjoutParisActivity.this, ParisActivity.class);
                             startActivity(intent3);
