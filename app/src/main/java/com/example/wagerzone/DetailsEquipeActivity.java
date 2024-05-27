@@ -38,7 +38,7 @@ public class DetailsEquipeActivity extends AppCompatActivity {
 
         // Récupérer les données passées depuis l'activité précédente
         int imageId = getIntent().getIntExtra("imageId", 0);
-        String nomEquipe = getIntent().getStringExtra("nomEquipe");
+        String nomEquipe = getIntent().getStringExtra("equipe");
         String entraineurEquipe = getIntent().getStringExtra("entraineurEquipe");
         String stadeEquipe = getIntent().getStringExtra("stadeEquipe");
         String matchJoue = getIntent().getStringExtra("matchJoue");
