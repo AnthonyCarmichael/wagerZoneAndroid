@@ -60,9 +60,6 @@
             android:name=".MesTransactions"
             android:exported="false" />
         <activity
-            android:name=".Retrait"
-            android:exported="false" />
-        <activity
             android:name=".MontantTransaction"
             android:exported="false" />
         <activity
