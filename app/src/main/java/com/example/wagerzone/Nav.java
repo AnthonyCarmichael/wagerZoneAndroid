@@ -36,6 +36,12 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.UUID;
 
+/**
+ * La classe nav gère le header, footer ainsi que les bouton liés a la navigation entre les activités.
+ * C'est la classe nav qui s'occupe aussi de transmettre les informations du users a chaque lancement d'activité.
+ * @author Anthony Carmichael
+ * @version 1.0
+ */
 public class Nav extends AppCompatActivity implements View.OnClickListener{
     private Button _home,_equipes,_matchs,_paris;
     private ImageButton _userIcone;
