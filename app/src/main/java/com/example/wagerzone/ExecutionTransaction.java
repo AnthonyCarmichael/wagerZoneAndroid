@@ -35,6 +35,8 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 /**
+ * @author Jean-Loup Dandurand-Pominville
+ * @version 1.0
  * Cette classe représente l'exécution d'une transaction dans l'application.
  * Elle gère les paiements et les retraits en utilisant Stripe Payment Sheet et des appels d'API.
  */
@@ -88,15 +90,23 @@ public class ExecutionTransaction extends AppCompatActivity {
         else{
             fetchPaiementApi();
         }
-
-
     }
-
+    /**
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
+     * Transforme le montant en une valeur negative
+     * et effectue la transaction dans la bd du serveur
+     */
     private void fetchRetraitApi() {
         montant = montant * -1;
         effectueTransaction();
     }
-
+    /**
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
+     * Effectue une requête POST à l'API pour créer un paiement qui demande
+     * la configuratio et la clé du client stripe.
+     */
     private void fetchPaiementApi() {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url ="http://10.0.2.2:8000/api/fetchPaiement";
@@ -135,7 +145,12 @@ public class ExecutionTransaction extends AppCompatActivity {
 
     }
 
-
+    /**
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
+     * Ouvre la feuille de paiement Stripe pour permettre à l'utilisateur de faire la transaction
+     * Si non fait un message d'erreur et retourne au portefeuille.
+     */
     private void ouverturePaiement(){
         if(paymentIntentClientSecret != null)
         {
@@ -147,8 +162,14 @@ public class ExecutionTransaction extends AppCompatActivity {
             retourne();
         }
     }
-
-    private void onPaymentSheetResult(final PaymentSheetResult paymentSheetResult) {
+/**
+ * @author Jean-Loup Dandurand-Pominville
+ * @version 1.0
+ * Gère le résultat de la feuille de paiement Stripe après que l'utilisateur a tenté de finaliser la transaction.
+ * @param paymentSheetResult Le résultat de l'opération de paiement.
+ * Gère canceled, failed et completed
+ */
+private void onPaymentSheetResult(final PaymentSheetResult paymentSheetResult) {
         //si l'action est cancellé
         if(paymentSheetResult instanceof PaymentSheetResult.Canceled){
             Toast.makeText(this, "Cancellé", Toast.LENGTH_SHORT).show();
@@ -173,7 +194,12 @@ public class ExecutionTransaction extends AppCompatActivity {
             retourne();
         }
     }
-
+    /**
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
+     * Effectue la transaction en envoyant une requête POST à l'API
+     * et envoie un message de réussite ou d'erreur.
+     */
     private void effectueTransaction() {
         //Création de la requete
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -220,7 +246,11 @@ public class ExecutionTransaction extends AppCompatActivity {
         };
         queue.add(stringRequest);
     }
-
+    /**
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
+     * Renvoie les informations de l'utilisateur vers MontantTransaction.
+     */
     private void retourne(){
         Intent retour = new Intent();
         retour.putExtra("user", user);
