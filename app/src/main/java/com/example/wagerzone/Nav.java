@@ -74,9 +74,12 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
         if (_activity.getClass().equals(MainActivity.class)){
             _messageErreurSuccesMain = rootView.findViewById(R.id.messageErreurSuccesMain);
             getUserWithToken();
-            if (_user != null && _user.get_image() != null && _user.get_image().length > 0) {
-                Bitmap newicone = BitmapFactory.decodeByteArray(_user.get_image(), 0, _user.get_image().length);
-                get_userIcone().setImageBitmap(newicone);
+            if (get_user() != null && get_user().get_image() != null && get_user().get_image().length > 3) {
+                Bitmap newicone = BitmapFactory.decodeByteArray(get_user().get_image(), 0, get_user().get_image().length);
+
+            }
+            else {
+                get_userIcone().setBackgroundResource(R.drawable.user);
             }
         }
         _userIcone.setOnClickListener(this);

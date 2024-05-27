@@ -39,6 +39,12 @@ import java.util.UUID;
 
 import kotlin.UByteArray;
 
+/**
+ * L'activité connexion permet de gérer la connexion d'un utilisateur et la sauvegarde d'un
+ * token lorsque l'on veut concerver son compte connecté
+ *  @author Anthony Carmichael
+ *  @version 1.0
+ */
 public class ConnexionActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Nav _nav;
@@ -47,6 +53,9 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
     private CheckBox _souvenir;
     private Button _btnConnecter, _btnInscription;
     private TextView _messageErreurSucces;
+    /**
+     * Initialisation de l'activité et ses composantes
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
