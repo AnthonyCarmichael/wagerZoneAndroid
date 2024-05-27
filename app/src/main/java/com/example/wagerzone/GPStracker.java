@@ -11,6 +11,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+/**
+ * Cette classe permet d'avoir la géolocalisation de l'utilisateur pour adapter le form d'inscription
+ * et de mofification de l'utilisateur automatiquement.
+ *  @author Anthony Carmichael
+ *  @version 1.0
+ */
 public class GPStracker implements LocationListener {
     Context context;
     public  GPStracker(Context c){

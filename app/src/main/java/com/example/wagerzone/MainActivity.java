@@ -1,24 +1,39 @@
 package com.example.wagerzone;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
+/**
+ * @author Jean-Loup Dandurand-Pominville
+ * @version 1.0
+ * Classe principale de l'application, représentant l'activité principale.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private Nav _nav;
     private GestionFonds fonds;
+    /**
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
+     * Méthode appelée à création de l'activité.
+     * Initialise les vues, les variables et configure les boutons.
+     * @param savedInstanceState État de l'activité sauvegardé.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +60,13 @@ public class MainActivity extends AppCompatActivity {
                 notif.notifBouton(2, "notification2", "test");
             }
         });
-
-
     }
-
+    /**
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
+     * Méthode appelée lorsque l'activité est reprise.
+     * Met à jour l'interface utilisateur en fonction de l'état de la navigation.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -59,7 +77,15 @@ public class MainActivity extends AppCompatActivity {
         _nav.get_matchs().setBackgroundResource(R.drawable.rounded_dark_red);
         _nav.get_paris().setBackgroundResource(R.drawable.rounded_dark_red);
     }
-
+    /**
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
+     * Méthode appelée lors du retour d'une activité lancée avec startActivityForResult.
+     * Met à jour les données de l'utilisateur et l'interface utilisateur en conséquence.
+     * @param requestCode Le code de requête passé à startActivityForResult.
+     * @param resultCode Le code de résultat renvoyé par l'activité enfant.
+     * @param data L'intent contenant les données retournées.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
@@ -81,18 +107,16 @@ public class MainActivity extends AppCompatActivity {
                     messageErreurSuccesMain.setTextColor(getResources().getColor(R.color.vertFonce));
                     messageErreurSuccesMain.setVisibility(View.VISIBLE);
                     _nav.set_user(user);
-                    if (_nav.get_user().get_image().length > 3) {
+                    if (_nav.get_user() != null && _nav.get_user().get_image() != null && _nav.get_user().get_image().length > 3) {
                         Bitmap newicone = BitmapFactory.decodeByteArray(_nav.get_user().get_image(), 0, _nav.get_user().get_image().length);
                         _nav.get_userIcone().setImageBitmap(newicone);
                     }
-
                 }
-
             }
         }
         if (resultCode == 9){ // Déconnexion
             _nav.set_user(null);
-            fonds.deleteFonds();
+            //fonds.deleteFonds();
             TextView messageErreurSuccesMain = _nav.get_messageErreurSuccesMain();
             messageErreurSuccesMain.setVisibility(View.INVISIBLE);
             _nav.get_userIcone().setImageResource(R.drawable.user);
@@ -111,8 +135,6 @@ public class MainActivity extends AppCompatActivity {
         if (data != null && data.hasExtra("user")) {
             Utilisateur user = (Utilisateur) data.getSerializableExtra("user");
             _nav.set_user(user);
-
         }
-
     }
 }

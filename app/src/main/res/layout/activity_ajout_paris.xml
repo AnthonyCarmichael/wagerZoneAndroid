@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ajout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AjoutParisActivity">
@@ -27,8 +28,8 @@
         android:layout_marginStart="181dp"
         android:layout_marginTop="46dp"
         android:layout_marginEnd="179dp"
-        android:textColor="@color/black"
         android:text="Match"
+        android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,8 +69,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
                 android:text="TextView"
-                android:textColor="@color/black"
                 android:textAlignment="center"
+                android:textColor="@color/black"
                 android:textSize="18sp" />
 
             <TextView
@@ -78,8 +79,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
                 android:text="TextView"
-                android:textColor="@color/black"
                 android:textAlignment="center"
+                android:textColor="@color/black"
                 android:textSize="18sp" />
 
             <EditText
@@ -99,10 +100,10 @@
                 android:id="@+id/accepter"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="Modifier"
-                android:textSize="18sp"
                 android:background="@drawable/bouton_paris_final"
-                android:textColor="@color/white"/>
+                android:text="@string/ajouter"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -156,7 +157,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bouton_paris_final"
-                android:text="Retour"
+                android:text="@string/retour"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
         </LinearLayout>

@@ -5,6 +5,12 @@ import org.json.JSONObject;
 
 import java.util.Objects;
 
+/**
+ * C'est une classe permet de gérer le transfert et le traitement des
+ * données d'une ville.
+ *  @author Anthony Carmichael
+ *  @version 1.0
+ */
 public class Ville {
     private int _id_ville;
     private String _nom_ville;

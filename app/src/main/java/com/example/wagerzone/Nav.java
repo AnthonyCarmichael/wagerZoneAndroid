@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,7 +60,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
         if (_activity.getIntent() != null && _activity.getIntent().hasExtra("user")) {
             this._user = (Utilisateur) _activity.getIntent().getSerializableExtra("user");
             if (_user!=null){
-                if (_user.get_image().length > 3) {
+                if (_user.get_image() != null && _user.get_image().length > 3) {
                     Bitmap newicone = BitmapFactory.decodeByteArray(get_user().get_image(), 0, get_user().get_image().length);
                     get_userIcone().setImageBitmap(newicone);
                 }
@@ -73,6 +74,13 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
         if (_activity.getClass().equals(MainActivity.class)){
             _messageErreurSuccesMain = rootView.findViewById(R.id.messageErreurSuccesMain);
             getUserWithToken();
+            if (get_user() != null && get_user().get_image() != null && get_user().get_image().length > 3) {
+                Bitmap newicone = BitmapFactory.decodeByteArray(get_user().get_image(), 0, get_user().get_image().length);
+
+            }
+            else {
+                get_userIcone().setBackgroundResource(R.drawable.user);
+            }
         }
         _userIcone.setOnClickListener(this);
         _home.setOnClickListener(this);
@@ -350,7 +358,7 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                 user = new Utilisateur();
                 user.set_nom(userObject.getString("nom"));
                 user.set_prenom(userObject.getString("prenom"));
-                user.set_name(userObject.getString("name")); // USERNAME
+                user.set_name(userObject.getString("name"));
                 user.set_email(userObject.getString("email"));
                 user.set_id(userObject.getInt("id"));
                 user.set_date_naissance(userObject.getString("date_naissance"));
@@ -359,7 +367,14 @@ public class Nav extends AppCompatActivity implements View.OnClickListener{
                 user.set_fonds(userObject.getString("fonds"));
                 user.set_ville(villeObject.getString("nom_ville"));
                 user.set_pays(paysObject.getString("nom_pays"));
-                user.set_password(paysObject.getString("nom_pays"));
+
+                String imageBase64 = userObject.getString("image");
+                if (!imageBase64.isEmpty()) {
+                    byte[] imageBytes = null;
+                    imageBytes = Base64.decode(imageBase64, Base64.DEFAULT);
+                    user.set_image(imageBytes);
+                }
+
                 this._user = user;
                 //Met les fonds dans le fichier
                 //ajuste le fichier de fonds

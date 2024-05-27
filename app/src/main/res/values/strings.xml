@@ -51,4 +51,6 @@
     <string name="erreur_modif">Erreur, impossible de modifier les informations du compte.</string>
     <string name="annuler">Annuler</string>
     <string name="erreur_suppression">Impossible de supprimer le compte</string>
+    <string name="retour">Retour</string>
+    <string name="ajouter">Ajouter</string>
 </resources>

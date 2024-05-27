@@ -39,6 +39,12 @@ import java.util.UUID;
 
 import kotlin.UByteArray;
 
+/**
+ * L'activité connexion permet de gérer la connexion d'un utilisateur et la sauvegarde d'un
+ * token lorsque l'on veut concerver son compte connecté
+ *  @author Anthony Carmichael
+ *  @version 1.0
+ */
 public class ConnexionActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Nav _nav;
@@ -47,6 +53,9 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
     private CheckBox _souvenir;
     private Button _btnConnecter, _btnInscription;
     private TextView _messageErreurSucces;
+    /**
+     * Initialisation de l'activité et ses composantes
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +88,9 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
 
     }
 
+    /**
+     * Initialisation des boutons
+     */
     private void setBoutons(){
         this._btnInscription = findViewById(R.id.btnInscription);
         this._btnConnecter = findViewById(R.id.btnSeConnecter);
@@ -87,6 +99,9 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
         _btnConnecter.setOnClickListener(this);
     }
 
+    /**
+     * Gestion des évênement des boutons inscription et se connecter
+     */
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btnInscription){
@@ -104,6 +119,13 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+    /**
+     * Permet de vérifier en BD si la tentative de connexion est valide
+     * @param username le username entré par l'utilisateur.
+     * @param password le mot de passe entré par l'utilisateur.
+     * @param souvenir est le checkbox pour créer un token permettant a l'utilisateur de rester connecté.
+     *
+     */
     private Utilisateur verifyUser(String username, String password, Boolean souvenir) {
         Utilisateur user = null;
         try {
@@ -206,6 +228,10 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
         return user;
     }
 
+    /**
+     * Permet de créer un token pour que l'utilisateur reste connecté même si l'application se ferme
+     * @param token un code chiffré stocker dans un fichier tokenWagerZone.txt
+     */
     private void writeToken(String token) {
         OutputStreamWriter outputStreamWriter = null;
         try{

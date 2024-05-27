@@ -37,6 +37,7 @@ public class PartieAdapter extends RecyclerView.Adapter<PartieAdapter.MyViewHold
      * Contexte dans lequel l'adaptateur est utilisé.
      */
     private Context context;
+    private Nav nav;
 
     /**
      * Constructeur de l'adaptateur.
@@ -66,12 +67,53 @@ public class PartieAdapter extends RecyclerView.Adapter<PartieAdapter.MyViewHold
         return new PartieAdapter.MyViewHolder(view);
     }
 
+<<<<<<< HEAD
     /**
      * Lie les données d'une partie à un ViewHolder.
      *
      * @param holder Le ViewHolder qui doit être mis à jour pour représenter les contenus de l'élément à la position donnée.
      * @param position La position de l'élément dans l'ensemble de données de l'adaptateur.
      */
+=======
+    public PartieAdapter(Context context, Nav nav, ArrayList<Partie> partie, RecyclerViewInterface recyclerViewInterface){
+        this.context = context;
+        this.parties = partie;
+        this.nav = nav;
+        this.recyclerViewInterface = recyclerViewInterface;
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        ImageView imageView1;
+        ImageView imageView2;
+        TextView nomEquipe1;
+        TextView nomEquipe2;
+        Button button;
+        public MyViewHolder(View itemView){
+            super(itemView);
+            nomEquipe1 = (TextView) itemView.findViewById(R.id.nomEquipe1);
+            nomEquipe2 = (TextView) itemView.findViewById(R.id.nomEquipe2);
+
+            imageView1 = (ImageView) itemView.findViewById(R.id.imageEquipe1);
+            imageView2 = (ImageView) itemView.findViewById(R.id.imageEquipe2);
+
+            button = itemView.findViewById(R.id.buttonParis);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(recyclerViewInterface != null){
+                        int pos = getAdapterPosition();
+
+                        if(pos != RecyclerView.NO_POSITION){
+                            recyclerViewInterface.onItemClick(pos);
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+>>>>>>> 4d4d9988202ca99028fec804d7f5234818e90906
     @Override
     public void onBindViewHolder(@NonNull PartieAdapter.MyViewHolder holder, int position) {
         Partie partie = parties.get(position);
@@ -109,8 +151,15 @@ public class PartieAdapter extends RecyclerView.Adapter<PartieAdapter.MyViewHold
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+<<<<<<< HEAD
                 Intent intent = new Intent(context, DetailsEquipeActivity.class);
+=======
+                Intent intent = new Intent(context, AjoutParisActivity.class);
+                intent.putExtra("id_partie", finalPartie.get_id_partie());
+                intent.putExtra("id_utilisateur", nav.get_user().get_id());
+>>>>>>> 4d4d9988202ca99028fec804d7f5234818e90906
                 context.startActivity(intent);
+                ((PartieActivity)context).finish();
             }
         });
     }

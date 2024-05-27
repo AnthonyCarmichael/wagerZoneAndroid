@@ -13,14 +13,30 @@ import android.os.Build;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-
+/**
+ * @author Jean-Loup Dandurand-Pominville
+ * @version 1.0
+ * Classe de gestion des notifications.
+ */
 public class GestionNotifications {
     private Context context;
-
+    /**
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
+     * Constructeur de la classe GestionNotifications.
+     * @param context Le contexte de l'application.
+     */
     public GestionNotifications(Context context){
         this.context = context;
     }
-
+    /**
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
+     * Envoie une notification lors de l'execution d'un bouton.
+     * @param idNotification L'ID de la notification.
+     * @param titre Le titre de la notification.
+     * @param texte Le texte de la notification.
+     */
     public void notifBouton(int idNotification, String titre, String texte) {
         //Crée la channel (chaine) de notification
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -57,7 +73,14 @@ public class GestionNotifications {
         //  Envois la notification
         managerCompat.notify(idNotification, builder.build());
     }
-    //À la création d'un nouveau paris
+    /**
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
+     * Envoie une notification avec un grand texte.
+     * @param idNotification L'ID de la notification.
+     * @param titre Le titre de la notification.
+     * @param grandTexte Le texte détaillé de la notification.
+     */
     public void notifBoutonGrandTexte(int idNotification, String titre, String grandTexte) {
         //Crée la channel (chaine) de notification
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

@@ -35,7 +35,14 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Calendar;
-
+/**
+ * Activité permettant de gérer le compte d'un utilisateur.
+ * Cette activité permet de consulter les informations liées a son compte,
+ * ainsi que les modifié. L'utilisateur a aussi la possibilité de désactiver son compte
+ * de façon permanante.
+ * @author Anthony Carmichael
+ * @version 1.0
+ */
 public class CompteActivity extends AppCompatActivity  implements View.OnClickListener{
 
     private static final int CAMERA_REQUEST_CODE = 102 ;
@@ -57,6 +64,10 @@ public class CompteActivity extends AppCompatActivity  implements View.OnClickLi
     private Button _btnAnnuler;
     private ScrollView _infoCompte;
     private ScrollView _form;
+
+    /**
+     * Initialisation de l'activité
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +94,12 @@ public class CompteActivity extends AppCompatActivity  implements View.OnClickLi
         setButton();
     }
 
+
+    /**
+     * Initialisation des textView permettant l'affichage des données de l'utilisateur,
+     * ainsi que l'affichage du form qui est en visibilité GONE au démarrage de l'activité
+     */
+
     private void setTextView() {
         _username = findViewById(R.id.usernameDatabase);
         _email = findViewById(R.id.emailDatabase);
@@ -99,6 +116,9 @@ public class CompteActivity extends AppCompatActivity  implements View.OnClickLi
         setInfoCompteUser();
     }
 
+    /**
+     * Initialisation des boutons de l'activité
+     */
     private void setButton(){
         _btnModifier = findViewById(R.id.modifier);
         _btnSupprimer = findViewById(R.id.supprimer);
@@ -113,6 +133,9 @@ public class CompteActivity extends AppCompatActivity  implements View.OnClickLi
     }
 
 
+    /**
+     * Gestionnaire des actions lors d'un clic avec un bouton
+     */
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.modifier){
@@ -166,6 +189,10 @@ public class CompteActivity extends AppCompatActivity  implements View.OnClickLi
 
     }
 
+
+    /**
+     * Gestionnaire des actions lorsqu'une réponse a été reçu après une demande de permission
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -185,6 +212,9 @@ public class CompteActivity extends AppCompatActivity  implements View.OnClickLi
     }
 
 
+    /**
+     * Gestionnaire des result lorsque on lance une activité tiers
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -212,6 +242,12 @@ public class CompteActivity extends AppCompatActivity  implements View.OnClickLi
         }
     }
 
+    /**
+     * Cette méthode sert a envoyer l'information a la base de donnée via notre API.
+     * De plus, la variable _user du _nav est mise à jours
+     * @param data Conserne le form qui a été envoyer et qu'on utilise pour mettre à jours le
+     * user et de transmettre les données du form a la requête post vers le serveur de WagerZone
+     */
     protected void updateUser(JSONObject data){
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -273,6 +309,9 @@ public class CompteActivity extends AppCompatActivity  implements View.OnClickLi
         }
     }
 
+    /**
+     * Permet de mettre à jours les textview permettant de voir les informations liées au compte.
+     */
     private void setInfoCompteUser() {
         _username.setText(_nav.get_user().get_name());
         _email.setText(_nav.get_user().get_email());
@@ -285,6 +324,9 @@ public class CompteActivity extends AppCompatActivity  implements View.OnClickLi
         _telephone.setText(_nav.get_user().get_telephone());
     }
 
+    /**
+     * Remplis automatiquement les champs du form avec les valeur du user
+     */
     private void presetFormModifUser() {
 
         EditText nom = findViewById(R.id.nom);
@@ -304,6 +346,9 @@ public class CompteActivity extends AppCompatActivity  implements View.OnClickLi
         telephone.setText(_nav.get_user().get_telephone());
     }
 
+    /**
+     * Permet de désactiver l'utilisateur dans la base de données via une requête post vers l'API
+     */
     protected void desactiverUser(){
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -344,6 +389,9 @@ public class CompteActivity extends AppCompatActivity  implements View.OnClickLi
         }
     }
 
+    /**
+     * Permet de s'assurer que lorsque l'activité est terminée, on renvoi l'utilisateur courrant
+     */
 
     @Override
     public void finish() {
@@ -352,5 +400,4 @@ public class CompteActivity extends AppCompatActivity  implements View.OnClickLi
         setResult(Activity.RESULT_OK, resultIntent);
         super.finish();
     }
-
 }

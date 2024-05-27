@@ -43,6 +43,12 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * C'est une classe permettant de réutiliser le form de l'activité inscription.
+ * Cette classe est utilisé dans la gestion du compte.
+ *  @author Anthony Carmichael
+ *  @version 1.0
+ */
 public class GestionFormUser extends AppCompatActivity implements View.OnClickListener{
     private static final int CAMERA_PERM_CODE = 101;
     private static final int CAMERA_REQUEST_CODE = 102 ;
@@ -70,6 +76,11 @@ public class GestionFormUser extends AppCompatActivity implements View.OnClickLi
     private Calendar _calendrier;
     private Calendar _dateLimite;
 
+    /**
+     * Contruscteur pour le gestionnaire du form
+     * @param context context de l'activité active
+     * @param activity l'activité active
+     */
     public GestionFormUser(Context context,Activity activity) {
         this._context = context;
         this._activity = activity;
@@ -220,9 +231,9 @@ public class GestionFormUser extends AppCompatActivity implements View.OnClickLi
         this._dateLimite = _dateLimite;
     }
 
-    public void fetchVille(int idPays) {
+    public void fetchVille(int idVille) {
         SQLiteManager sqLiteManager = new SQLiteManager(_context);
-        _villes = sqLiteManager.fetchAllVillesByPaysId(idPays);
+        _villes = sqLiteManager.fetchAllVillesByPaysId(idVille);
     }
 
     public void fetchPays() {

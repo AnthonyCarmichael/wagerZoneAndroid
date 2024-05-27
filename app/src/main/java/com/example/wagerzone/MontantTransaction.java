@@ -15,12 +15,23 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.math.BigDecimal;
-
+/**
+ * @author Jean-Loup Dandurand-Pominville
+ * @version 1.0
+ * Activité pour effectuer une transaction de montant, soit un dépôt, soit un retrait.
+ */
 public class MontantTransaction extends AppCompatActivity {
     private TextView editMontant;
     private boolean estRetrait;
     private Utilisateur user;
     private TextView fondsView;
+    /**
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
+     * Méthode appelée à la création de l'activité.
+     * Initialise les vues, les variables et configure les boutons.
+     * @param savedInstanceState État de l'activité sauvegardé.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,15 +57,19 @@ public class MontantTransaction extends AppCompatActivity {
         btnRetour.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                Intent retour = new Intent();
+                retour.putExtra("user", user);
+                setResult(Activity.RESULT_CANCELED, retour);
                 finish();
             }
         });
-
+        //Bouton Paiement
         Button btnPaiement = findViewById(R.id.btnPaiement);
         btnPaiement.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 float montant = 0;
+                //Si il vient pour le retrait, envois vers le
                 if(!editMontant.getText().toString().trim().equals(""))
                     montant = Float.valueOf(editMontant.getText().toString().trim());
                 if(montant >= 5)
@@ -83,6 +98,15 @@ public class MontantTransaction extends AppCompatActivity {
             }
         });
     }
+    /**
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
+     * Méthode appelée lors du retour d'une activité lancée avec startActivityForResult.
+     * Met à jour les données de l'utilisateur si la transaction a été effectuée avec succès.
+     * @param requestCode Le code de requête passé à startActivityForResult.
+     * @param resultCode Le code de résultat renvoyé par l'activité enfant.
+     * @param data L'intent contenant les données retournées.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
