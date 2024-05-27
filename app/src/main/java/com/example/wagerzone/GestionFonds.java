@@ -67,6 +67,10 @@ public class GestionFonds{
         this.fonds = fonds;
         ecrireFonds();
     }
+    public void setFonds(float fonds) {
+        this.fonds = BigDecimal.valueOf(fonds);
+        ecrireFonds();
+    }
     //Efface le fichier
     public boolean deleteFonds() {
         fonds = BigDecimal.ZERO;
