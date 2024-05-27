@@ -3,9 +3,19 @@ package com.example.wagerzone;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+<<<<<<< HEAD
 /**
  * La classe Paris représente un pari avec des détails tels que le montant, la date et l'heure,
  * l'équipe receveur, l'identifiant de la partie, et l'identifiant du pari.
+=======
+import java.util.HashMap;
+
+/**
+ *  @author Jean-Loup Dandurand-Pominville
+ *  @version 1.0
+ * C'est une classe permet de gérer le transfert et le traitement des
+ * données des paris.
+>>>>>>> 455f5799fe080ba1cc3f02350976e24877a2d713
  */
 public class Paris {
     private float _montant;

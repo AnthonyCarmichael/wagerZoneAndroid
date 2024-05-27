@@ -5,9 +5,17 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Objects;
+<<<<<<< HEAD
 
 /**
  * La classe Equipe représente une équipe de sport avec ses différentes caractéristiques.
+=======
+/**
+ *  @author Jean-Loup Dandurand-Pominville
+ *  @version 1.0
+ * C'est une classe permet de gérer le transfert et le traitement des
+ * données des equipes;
+>>>>>>> 455f5799fe080ba1cc3f02350976e24877a2d713
  */
 public class Equipe {
     private int _id_equipe;
