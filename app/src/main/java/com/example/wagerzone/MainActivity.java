@@ -1,20 +1,26 @@
 package com.example.wagerzone;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 /**
+ * @author Jean-Loup Dandurand-Pominville
+ * @version 1.0
  * Classe principale de l'application, représentant l'activité principale.
  */
 public class MainActivity extends AppCompatActivity {
@@ -22,8 +28,10 @@ public class MainActivity extends AppCompatActivity {
     private Nav _nav;
     private GestionFonds fonds;
     /**
-     * Méthode appelée lors de la création de l'activité.
-     * Initialise les vues, les variables et configure les écouteurs de clics pour les boutons.
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
+     * Méthode appelée à création de l'activité.
+     * Initialise les vues, les variables et configure les boutons.
      * @param savedInstanceState État de l'activité sauvegardé.
      */
     @Override
@@ -54,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     /**
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
      * Méthode appelée lorsque l'activité est reprise.
      * Met à jour l'interface utilisateur en fonction de l'état de la navigation.
      */
@@ -68,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
         _nav.get_paris().setBackgroundResource(R.drawable.rounded_dark_red);
     }
     /**
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
      * Méthode appelée lors du retour d'une activité lancée avec startActivityForResult.
      * Met à jour les données de l'utilisateur et l'interface utilisateur en conséquence.
      * @param requestCode Le code de requête passé à startActivityForResult.
