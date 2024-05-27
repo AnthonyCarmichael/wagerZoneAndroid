@@ -61,9 +61,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    /**
-     * @author Jean-Loup Dandurand-Pominville
-     * @version 1.0
+    /**=
      * Méthode appelée lorsque l'activité est reprise.
      * Met à jour l'interface utilisateur en fonction de l'état de la navigation.
      */
@@ -78,8 +76,6 @@ public class MainActivity extends AppCompatActivity {
         _nav.get_paris().setBackgroundResource(R.drawable.rounded_dark_red);
     }
     /**
-     * @author Jean-Loup Dandurand-Pominville
-     * @version 1.0
      * Méthode appelée lors du retour d'une activité lancée avec startActivityForResult.
      * Met à jour les données de l'utilisateur et l'interface utilisateur en conséquence.
      * @param requestCode Le code de requête passé à startActivityForResult.
