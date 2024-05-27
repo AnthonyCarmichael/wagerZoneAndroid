@@ -58,6 +58,12 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Cette classe gère l'inscription de l'utilisateur via un form d'inscription et une requête POST avec
+ * l'API
+ *  @author Anthony Carmichael
+ *  @version 1.0
+ */
 public class InscriptionActivity extends AppCompatActivity  implements View.OnClickListener{
 
     private static final int CAMERA_PERM_CODE = 101;

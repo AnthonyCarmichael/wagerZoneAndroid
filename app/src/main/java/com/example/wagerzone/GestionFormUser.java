@@ -45,7 +45,9 @@ import java.util.regex.Pattern;
 
 /**
  * C'est une classe permettant de réutiliser le form de l'activité inscription.
- * Cette classe est utiliser dans la gestion du compte.
+ * Cette classe est utilisé dans la gestion du compte.
+ *  @author Anthony Carmichael
+ *  @version 1.0
  */
 public class GestionFormUser extends AppCompatActivity implements View.OnClickListener{
     private static final int CAMERA_PERM_CODE = 101;

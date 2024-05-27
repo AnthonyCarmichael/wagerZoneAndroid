@@ -1,3 +1,6 @@
+/**
+ * La classe DetailsEquipeActivity est une activité qui affiche les détails d'une équipe sélectionnée.
+ */
 package com.example.wagerzone;
 
 import android.os.Bundle;
@@ -12,9 +15,21 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+/**
+ * DetailsEquipeActivity est une activité qui affiche les détails d'une équipe sélectionnée.
+ */
 public class DetailsEquipeActivity extends AppCompatActivity {
 
+    /**
+     * L'équipe dont les détails sont affichés.
+     */
     private Equipe equipe;
+
+    /**
+     * Appelé lorsque l'activité est créée pour la première fois.
+     *
+     * @param savedInstanceState Si l'activité est ré-initialisée après avoir été précédemment arrêtée, ce Bundle contient les données les plus récentes fournies dans onSaveInstanceState(Bundle). Note : Sinon, il est null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +62,7 @@ public class DetailsEquipeActivity extends AppCompatActivity {
         String matchNul = getIntent().getStringExtra("matchNul");
         String defaiteProlongation = getIntent().getStringExtra("defaiteProlongation");
 
-        // Définir le nom de l'équipe
+        // Définir les informations de l'équipe
         nomEquipeTextView.setText(nomEquipe);
         entraineur.setText(entraineurEquipe);
         stade.setText(stadeEquipe);
@@ -62,11 +77,11 @@ public class DetailsEquipeActivity extends AppCompatActivity {
             logoImageView.setImageResource(imageId);
         }
 
-        //Bouton retour
+        // Bouton retour
         Button btnRetour = findViewById(R.id.btnRetour);
-        btnRetour.setOnClickListener(new View.OnClickListener(){
+        btnRetour.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 finish();
             }
         });
