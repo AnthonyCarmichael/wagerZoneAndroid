@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if (resultCode == 9){ // Déconnexion
             _nav.set_user(null);
-            fonds.deleteFonds();
+            //fonds.deleteFonds();
             TextView messageErreurSuccesMain = _nav.get_messageErreurSuccesMain();
             messageErreurSuccesMain.setVisibility(View.INVISIBLE);
             _nav.get_userIcone().setImageResource(R.drawable.user);
