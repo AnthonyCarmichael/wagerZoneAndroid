@@ -5,7 +5,6 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Objects;
-<<<<<<< HEAD
 
 /**
  * La classe Equipe représente une équipe de sport avec ses différentes caractéristiques.
