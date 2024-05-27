@@ -19,7 +19,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 /**
- * @author Jean-Loup Dandurand-Pominville
+ * @author Anthony Carmichael
  * @version 1.0
  * Classe principale de l'application, représentant l'activité principale.
  */
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private Nav _nav;
     private GestionFonds fonds;
     /**
-     * @author Jean-Loup Dandurand-Pominville
+     * @author Anthony Carmichael
      * @version 1.0
      * Méthode appelée à création de l'activité.
      * Initialise les vues, les variables et configure les boutons.
@@ -61,7 +61,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    /**=
+    /**
+     * @author Anthony Carmichael
+     * @version 1.0
      * Méthode appelée lorsque l'activité est reprise.
      * Met à jour l'interface utilisateur en fonction de l'état de la navigation.
      */
@@ -76,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
         _nav.get_paris().setBackgroundResource(R.drawable.rounded_dark_red);
     }
     /**
+     * @author Anthony Carmichael
+     * @version 1.0
      * Méthode appelée lors du retour d'une activité lancée avec startActivityForResult.
      * Met à jour les données de l'utilisateur et l'interface utilisateur en conséquence.
      * @param requestCode Le code de requête passé à startActivityForResult.
