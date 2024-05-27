@@ -3,15 +3,13 @@ package com.example.wagerzone;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-<<<<<<< HEAD
+
 /**
  * La classe Partie représente une partie avec ses attributs principaux.
  */
-=======
 import java.util.HashMap;
 
 
->>>>>>> 455f5799fe080ba1cc3f02350976e24877a2d713
 public class Partie {
     private int _id_partie;
     private String _date_heure;
