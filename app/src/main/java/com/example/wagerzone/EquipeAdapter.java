@@ -40,6 +40,7 @@ public class EquipeAdapter extends RecyclerView.Adapter<EquipeAdapter.MyViewHold
         Equipe equipe = new Equipe();
         equipe = equipes.get(position);
         String nom_equipe = equipe.get_nom_equipe().toLowerCase().replace(' ', '_');
+
         int imageId = context.getResources().getIdentifier(nom_equipe, "drawable", context.getPackageName());
 
         SQLiteManager sqLiteManager = new SQLiteManager(context);
