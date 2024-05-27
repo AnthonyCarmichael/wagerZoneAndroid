@@ -67,14 +67,12 @@ public class PartieAdapter extends RecyclerView.Adapter<PartieAdapter.MyViewHold
         return new PartieAdapter.MyViewHolder(view);
     }
 
-<<<<<<< HEAD
     /**
      * Lie les données d'une partie à un ViewHolder.
      *
      * @param holder Le ViewHolder qui doit être mis à jour pour représenter les contenus de l'élément à la position donnée.
      * @param position La position de l'élément dans l'ensemble de données de l'adaptateur.
      */
-=======
     public PartieAdapter(Context context, Nav nav, ArrayList<Partie> partie, RecyclerViewInterface recyclerViewInterface){
         this.context = context;
         this.parties = partie;
