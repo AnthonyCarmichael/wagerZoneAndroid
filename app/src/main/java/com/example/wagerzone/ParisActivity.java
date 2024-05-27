@@ -1,3 +1,4 @@
+
 package com.example.wagerzone;
 
 import android.content.Intent;
@@ -16,10 +17,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
+/**
+ *
+ * @author Maxime Malette
+ * @version 1.0
+ *
+ * Cette activité permet à l'utilisateur de voir tous ses paris.
+ */
 public class ParisActivity extends AppCompatActivity implements RecyclerViewInterface {
     RecyclerView recyclerView;
     private Nav _nav;
+
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +59,9 @@ public class ParisActivity extends AppCompatActivity implements RecyclerViewInte
 
     }
 
+    /**
+     * Permet de mettre un highlight sur le bon titre du nav.
+     */
     @Override
     protected void onResume() {
         super.onResume();

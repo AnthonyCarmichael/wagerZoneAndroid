@@ -17,9 +17,23 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.io.IOException;
-
+/**
+ *
+ * @author Maxime Malette
+ * @version 1.0
+ *
+ * Cette cactivité permet à l'utilisateur d'ajouter un paris.
+ */
 public class AjoutParisActivity extends AppCompatActivity {
     private Nav _nav;
+
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +91,10 @@ public class AjoutParisActivity extends AppCompatActivity {
         logoReceveur.setImageDrawable(logoDrawableReceveur);
 
         retour.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v The view that was clicked.
+             */
             @Override
             public void onClick(View v) {
 
@@ -87,6 +105,10 @@ public class AjoutParisActivity extends AppCompatActivity {
         });
 
         accepter.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v The view that was clicked.
+             */
             @Override
             public void onClick(View v) {
                 SQLiteManager sqLiteManager = new SQLiteManager(AjoutParisActivity.this);
@@ -96,6 +118,13 @@ public class AjoutParisActivity extends AppCompatActivity {
                     builder.setMessage("Veuillez mettre un montant sur une seule équipe");
                     builder.setIcon(R.drawable.ic_launcher_foreground);
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        /**
+                         *
+                         * @param dialog the dialog that received the click
+                         * @param id the button that was clicked (ex.
+                         *              {@link DialogInterface#BUTTON_POSITIVE}) or the position
+                         *              of the item clicked
+                         */
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.dismiss();
                         }
@@ -106,6 +135,13 @@ public class AjoutParisActivity extends AppCompatActivity {
                     builder.setMessage("Veuillez mettre un montant sur une équipe");
                     builder.setIcon(R.drawable.ic_launcher_foreground);
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        /**
+                         *
+                         * @param dialog the dialog that received the click
+                         * @param id the button that was clicked (ex.
+                         *              {@link DialogInterface#BUTTON_POSITIVE}) or the position
+                         *              of the item clicked
+                         */
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.dismiss();
                         }
@@ -115,6 +151,13 @@ public class AjoutParisActivity extends AppCompatActivity {
                     builder.setTitle(R.string.app_name);
                     builder.setMessage("Le paris à bien été ajouter");
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        /**
+                         *
+                         * @param dialog the dialog that received the click
+                         * @param id the button that was clicked (ex.
+                         *              {@link DialogInterface#BUTTON_POSITIVE}) or the position
+                         *              of the item clicked
+                         */
                         public void onClick(DialogInterface dialog, int id) {
                             try {
                                 sqLiteManager.ajouterParis(intent.getIntExtra("id_partie", 0), Float.parseFloat(miseReceveur.getText().toString()), 1, intent.getIntExtra("id_utilisateur", 0));
@@ -132,6 +175,13 @@ public class AjoutParisActivity extends AppCompatActivity {
                     builder.setTitle(R.string.app_name);
                     builder.setMessage("Le paris à bien été ajouter");
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        /**
+                         *
+                         * @param dialog the dialog that received the click
+                         * @param id the button that was clicked (ex.
+                         *              {@link DialogInterface#BUTTON_POSITIVE}) or the position
+                         *              of the item clicked
+                         */
                         public void onClick(DialogInterface dialog, int id) {
                             try {
                                 sqLiteManager.ajouterParis(intent.getIntExtra("id_partie", 0), Float.parseFloat(miseVisiteur.getText().toString()), 0, intent.getIntExtra("id_utilisateur", 0));
@@ -152,6 +202,9 @@ public class AjoutParisActivity extends AppCompatActivity {
             }
         });
     }
+    /**
+     * Permet de mettre un highlight sur le bon titre du nav.
+     */
     protected void onResume() {
         super.onResume();
         _nav.get_home().setBackgroundResource(R.drawable.rounded_dark_red);
