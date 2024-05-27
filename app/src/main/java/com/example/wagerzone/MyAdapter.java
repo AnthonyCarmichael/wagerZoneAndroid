@@ -20,12 +20,26 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
+/**
+ *
+ * @author Maxime Malette
+ * @version 1.0
+ *
+ * Cette classe permet de gérer la base de données interne et la communication avec l'api du site web.
+ */
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private final RecyclerViewInterface recyclerViewInterface;
     private ArrayList<Paris> paris;
     private Context context;
 
+    /**
+     *
+     * @param parent The ViewGroup into which the new View will be added after it is bound to
+     *               an adapter position.
+     * @param viewType The view type of the new View.
+     *
+     * @return retourne la vue voulue
+     */
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -34,12 +48,24 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return new MyViewHolder(view);
     }
 
+    /**
+     *
+     * @param context Le contexte de l'activité d'où provient l'appel
+     * @param paris Les paris de l'utilisateur connecté
+     * @param recyclerViewInterface Notre interface qui permet d'implémenter des recyclerView
+     */
     public MyAdapter(Context context, ArrayList<Paris> paris, RecyclerViewInterface recyclerViewInterface){
         this.context = context;
         this.paris = paris;
         this.recyclerViewInterface = recyclerViewInterface;
     }
 
+    /**
+     *
+     * @param holder The ViewHolder which should be updated to represent the contents of the
+     *        item at the given position in the data set.
+     * @param position The position of the item within the adapter's data set.
+     */
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Partie partie = new Partie();
@@ -64,6 +90,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     }
 
+    /**
+     *
+     * @return Le nombre de paris de l'utilisateur connecté
+     */
     @Override
     public int getItemCount() {
         return paris.size();
@@ -73,7 +103,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         TextView match;
         TextView mise;
 
-
+        /**
+         *
+         * @param itemView La view de l'activité qui l'a appelé.
+         */
         public MyViewHolder(View itemView){
             super(itemView);
             mise = (TextView) itemView.findViewById(R.id.mise);
@@ -82,6 +115,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             Button modifier = (Button) itemView.findViewById(R.id.modifier);
 
             itemView.setOnClickListener(new View.OnClickListener() {
+                /**
+                 *
+                 * @param v The view that was clicked.
+                 */
                 @Override
                 public void onClick(View v) {
                     if(recyclerViewInterface != null){
@@ -94,6 +131,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 }
             });
             annuler.setOnClickListener(new View.OnClickListener() {
+                /**
+                 *
+                 * @param v The view that was clicked.
+                 */
                 @Override
                 public void onClick(View v) {
                     Paris pari = paris.get(getAdapterPosition());
@@ -103,10 +144,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                     builder.setMessage("Voulez vous vraiment annuler ce paris?");
                     builder.setIcon(R.drawable.ic_launcher_foreground);
                     builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                        /**
+                         *
+                         * @param dialog the dialog that received the click
+                         * @param id the button that was clicked (ex.
+                         *              {@link DialogInterface#BUTTON_POSITIVE}) or the position
+                         *              of the item clicked
+                         */
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.dismiss();
                             try {
-                                sqLiteManager.supprimerParis(pari.get_id_paris());
+                                sqLiteManager.supprimerParis(pari.get_id_paris(), pari.get_montant());
                                 Intent intent = new Intent(v.getContext(), ParisActivity.class);
                                 startActivity(v.getContext(), intent, null);
                                 ((ParisActivity)context).finish();
@@ -118,6 +166,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                         }
                     });
                     builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                        /**
+                         *
+                         * @param dialog the dialog that received the click
+                         * @param id the button that was clicked (ex.
+                         *              {@link DialogInterface#BUTTON_POSITIVE}) or the position
+                         *              of the item clicked
+                         */
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.dismiss();
                         }
@@ -127,6 +182,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 }
             });
             modifier.setOnClickListener(new View.OnClickListener() {
+                /**
+                 *
+                 * @param v The view that was clicked.
+                 */
                 @Override
                 public void onClick(View v) {
 

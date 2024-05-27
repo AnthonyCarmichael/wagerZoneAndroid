@@ -28,7 +28,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
-
+/**
+ *
+ * @author Maxime Malette, Anthony Carmichael, Richard Dongmo, Jean-Loup Dandurand-Pominville
+ * @version 1.0
+ *
+ * Cette classe permet de gérer la base de données interne et la communication avec l'api du site web.
+ */
 public class SQLiteManager  extends SQLiteOpenHelper
 {
     private static SQLiteManager sqLiteManager;
@@ -81,6 +87,11 @@ public class SQLiteManager  extends SQLiteOpenHelper
 
         return sqLiteManager;
     }
+
+    /**
+     *
+     * @param db The database.
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         StringBuilder sqlPays;
@@ -261,6 +272,14 @@ public class SQLiteManager  extends SQLiteOpenHelper
         }
     }
 
+    /**
+     *
+     * @param sqLiteDatabase La base de données
+     * @throws SQLException Vérifie les exception SQL
+     * @throws IOException Vérifie les exceptions IO
+     *
+     * Permet d'insérer les sports présent dans la base de données distantes dans la bd locale.
+     */
     public void insertSports(SQLiteDatabase sqLiteDatabase) throws SQLException, IOException {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -288,19 +307,14 @@ public class SQLiteManager  extends SQLiteOpenHelper
         }
     }
 
-    public ArrayList<String> getNomSport() throws IOException {
-        ArrayList<String> sports = new ArrayList<>();
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        try (Cursor result = sqLiteDatabase.rawQuery("SELECT " + NOM_SPORT + " FROM " + TABLE_SPORT, null)){
-            if(result.getCount() != 0){
-                while (result.moveToNext()){
-                    sports.add(result.getString(0));
-                }
-            }
-        }
-        return sports;
-    }
-
+    /**
+     *
+     * @param sqLiteDatabase La base de données
+     * @throws SQLException Vérifie les exception SQL
+     * @throws IOException Vérifie les exceptions IO
+     *
+     * Permet d'insérer les pays présent dans la base de données distantes dans la bd locale.
+     */
     public void insertPays(SQLiteDatabase sqLiteDatabase) throws SQLException, IOException {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -329,19 +343,14 @@ public class SQLiteManager  extends SQLiteOpenHelper
         }
     }
 
-    public ArrayList<String> getNomPays() throws IOException {
-        ArrayList<String> pays = new ArrayList<>();
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        try (Cursor result = sqLiteDatabase.rawQuery("SELECT " + NOM_PAYS + " FROM " + TABLE_PAYS, null)){
-            if(result.getCount() != 0){
-                while (result.moveToNext()){
-                    pays.add(result.getString(0));
-                }
-            }
-        }
-        return pays;
-    }
-
+    /**
+     *
+     * @param sqLiteDatabase La base de données
+     * @throws SQLException Vérifie les exception SQL
+     * @throws IOException Vérifie les exceptions IO
+     *
+     * Permet d'insérer les villes présent dans la base de données distantes dans la bd locale.
+     */
     public void insertVilles(SQLiteDatabase sqLiteDatabase) throws SQLException, IOException {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -371,19 +380,15 @@ public class SQLiteManager  extends SQLiteOpenHelper
         }
     }
 
-    public ArrayList<String> getNomVille() throws IOException {
-        ArrayList<String> ville = new ArrayList<>();
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        try (Cursor result = sqLiteDatabase.rawQuery("SELECT " + NOM_VILLE + " FROM " + TABLE_VILLE, null)){
-            if(result.getCount() != 0){
-                while (result.moveToNext()){
-                    ville.add(result.getString(0));
-                }
-            }
-        }
-        return ville;
-    }
 
+    /**
+     *
+     * @param sqLiteDatabase La base de données
+     * @throws SQLException Vérifie les exception SQL
+     * @throws IOException Vérifie les exceptions IO
+     *
+     * Permet d'insérer les équipes présent dans la base de données distantes dans la bd locale.
+     */
     public void insertEquipes(SQLiteDatabase sqLiteDatabase) throws SQLException, IOException {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -421,19 +426,14 @@ public class SQLiteManager  extends SQLiteOpenHelper
         }
     }
 
-    public ArrayList<String> getNomEquipe() throws IOException {
-        ArrayList<String> equipe = new ArrayList<>();
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        try (Cursor result = sqLiteDatabase.rawQuery("SELECT " + NOM_EQUIPE + " FROM " + TABLE_EQUIPE, null)){
-            if(result.getCount() != 0){
-                while (result.moveToNext()){
-                    equipe.add(result.getString(0));
-                }
-            }
-        }
-        return equipe;
-    }
-
+    /**
+     *
+     * @param sqLiteDatabase La base de données
+     * @throws SQLException Vérifie les exception SQL
+     * @throws IOException Vérifie les exceptions IO
+     *
+     * Permet d'insérer les détails d'une équipe pour une partie présent dans la base de données distantes dans la bd locale.
+     */
     public void insertEquipePartie(SQLiteDatabase sqLiteDatabase) throws SQLException, IOException {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -466,6 +466,14 @@ public class SQLiteManager  extends SQLiteOpenHelper
         }
     }
 
+    /**
+     *
+     * @param sqLiteDatabase La base de données
+     * @throws SQLException Vérifie les exception SQL
+     * @throws IOException Vérifie les exceptions IO
+     *
+     * Permet d'insérer les parties présent dans la base de données distantes dans la bd locale.
+     */
     public void insertParties(SQLiteDatabase sqLiteDatabase) throws SQLException, IOException {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -495,6 +503,13 @@ public class SQLiteManager  extends SQLiteOpenHelper
         }
     }
 
+    /**
+     *
+     * @return Tous les paris de l'utilisateur connecté
+     * @throws IOException Vérifie les exceptions IO
+     *
+     * Permet de récupérer tous les paris
+     */
     public ArrayList<Paris> getParis() throws IOException {
         ArrayList<Paris> paris = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
@@ -517,30 +532,41 @@ public class SQLiteManager  extends SQLiteOpenHelper
         return paris;
     }
 
+    /**
+     *
+     * @return Retourne les paris actif de l'utilisateur connecté.
+     */
     public ArrayList<Paris> getParisActifs(){
         ArrayList<Paris> paris = new ArrayList<>();
-        ArrayList<Paris> parisActifs = new ArrayList<>();
-        try {
-            paris = getParis();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        for (Paris pari:paris) {
-            SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            format.setTimeZone(TimeZone.getTimeZone("America/New_York"));
-            try {
-                Date date = (Date) format.parse(pari.get_date_heure());
-                //s'assure que le paris ne soit pas encore envoyé
-                if(date.getTime() > System.currentTimeMillis())
-                    parisActifs.add(pari);
-
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Date currentDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String currentDateTime = dateFormat. format(currentDate);
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_PARIS + " JOIN " + TABLE_PARTIE + " ON " + TABLE_PARIS +"."+ "id_partie" + " = " +  TABLE_PARTIE +"."+ "id_partie" + " WHERE " + TABLE_PARTIE +"."+ "date_heure > CURRENT_DATE", null)){
+            if(result.moveToFirst()){
+                do{
+                    Paris pari = new Paris();
+                    pari.set_id_paris(result.getInt(1));
+                    pari.set_montant(result.getFloat(2));
+                    pari.set_date_heure(result.getString(3));
+                    pari.set_receveur(result.getInt(4));
+                    pari.set_id_partie(result.getInt(5));
+                    paris.add(pari);
+                }while (result.moveToNext());
+            }
+            else{
+                paris = null;
             }
         }
-        return parisActifs;
+        return paris;
     }
 
+    /**
+     *
+     * @param id_partie L'id de la partie que l'on veut aller chercher
+     * @return La partie voulu
+     * @throws IOException Vérifie les exceptions IO
+     */
     public Partie getPartie(int id_partie) throws IOException {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         Partie partie = new Partie();
@@ -557,6 +583,11 @@ public class SQLiteManager  extends SQLiteOpenHelper
         return partie;
     }
 
+    /**
+     *
+     * @return Retourne toutes les parties en bd
+     * @throws IOException Vérifie les exceptions IO
+     */
     public ArrayList<Partie> getParties() throws IOException {
         ArrayList<Partie> parties = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
@@ -578,6 +609,11 @@ public class SQLiteManager  extends SQLiteOpenHelper
         return parties;
     }
 
+    /**
+     *
+     * @return Toutes les equipes en bd
+     * @throws IOException Vérifie les exceptions IO
+     */
     public ArrayList<Equipe> getEquipes() throws IOException {
         ArrayList<Equipe> equipes = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -607,7 +643,12 @@ public class SQLiteManager  extends SQLiteOpenHelper
         return equipes;
     }
 
-
+    /**
+     *
+     * @param id_partie L'id de la partie pour laquelle on veut récupérer l'équipe receveur
+     * @return L'equipe receveur de la partie demander.
+     * @throws IOException Vérifie les exceptions IO
+     */
     public Equipe getEquipeReceveur(int id_partie) throws IOException {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         int id_equipe = 0;
@@ -639,6 +680,49 @@ public class SQLiteManager  extends SQLiteOpenHelper
         return equipe;
     }
 
+    /**
+     *
+     * @param id_partie L'id de la partie pour laquelle on veut récupérer l'équipe visiteur
+     * @return L'equipe visiteur de la partie demander.
+     * @throws IOException Vérifie les exceptions IO
+     */
+    public Equipe getEquipeVisiteur(int id_partie) throws IOException {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        int id_equipe = 0;
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_EQUIPE_PARTIE + " WHERE " + ID_PARTIE + " = " + id_partie + " AND " + RECEVEUR + " = 0", null)){
+            if(result.getCount() != 0){
+                while (result.moveToNext()){
+                    id_equipe = result.getInt(4);
+                }
+            }
+        }
+        Equipe equipe =new Equipe();
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_EQUIPE + " WHERE " + ID_EQUIPE + " = " + id_equipe, null)){
+            if(result.getCount() != 0){
+                while (result.moveToNext()){
+                    equipe.set_id_equipe(result.getInt(0));
+                    equipe.set_nom_equipe(result.getString(1));
+                    equipe.set_entraineur(result.getString(2));
+                    equipe.set_stade(result.getString(3));
+                    equipe.set_match_joue(result.getInt(4));
+                    equipe.set_victoire(result.getInt(5));
+                    equipe.set_defaite(result.getInt(6));
+                    equipe.set_match_nul(result.getInt(7));
+                    equipe.set_defaite_prolongation(result.getInt(8));
+                    equipe.set_ville(result.getString(9));
+                    equipe.set_sport(result.getString(10));
+                }
+            }
+        }
+        return equipe;
+    }
+
+    /**
+     *
+     * @param id_partie L'id de la partie pour laquelle on veut récupérer la cote de l'équipe receveur
+     * @return La cote de l'equipe receveur de la partie demander.
+     * @throws IOException Vérifie les exceptions IO
+     */
     public int getCoteReceveur(int id_partie) throws IOException {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         int cote = 0;
@@ -652,6 +736,12 @@ public class SQLiteManager  extends SQLiteOpenHelper
 
         return cote;
     }
+    /**
+     *
+     * @param id_partie L'id de la partie pour laquelle on veut récupérer la cote de l'équipe visiteur
+     * @return La cote de l'equipe visiteur de la partie demander.
+     * @throws IOException Vérifie les exceptions IO
+     */
     public int getCoteVisiteur(int id_partie) throws IOException {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         int cote = 0;
@@ -666,7 +756,12 @@ public class SQLiteManager  extends SQLiteOpenHelper
         return cote;
     }
 
-
+    /**
+     *
+     * @param id_user L'id de l'user qui s'est connecté
+     *
+     * Met à jour la table paris pour la remplir avec les paris de l'utilisateur connecté
+     */
     public void MAJParis(int id_user){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         sqLiteDatabase.delete(TABLE_PARIS,null, null );
@@ -702,11 +797,20 @@ public class SQLiteManager  extends SQLiteOpenHelper
         }
     }
 
-    public void supprimerParis(int id_paris) throws IOException {
+    /**
+     *
+     * @param id_paris L'id du paris à supprimer
+     * @param montant Le montant du paris à supprimer
+     * @throws IOException Vérifie les exceptions IO
+     *
+     * Supprime le paris demander et rembourse l'utilisateur
+     */
+    public void supprimerParis(int id_paris, float montant) throws IOException {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         sqLiteDatabase.delete(TABLE_PARIS,"id_paris=?", new String[]{String.valueOf(id_paris)} );
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
+        GestionFonds gestionFonds = new GestionFonds();
+        gestionFonds.add(montant);
         StrictMode.setThreadPolicy(policy);
         String lien = new String("http://10.0.2.2:8000/api/supprimer/paris");
         URL url = new URL(lien);
@@ -725,14 +829,27 @@ public class SQLiteManager  extends SQLiteOpenHelper
         os.close();
         int responseCode=conn.getResponseCode();
     }
-    public void modifierParis(int id_paris, float montant, int receveur) throws IOException {
+
+    /**
+     *
+     * @param id_paris L'id du paris à modifier
+     * @param montant Le nouveau montant du paris
+     * @param receveur Boolean pour savoir s'il parie sur le recevuer
+     * @param montantPrec L'ancien montant du paris
+     * @throws IOException Vérifie les exceptions IO
+     *
+     * Permet de modifier un paris voulu et de remettre ou d'enlever de l'argent dans le compte de l'utilisateur
+     */
+    public void modifierParis(int id_paris, float montant, int receveur, float montantPrec) throws IOException {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(MONTANT, montant);
         contentValues.put(RECEVEUR, receveur);
         sqLiteDatabase.update(TABLE_PARIS, contentValues, "id_paris=?", new String[]{String.valueOf(id_paris)} );
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
+        GestionFonds gestionFonds = new GestionFonds();
+        gestionFonds.add(-(montant));
+        gestionFonds.add(montantPrec);
         StrictMode.setThreadPolicy(policy);
         String lien = new String("http://10.0.2.2:8000/api/modifier/paris");
         URL url = new URL(lien);
@@ -754,38 +871,63 @@ public class SQLiteManager  extends SQLiteOpenHelper
         int responseCode=conn.getResponseCode();
     }
 
-
-    public Equipe getEquipeVisiteur(int id_partie) throws IOException {
+    /**
+     *
+     * @param id_partie L'id de la partie concerné par le paris
+     * @param montant Le montant du paris
+     * @param receveur Boolean pour savoir s'il parie sur le recevuer
+     * @param id_utilisateur L'id de l'utilisateur qui fait le paris
+     * @throws IOException Vérifie les exceptions IO
+     */
+    public void ajouterParis(int id_partie, float montant, int receveur, int id_utilisateur) throws IOException {
+        /*'montant' => $request->input('montant'),
+                'receveur' => $request->input('receveur'),
+                'id_utilisateur' => $request->input('id_utilisateur'),
+                'id_partie' => $request->input('id_partie'),
+                'date_heure' => $date->format("Y-m-d h:i:s")*/
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss");
+        String dateFormat = formatter.format(date);
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        int id_equipe = 0;
-        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_EQUIPE_PARTIE + " WHERE " + ID_PARTIE + " = " + id_partie + " AND " + RECEVEUR + " = 0", null)){
-            if(result.getCount() != 0){
-                while (result.moveToNext()){
-                    id_equipe = result.getInt(4);
-                }
-            }
-        }
-        Equipe equipe =new Equipe();
-        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_EQUIPE + " WHERE " + ID_EQUIPE + " = " + id_equipe, null)){
-            if(result.getCount() != 0){
-                while (result.moveToNext()){
-                    equipe.set_id_equipe(result.getInt(0));
-                    equipe.set_nom_equipe(result.getString(1));
-                    equipe.set_entraineur(result.getString(2));
-                    equipe.set_stade(result.getString(3));
-                    equipe.set_match_joue(result.getInt(4));
-                    equipe.set_victoire(result.getInt(5));
-                    equipe.set_defaite(result.getInt(6));
-                    equipe.set_match_nul(result.getInt(7));
-                    equipe.set_defaite_prolongation(result.getInt(8));
-                    equipe.set_ville(result.getString(9));
-                    equipe.set_sport(result.getString(10));
-                }
-            }
-        }
-        return equipe;
+        GestionFonds gestionFonds = new GestionFonds();
+        gestionFonds.add(-(montant));
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MONTANT, montant);
+        contentValues.put(RECEVEUR, receveur);
+        contentValues.put(DATE_HEURE, dateFormat);
+        contentValues.put(ID_PARTIE, id_partie);
+        contentValues.put(ID_PARIS, 6);
+        sqLiteDatabase.insert(TABLE_PARIS, null, contentValues );
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+        String lien = new String("http://10.0.2.2:8000/api/ajouter/paris");
+        URL url = new URL(lien);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setReadTimeout(15000);
+        conn.setConnectTimeout(15000);
+        conn.setRequestMethod("POST");
+        conn.setDoInput(true);
+        conn.setDoOutput(true);
+        OutputStream os = conn.getOutputStream();
+        BufferedWriter writer = new BufferedWriter(
+                new OutputStreamWriter(os, "UTF-8"));
+        writer.write("id_partie="+id_partie);
+        writer.write("&montant="+montant);
+        writer.write("&receveur="+receveur);
+        writer.write("&id_utilisateur="+id_utilisateur);
+        writer.flush();
+        writer.close();
+        os.close();
+        int responseCode=conn.getResponseCode();
     }
 
+    /**
+     *
+     * @param sqLiteDatabase La bd
+     * @throws SQLException Vérifie les exceptions SQL
+     * @throws IOException Vérifie les exceptions IO
+     */
     public void insertStatuts(SQLiteDatabase sqLiteDatabase) throws SQLException, IOException {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -814,7 +956,11 @@ public class SQLiteManager  extends SQLiteOpenHelper
         }
     }
 
-
+    /**
+     *
+     * @param idPays L'id du pays duqyel on veut les villes
+     * @return LEs villes du pays concerné
+     */
     public List<Ville> fetchAllVillesByPaysId(int idPays){
         ArrayList<Ville> villes = new ArrayList<>();
 
@@ -844,6 +990,10 @@ public class SQLiteManager  extends SQLiteOpenHelper
         return villes;
     }
 
+    /**
+     *
+     * @return Tout les pays en bd
+     */
     public List<Pays> fetchAllPays(){
         ArrayList<Pays> paysArr = new ArrayList<>();
 
@@ -871,28 +1021,6 @@ public class SQLiteManager  extends SQLiteOpenHelper
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-    }
-
-    public ArrayList<EquipePartie> getEquipesParties(int idPartie) {
-        ArrayList<EquipePartie> equipesParties = new ArrayList<>();
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_EQUIPE_PARTIE + " WHERE " + ID_PARTIE + " = " + idPartie, null)){
-            if(result.moveToFirst()){
-                do{
-                    EquipePartie equipePartie = new EquipePartie();
-                    equipePartie.set_equipe(result.getString(0));
-                    equipePartie.set_partie(result.getString(1));
-                    equipePartie.set_but_marque(result.getInt(2));
-                    equipePartie.set_cote(result.getInt(3));
-                    equipePartie.set_receveur(result.getInt(4));
-                    equipesParties.add(equipePartie);
-                }while (result.moveToNext());
-            }
-            else{
-                equipesParties = null;
-            }
-        }
-        return equipesParties;
     }
 }
 

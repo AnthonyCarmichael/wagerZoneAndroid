@@ -217,11 +217,4 @@ public class ExecutionTransaction extends AppCompatActivity {
         setResult(Activity.RESULT_OK, retour);
         finish();
     }
-    /* Vestige de l'ancien code
-    private void changerFondsUtilisateur(){
-        BigDecimal montantBig = new BigDecimal(montant);
-        BigDecimal fonds = user.get_fonds().add(montantBig);
-        //fonds = fonds.setScale(2,BigDecimal.ROUND_HALF_EVEN);
-        user.set_fonds(fonds.toString());
-    }*/
 }
