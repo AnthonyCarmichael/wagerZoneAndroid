@@ -516,7 +516,12 @@ public class SQLiteManager  extends SQLiteOpenHelper
         }
         return paris;
     }
-
+    /**
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
+     * Recupère une liste de paris dont la partie ne s'est pas encore fini
+     * @return Une ArrayList contenant les paris actifs. Si aucun pari actif n'est trouvé, renvoie une ArrayList vide.
+     */
     public ArrayList<Paris> getParisActifs(){
         ArrayList<Paris> paris = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();

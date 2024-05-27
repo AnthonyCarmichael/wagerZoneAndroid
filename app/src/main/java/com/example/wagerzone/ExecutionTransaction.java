@@ -34,7 +34,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-
+/**
+ * Cette classe représente l'exécution d'une transaction dans l'application.
+ * Elle gère les paiements et les retraits en utilisant Stripe Payment Sheet et des appels d'API.
+ */
 public class ExecutionTransaction extends AppCompatActivity {
     private PaymentSheet paymentSheet;
     private String paymentIntentClientSecret;
@@ -43,6 +46,13 @@ public class ExecutionTransaction extends AppCompatActivity {
     private Utilisateur user;
     private boolean estRetrait;
     private GestionFonds gestionFonds;
+    /**
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
+     * Méthode appelée à création de l'activité.
+     * Initialise les vues, les variables et configure les boutons.
+     * @param savedInstanceState État de l'activité sauvegardé.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

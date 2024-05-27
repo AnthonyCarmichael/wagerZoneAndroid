@@ -29,7 +29,9 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
     private BigDecimal fonds = BigDecimal.valueOf(0);
     private static final DecimalFormat decfor = new DecimalFormat("0.00");
     /**
-     * Méthode appelée lors de la création de l'activité.
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
+     * Méthode appelée à création de l'activité.
      * Initialise les vues, les variables et configure les écouteurs de clics pour les boutons.
      * @param savedInstanceState État de l'activité sauvegardé.
      */
@@ -48,8 +50,10 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
         db = new SQLiteManager(Portefeuille.this);
         //Déclare les paris et le montant total
         paris = db.getParisActifs();
-        for (Paris pari:paris) {
-            totalMontantParis += pari.get_montant();
+        if(paris != null){
+            for (Paris pari:paris) {
+                totalMontantParis += pari.get_montant();
+            }
         }
         //nav = new Nav(this, findViewById(android.R.id.content),Portefeuille.this);
         //Déclare les TextView des montants
@@ -72,6 +76,8 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
         btnRetrait.setOnClickListener(this);
     }
     /**
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
      * Méthode appelée lors d'un clic sur une vue.
      * Gère les actions en fonction du bouton cliqué.
      * @param v La vue qui a été cliquée.
@@ -104,6 +110,8 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
         }
     }
     /**
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
      * Méthode appelée lors du retour d'une activité lancée avec startActivityForResult.
      * Met à jour les données de l'utilisateur et les montants affichés.
      * @param requestCode Le code de requête passé à startActivityForResult.
@@ -120,6 +128,8 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
         chargeMontantTotal();
     }
     /**
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
      * Charge et affiche le montant retirable à partir des fonds gérés par GestionFonds.
      */
     private void chargeMontantRetirable(){
@@ -128,12 +138,16 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
         montantRetirable.setText(fonds.toString() + '$');
     }
     /**
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
      * Charge et affiche le montant total des paris.
      */
     private void chargeMontanParis(){
         montantParisView.setText(decfor.format(totalMontantParis) + '$');
     }
     /**
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
      * Calcule et affiche le montant total combinant les fonds et le montant des paris.
      */
     private void chargeMontantTotal(){

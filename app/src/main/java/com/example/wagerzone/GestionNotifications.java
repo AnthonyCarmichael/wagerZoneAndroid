@@ -14,11 +14,15 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 /**
+ * @author Jean-Loup Dandurand-Pominville
+ * @version 1.0
  * Classe de gestion des notifications.
  */
 public class GestionNotifications {
     private Context context;
     /**
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
      * Constructeur de la classe GestionNotifications.
      * @param context Le contexte de l'application.
      */
@@ -26,7 +30,9 @@ public class GestionNotifications {
         this.context = context;
     }
     /**
-     * Envoie une notification avec un bouton.
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
+     * Envoie une notification lors de l'execution d'un bouton.
      * @param idNotification L'ID de la notification.
      * @param titre Le titre de la notification.
      * @param texte Le texte de la notification.
@@ -68,6 +74,8 @@ public class GestionNotifications {
         managerCompat.notify(idNotification, builder.build());
     }
     /**
+     * @author Jean-Loup Dandurand-Pominville
+     * @version 1.0
      * Envoie une notification avec un grand texte.
      * @param idNotification L'ID de la notification.
      * @param titre Le titre de la notification.
