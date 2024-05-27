@@ -5,6 +5,12 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+/**
+ *  @author Jean-Loup Dandurand-Pominville
+ *  @version 1.0
+ * C'est une classe permet de gérer le transfert et le traitement des
+ * données des paris.
+ */
 public class Paris {
     private float _montant;
     private String _date_heure;

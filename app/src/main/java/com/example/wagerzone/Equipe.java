@@ -5,7 +5,12 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Objects;
-
+/**
+ *  @author Jean-Loup Dandurand-Pominville
+ *  @version 1.0
+ * C'est une classe permet de gérer le transfert et le traitement des
+ * données des equipes;
+ */
 public class Equipe {
     private int _id_equipe;
     private String _nom_equipe;

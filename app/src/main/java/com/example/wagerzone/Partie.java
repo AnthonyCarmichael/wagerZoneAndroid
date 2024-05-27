@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+
 public class Partie {
     private int _id_partie;
     private String _date_heure;
