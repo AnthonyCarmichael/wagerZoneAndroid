@@ -12,6 +12,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -49,7 +50,11 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
         user = (Utilisateur) getIntent().getSerializableExtra("user");
         db = new SQLiteManager(Portefeuille.this);
         //Déclare les paris et le montant total
-        paris = db.getParisActifs();
+        try {
+            paris = db.getParis();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         if(paris != null){
             for (Paris pari:paris) {
                 totalMontantParis += pari.get_montant();
