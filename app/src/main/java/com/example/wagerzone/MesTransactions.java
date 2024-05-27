@@ -27,17 +27,26 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * La classe MesTransactions est une activité qui affiche les transactions de l'utilisateur.
+ */
 public class MesTransactions extends AppCompatActivity {
 
     private Utilisateur user;
-    private String dateTransaction[];
-    private String montantTransaction[];
-    private String typeTransaction[];
+    private String[] dateTransaction;
+    private String[] montantTransaction;
+    private String[] typeTransaction;
+
+    /**
+     * Méthode appelée lors de la création de l'activité. Initialise l'interface utilisateur et
+     * déclenche la récupération des transactions.
+     *
+     * @param savedInstanceState Si l'activité est recréée à partir d'un état précédemment sauvegardé,
+     *                           c'est cet état.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,45 +57,50 @@ public class MesTransactions extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         Button btnRetour = findViewById(R.id.btnRetour);
-        btnRetour.setOnClickListener(new View.OnClickListener(){
+        btnRetour.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 finish();
             }
         });
+
         this.user = (Utilisateur) getIntent().getSerializableExtra("user");
         fetchTransactions();
     }
 
-    //Déclaration des transactions
-    private void afficherTransactions(){
+    /**
+     * Affiche les transactions de l'utilisateur dans un RecyclerView.
+     */
+    private void afficherTransactions() {
         ProgressBar progressBar = findViewById(R.id.progressBar2);
         progressBar.setVisibility(View.INVISIBLE);
-        //Déclaration du recyclerView et de son adaptateur
-        RecyclerView rv = (RecyclerView) findViewById(R.id.rvTransactions);
-        TransactionAdaptor adaptor = new TransactionAdaptor(this, dateTransaction,typeTransaction,montantTransaction);
-        //Application des données dans le recycleView
+
+        RecyclerView rv = findViewById(R.id.rvTransactions);
+        TransactionAdaptor adaptor = new TransactionAdaptor(this, dateTransaction, typeTransaction, montantTransaction);
         rv.setAdapter(adaptor);
         rv.setLayoutManager(new LinearLayoutManager(this));
     }
-    private void fetchTransactions(){
-        //Création de la requete
+
+    /**
+     * Récupère les transactions de l'utilisateur à partir d'un serveur distant.
+     */
+    private void fetchTransactions() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://10.0.2.2:8000/api/fetchTransactions";
+        String url = "http://10.0.2.2:8000/api/fetchTransactions";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            //capture le retour JSON et la met dans la configuration
                             JSONObject jsonObject = new JSONObject(response);
                             JSONArray transactions = jsonObject.getJSONArray("transactions");
                             int nbTransactions = transactions.length();
                             dateTransaction = new String[nbTransactions];
                             montantTransaction = new String[nbTransactions];
                             typeTransaction = new String[nbTransactions];
-                            for (int i = 0 ; i < nbTransactions ; i++) {
+                            for (int i = 0; i < nbTransactions; i++) {
                                 JSONObject transaction = transactions.getJSONObject(nbTransactions - 1 - i);
                                 dateTransaction[i] = transaction.getString("date");
                                 montantTransaction[i] = transaction.getString("montant") + "$";
@@ -97,19 +111,18 @@ public class MesTransactions extends AppCompatActivity {
                             throw new RuntimeException(e);
                         }
                     }
-
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "Une erreur c'est produit", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Une erreur s'est produite", Toast.LENGTH_SHORT).show();
                 error.printStackTrace();
             }
-        }){
-            @RequiresApi(api = Build.VERSION_CODES.O) //Pour le LocalDateTime
-            protected Map<String, String> getParams(){
+        }) {
+            @RequiresApi(api = Build.VERSION_CODES.O) // Pour LocalDateTime
+            @Override
+            protected Map<String, String> getParams() {
                 Map<String, String> paramV = new HashMap<>();
                 paramV.put("authKey", "abc");
-                //Ajouter l'id de l'utilisateur
                 paramV.put("id_user", String.valueOf(user.get_id()));
                 return paramV;
             }
