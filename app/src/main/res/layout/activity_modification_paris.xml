@@ -99,10 +99,10 @@
                 android:id="@+id/accepter"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="Modifier"
-                android:textSize="18sp"
                 android:background="@drawable/bouton_paris_final"
-                android:textColor="@color/white"/>
+                android:text="@string/modifier"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -156,7 +156,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bouton_paris_final"
-                android:text="Retour"
+                android:text="@string/retour"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
         </LinearLayout>

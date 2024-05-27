@@ -1,25 +1,16 @@
 package com.example.wagerzone;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
-import org.json.JSONException;
 
 import java.io.IOException;
 
@@ -28,6 +19,7 @@ public class ModificationParisActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_modification_paris);
         this._nav = new Nav(this,findViewById(android.R.id.content),ModificationParisActivity.this);
         TextView titre = findViewById(R.id.titre);
@@ -44,6 +36,7 @@ public class ModificationParisActivity extends AppCompatActivity {
         Button accepter = findViewById(R.id.accepter);
         titre.setText("Modification paris");
         Intent intent = getIntent();
+        float montantPrec = intent.getFloatExtra("montant", 0);
         match.setText("Match : " + intent.getStringExtra("nomVisiteur") + " vs " + intent.getStringExtra("nomReceveur"));
         nomVisiteur.setText(intent.getStringExtra("nomVisiteur"));
         nomReceveur.setText(intent.getStringExtra("nomReceveur"));
@@ -105,7 +98,7 @@ public class ModificationParisActivity extends AppCompatActivity {
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             try {
-                                sqLiteManager.modifierParis(intent.getIntExtra("id_paris", 0), Float.parseFloat(miseReceveur.getText().toString()), 1);
+                                sqLiteManager.modifierParis(intent.getIntExtra("id_paris", 0), Float.parseFloat(miseReceveur.getText().toString()), 1, montantPrec);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
@@ -122,7 +115,7 @@ public class ModificationParisActivity extends AppCompatActivity {
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             try {
-                                sqLiteManager.modifierParis(intent.getIntExtra("id_paris", 0), Float.parseFloat(miseVisiteur.getText().toString()), 0);
+                                sqLiteManager.modifierParis(intent.getIntExtra("id_paris", 0), Float.parseFloat(miseVisiteur.getText().toString()), 0, montantPrec);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }

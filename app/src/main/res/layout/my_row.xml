@@ -33,11 +33,11 @@
                 android:id="@+id/modifier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/bouton_paris_final"
-                android:textColor="@color/white"
-                android:text="Modifier"
-                android:layout_marginBottom="5dp"/>
+                android:text="@string/modifier"
+                android:textColor="@color/white" />
         </LinearLayout>
 
         <LinearLayout
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/bouton_paris_final"
-                android:text="Annuler"
+                android:text="@string/annuler"
                 android:textColor="@color/white" />
         </LinearLayout>
 

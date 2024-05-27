@@ -19,6 +19,7 @@ public class PartieAdapter extends RecyclerView.Adapter<PartieAdapter.MyViewHold
     private final RecyclerViewInterface recyclerViewInterface;
     private ArrayList<Partie> parties;
     private Context context;
+    private Nav nav;
 
     @NonNull
     @Override
@@ -28,9 +29,10 @@ public class PartieAdapter extends RecyclerView.Adapter<PartieAdapter.MyViewHold
         return new PartieAdapter.MyViewHolder(view);
     }
 
-    public PartieAdapter(Context context, ArrayList<Partie> partie, RecyclerViewInterface recyclerViewInterface){
+    public PartieAdapter(Context context, Nav nav, ArrayList<Partie> partie, RecyclerViewInterface recyclerViewInterface){
         this.context = context;
         this.parties = partie;
+        this.nav = nav;
         this.recyclerViewInterface = recyclerViewInterface;
     }
 
@@ -103,9 +105,11 @@ public class PartieAdapter extends RecyclerView.Adapter<PartieAdapter.MyViewHold
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, DetailsEquipeActivity.class);
-
+                Intent intent = new Intent(context, AjoutParisActivity.class);
+                intent.putExtra("id_partie", finalPartie.get_id_partie());
+                intent.putExtra("id_utilisateur", nav.get_user().get_id());
                 context.startActivity(intent);
+                ((PartieActivity)context).finish();
             }
         });
     }

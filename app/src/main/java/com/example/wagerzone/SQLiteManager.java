@@ -703,11 +703,12 @@ public class SQLiteManager  extends SQLiteOpenHelper
         }
     }
 
-    public void supprimerParis(int id_paris) throws IOException {
+    public void supprimerParis(int id_paris, float montant) throws IOException {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         sqLiteDatabase.delete(TABLE_PARIS,"id_paris=?", new String[]{String.valueOf(id_paris)} );
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
+        GestionFonds gestionFonds = new GestionFonds();
+        gestionFonds.add(montant);
         StrictMode.setThreadPolicy(policy);
         String lien = new String("http://10.0.2.2:8000/api/supprimer/paris");
         URL url = new URL(lien);
@@ -726,14 +727,16 @@ public class SQLiteManager  extends SQLiteOpenHelper
         os.close();
         int responseCode=conn.getResponseCode();
     }
-    public void modifierParis(int id_paris, float montant, int receveur) throws IOException {
+    public void modifierParis(int id_paris, float montant, int receveur, float montantPrec) throws IOException {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(MONTANT, montant);
         contentValues.put(RECEVEUR, receveur);
         sqLiteDatabase.update(TABLE_PARIS, contentValues, "id_paris=?", new String[]{String.valueOf(id_paris)} );
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
+        GestionFonds gestionFonds = new GestionFonds();
+        gestionFonds.add(-(montant));
+        gestionFonds.add(montantPrec);
         StrictMode.setThreadPolicy(policy);
         String lien = new String("http://10.0.2.2:8000/api/modifier/paris");
         URL url = new URL(lien);
@@ -749,6 +752,49 @@ public class SQLiteManager  extends SQLiteOpenHelper
         writer.write("id_paris="+id_paris);
         writer.write("&montant="+montant);
         writer.write("&receveur="+receveur);
+        writer.flush();
+        writer.close();
+        os.close();
+        int responseCode=conn.getResponseCode();
+    }
+
+    public void ajouterParis(int id_partie, float montant, int receveur, int id_utilisateur) throws IOException {
+        /*'montant' => $request->input('montant'),
+                'receveur' => $request->input('receveur'),
+                'id_utilisateur' => $request->input('id_utilisateur'),
+                'id_partie' => $request->input('id_partie'),
+                'date_heure' => $date->format("Y-m-d h:i:s")*/
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss");
+        String dateFormat = formatter.format(date);
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        GestionFonds gestionFonds = new GestionFonds();
+        gestionFonds.add(-(montant));
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MONTANT, montant);
+        contentValues.put(RECEVEUR, receveur);
+        contentValues.put(DATE_HEURE, dateFormat);
+        contentValues.put(ID_PARTIE, id_partie);
+        contentValues.put(ID_PARIS, 6);
+        sqLiteDatabase.insert(TABLE_PARIS, null, contentValues );
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+        String lien = new String("http://10.0.2.2:8000/api/ajouter/paris");
+        URL url = new URL(lien);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setReadTimeout(15000);
+        conn.setConnectTimeout(15000);
+        conn.setRequestMethod("POST");
+        conn.setDoInput(true);
+        conn.setDoOutput(true);
+        OutputStream os = conn.getOutputStream();
+        BufferedWriter writer = new BufferedWriter(
+                new OutputStreamWriter(os, "UTF-8"));
+        writer.write("id_partie="+id_partie);
+        writer.write("&montant="+montant);
+        writer.write("&receveur="+receveur);
+        writer.write("&id_utilisateur="+id_utilisateur);
         writer.flush();
         writer.close();
         os.close();
