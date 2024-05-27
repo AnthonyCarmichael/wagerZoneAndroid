@@ -3,7 +3,6 @@ package com.example.wagerzone;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-<<<<<<< HEAD
 /**
  * La classe Paris représente un pari avec des détails tels que le montant, la date et l'heure,
  * l'équipe receveur, l'identifiant de la partie, et l'identifiant du pari.
