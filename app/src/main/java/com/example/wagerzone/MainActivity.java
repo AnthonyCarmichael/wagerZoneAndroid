@@ -14,11 +14,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
+/**
+ * Classe principale de l'application, représentant l'activité principale.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private Nav _nav;
     private GestionFonds fonds;
+    /**
+     * Méthode appelée lors de la création de l'activité.
+     * Initialise les vues, les variables et configure les écouteurs de clics pour les boutons.
+     * @param savedInstanceState État de l'activité sauvegardé.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +55,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
+    /**
+     * Méthode appelée lorsque l'activité est reprise.
+     * Met à jour l'interface utilisateur en fonction de l'état de la navigation.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -59,7 +69,13 @@ public class MainActivity extends AppCompatActivity {
         _nav.get_matchs().setBackgroundResource(R.drawable.rounded_dark_red);
         _nav.get_paris().setBackgroundResource(R.drawable.rounded_dark_red);
     }
-
+    /**
+     * Méthode appelée lors du retour d'une activité lancée avec startActivityForResult.
+     * Met à jour les données de l'utilisateur et l'interface utilisateur en conséquence.
+     * @param requestCode Le code de requête passé à startActivityForResult.
+     * @param resultCode Le code de résultat renvoyé par l'activité enfant.
+     * @param data L'intent contenant les données retournées.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 

@@ -28,6 +28,11 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
     private float totalMontantParis;
     private BigDecimal fonds = BigDecimal.valueOf(0);
     private static final DecimalFormat decfor = new DecimalFormat("0.00");
+    /**
+     * Méthode appelée lors de la création de l'activité.
+     * Initialise les vues, les variables et configure les écouteurs de clics pour les boutons.
+     * @param savedInstanceState État de l'activité sauvegardé.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +71,11 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
         btnTransactions.setOnClickListener(this);
         btnRetrait.setOnClickListener(this);
     }
+    /**
+     * Méthode appelée lors d'un clic sur une vue.
+     * Gère les actions en fonction du bouton cliqué.
+     * @param v La vue qui a été cliquée.
+     */
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.buttonAjoutFonds){
@@ -93,7 +103,13 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
             finish();
         }
     }
-
+    /**
+     * Méthode appelée lors du retour d'une activité lancée avec startActivityForResult.
+     * Met à jour les données de l'utilisateur et les montants affichés.
+     * @param requestCode Le code de requête passé à startActivityForResult.
+     * @param resultCode Le code de résultat renvoyé par l'activité enfant.
+     * @param data L'intent contenant les données retournées.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -103,15 +119,23 @@ public class Portefeuille extends AppCompatActivity implements View.OnClickListe
         chargeMontantRetirable();
         chargeMontantTotal();
     }
-
+    /**
+     * Charge et affiche le montant retirable à partir des fonds gérés par GestionFonds.
+     */
     private void chargeMontantRetirable(){
         GestionFonds gestionFonds = new GestionFonds();
         fonds = gestionFonds.getFonds().setScale(2, RoundingMode.HALF_EVEN);
         montantRetirable.setText(fonds.toString() + '$');
     }
+    /**
+     * Charge et affiche le montant total des paris.
+     */
     private void chargeMontanParis(){
         montantParisView.setText(decfor.format(totalMontantParis) + '$');
     }
+    /**
+     * Calcule et affiche le montant total combinant les fonds et le montant des paris.
+     */
     private void chargeMontantTotal(){
         BigDecimal total = fonds.add(BigDecimal.valueOf(totalMontantParis)).setScale(2, RoundingMode.HALF_EVEN);
         montantTotalView.setText(total.toString() + '$');
