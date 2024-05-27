@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private Nav _nav;
     private GestionFonds fonds;
     /**
-     * @author Jean-Loup Dandurand-Pominville
+     * @author Anthony Carmichael
      * @version 1.0
      * Méthode appelée à création de l'activité.
      * Initialise les vues, les variables et configure les boutons.
